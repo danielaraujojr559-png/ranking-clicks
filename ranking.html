@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classificação — Por que Você Não Para de Clicar um Pouco</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #000000;
+      background-image: url('/fundo.gif'), url('/fundo.gif');
+      background-position: left center, right center;
+      background-size: 50vw 100vh, 50vw 100vh;
+      background-repeat: no-repeat, no-repeat;
+      background-attachment: fixed, fixed;
+      color: white;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1160px;
+      margin-top: 32px;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .header-info h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+      letter-spacing: -0.02em;
+    }
+
+    .header-info p {
+      font-size: 0.875rem;
+      color: #cbd5e1;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
+      margin-top: 4px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #4ade80;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background-color: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ade80;
+    }
+
+    /* Container Principal */
+    .container-principal {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 40px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Cartões com Vidro Fosco (Glassmorphism) */
+    .cartao {
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 32px;
+      min-width: 320px;
+      color: white;
+      flex: 1 1 450px;
+      max-width: 520px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cartao-header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .cartao-titulo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .cartao-subtitulo {
+      font-size: 0.8125rem;
+      color: #94a3b8;
+    }
+
+    .tabela-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    th.num, td.num {
+      text-align: right;
+    }
+
+    td {
+      padding: 14px 14px;
+      font-size: 0.9375rem;
+      color: #e2e8f0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr {
+      transition: background-color 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .pos-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+    }
+
+    .pos-1 {
+      background: rgba(234, 179, 8, 0.25);
+      color: #fef08a;
+      border: 1px solid rgba(234, 179, 8, 0.5);
+    }
+
+    .pos-2 {
+      background: rgba(148, 163, 184, 0.25);
+      color: #f1f5f9;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .pos-3 {
+      background: rgba(249, 115, 22, 0.25);
+      color: #fed7aa;
+      border: 1px solid rgba(249, 115, 22, 0.4);
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .clicks-value {
+      font-weight: 700;
+      color: #38bdf8;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .time-value {
+      font-size: 0.8125rem;
+      color: #94a3b8;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .empty-row {
+      text-align: center;
+      padding: 32px 14px;
+      color: #94a3b8;
+      font-size: 0.875rem;
+    }
+
+    footer {
+      margin-top: auto;
+      margin-bottom: 24px;
+      text-align: center;
+      font-size: 0.8125rem;
+      color: #cbd5e1;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Botão Como Funciona */
+    #btnInfo {
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 9999px;
+      padding: 10px 24px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    #btnInfo:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* Modal Flutuante */
+    #modalInfo {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .modal-card {
+      background: rgba(10, 15, 25, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      padding: 36px 40px;
+      max-width: 620px;
+      width: 100%;
+      position: relative;
+      color: #f1f5f9;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      line-height: 1.6;
+    }
+
+    .modal-card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .modal-card p {
+      margin-bottom: 14px;
+      font-size: 0.9375rem;
+      color: #cbd5e1;
+    }
+
+    .modal-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-card strong {
+      color: #ffffff;
+    }
+
+    .btn-close-modal {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .btn-close-modal:hover {
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Botão Como Funciona -->
+  <div style="margin-top: 28px; text-align: center; width: 100%;">
+    <button id="btnInfo">ℹ️ Como Funciona?</button>
+  </div>
+
+  <header>
+    <div class="header-info">
+      <h1>Por que Você Não Para de Clicar um Pouco</h1>
+      <p>Os dados são enviados a cada 5 segundos.</p>
+    </div>
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      <span>Atualização contínua</span>
+    </div>
+  </header>
+
+  <!-- Container Principal -->
+  <div class="container-principal" style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; padding: 40px;">
+
+    <!-- Cartão 1: Classificação Diária -->
+    <div class="cartao" style="background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 32px; min-width: 320px; color: white;">
+      <div class="cartao-header">
+        <h2 class="cartao-titulo">Classificação Diária</h2>
+        <span class="cartao-subtitulo">Reinício à meia-noite</span>
+      </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 70px;">Posição</th>
+              <th>Usuário</th>
+              <th class="num">Cliques</th>
+              <th class="num" style="width: 100px;">Horário</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-diaria">
+            <tr>
+              <td colspan="4" class="empty-row">Carregando dados...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Cartão 2: Classificação Total -->
+    <div class="cartao" style="background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 32px; min-width: 320px; color: white;">
+      <div class="cartao-header">
+        <h2 class="cartao-titulo">Classificação Total</h2>
+        <span class="cartao-subtitulo">Histórico consolidado</span>
+      </div>
+      <div class="tabela-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 70px;">Posição</th>
+              <th>Usuário</th>
+              <th class="num">Cliques</th>
+              <th class="num" style="width: 100px;">Horário</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-total">
+            <tr>
+              <td colspan="4" class="empty-row">Carregando dados...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Painel de Desempenho e Telemetria de Cliques
+  </footer>
+
+  <!-- Modal (Janela Flutuante) -->
+  <div id="modalInfo">
+    <div class="modal-card">
+      <button id="btnCloseModal" class="btn-close-modal" aria-label="Fechar">&times;</button>
+      <h2>Engenharia do Projeto</h2>
+      <p>Esta aplicação foi construída com uma arquitetura desenhada para garantir zero impacto no uso normal do computador.</p>
+      <p><strong>O Motor (C++):</strong> Um executável a correr de forma 100% invisível em segundo plano, consumindo apenas ~10 MB de RAM.</p>
+      <p><strong>Captura Raw Input:</strong> Em vez de utilizar mouse hooks tradicionais que causam input lag ou interferem com outros softwares, o programa lê diretamente os dados de hardware na raiz do sistema operativo, garantindo a máxima performance.</p>
+      <p><strong>O Servidor (Node.js):</strong> Processa os dados de forma assíncrona, mantendo o ranking sempre atualizado.</p>
+      <p><strong>Sincronização:</strong> Para poupar os recursos de rede, a comunicação ocorre apenas a cada 15 segundos, enviando um pacote JSON minúsculo para a web.</p>
+    </div>
+  </div>
+
+  <script>
+    function renderizarTabela(dados, campoCliques, elementoId) {
+      const container = document.getElementById(elementoId);
+      if (!container) return;
+
+      if (!dados || dados.length === 0) {
+        container.innerHTML = '<tr><td colspan="4" class="empty-row">Nenhum registro encontrado.</td></tr>';
+        return;
+      }
+
+      // Ordena a lista de jogadores do 1º lugar com mais cliques para os restantes
+      const listaOrdenada = [...dados].sort((a, b) => {
+        return (Number(b[campoCliques]) || 0) - (Number(a[campoCliques]) || 0);
+      });
+
+      const linhasHtml = listaOrdenada.map((item, index) => {
+        const posicao = index + 1;
+        const classePosicao = posicao <= 3 ? 'pos-' + posicao : '';
+        const cliquesFormatados = Number(item[campoCliques] || 0).toLocaleString('pt-BR');
+        const horario = item.updated_at ? (item.updated_at.split(' ')[1] || item.updated_at) : '-';
+
+        return '<tr>' +
+          '<td><span class="pos-badge ' + classePosicao + '">' + posicao + '</span></td>' +
+          '<td><span class="user-name">' + item.nickname + '</span></td>' +
+          '<td class="num"><span class="clicks-value">' + cliquesFormatados + '</span></td>' +
+          '<td class="num"><span class="time-value">' + horario + '</span></td>' +
+          '</tr>';
+      }).join('');
+
+      container.innerHTML = linhasHtml;
+    }
+
+    async function atualizarDados() {
+      try {
+        const resposta = await fetch('/api/ranking');
+        if (!resposta.ok) return;
+        const dados = await resposta.json();
+
+        if (dados.top_today) {
+          renderizarTabela(dados.top_today, 'clicks_hoje', 'tabela-diaria');
+        }
+        if (dados.top_total) {
+          renderizarTabela(dados.top_total, 'clicks_totais', 'tabela-total');
+        }
+      } catch (erro) {
+        // Falha de rede silenciosa para estabilidade da interface
+      }
+    }
+
+    // Carregamento inicial imediato e atualização contínua a cada 5 segundos
+    atualizarDados();
+    setInterval(atualizarDados, 5000);
+
+    // Controle do Modal 'Como Funciona?'
+    const btnInfo = document.getElementById('btnInfo');
+    const modalInfo = document.getElementById('modalInfo');
+    const btnCloseModal = document.getElementById('btnCloseModal');
+
+    if (btnInfo && modalInfo) {
+      btnInfo.addEventListener('click', () => {
+        modalInfo.style.display = 'flex';
+      });
+    }
+
+    if (btnCloseModal && modalInfo) {
+      btnCloseModal.addEventListener('click', () => {
+        modalInfo.style.display = 'none';
+      });
+    }
+
+    if (modalInfo) {
+      modalInfo.addEventListener('click', (e) => {
+        if (e.target === modalInfo) {
+          modalInfo.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

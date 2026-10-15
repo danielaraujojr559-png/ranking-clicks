@@ -1,0 +1,14 @@
+# Banco de dados
+database.sqlite
+ranking.db
+*.sqlite
+*.sqlite3
+*.db
+
+# Dependencias
+node_modules/
+
+# Logs e temporarios
+*.log
+.DS_Store
+Thumbs.db
