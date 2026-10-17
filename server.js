@@ -38,6 +38,8 @@ const stmtUpsert = db.prepare(`
     clicks_totais = excluded.clicks_totais,
     updated_at = excluded.updated_at
 `);
+const stmtDelete = db.prepare('DELETE FROM players WHERE nickname = ?');
+
 
 // Objeto / Mapa em memoria para suportar multiplos jogadores concorrentes
 const playersStore = new Map();
@@ -61,7 +63,7 @@ try {
 const PORT = process.env.PORT || 3000;
 const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
@@ -236,6 +238,50 @@ const server = http.createServer((req, res) => {
     } catch (err) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Falha ao buscar dados' }));
+    }
+    return;
+  }
+
+  // ---------------------------------------------------------------------------
+  // GET/DELETE /api/admin/delete/:nickname?senha=1234 -> Deleta jogador do ranking
+  // ---------------------------------------------------------------------------
+  if ((req.method === 'GET' || req.method === 'DELETE') && url.pathname.startsWith('/api/admin/delete/')) {
+    const rawNickname = url.pathname.slice('/api/admin/delete/'.length);
+    const nickname = decodeURIComponent(rawNickname).trim();
+    const senha = url.searchParams.get('senha');
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234';
+
+    if (senha !== ADMIN_PASSWORD) {
+      res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Acesso negado: senha incorreta ou ausente (?senha=1234)' }));
+      return;
+    }
+
+    if (!nickname) {
+      res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Nickname não informado na URL' }));
+      return;
+    }
+
+    try {
+      const existedInMem = playersStore.has(nickname);
+      playersStore.delete(nickname);
+      const dbResult = stmtDelete.run(nickname);
+
+      console.log(`[ADMIN] Jogador '${nickname}' removido por admin. (Memória: ${existedInMem}, SQLite afetados: ${dbResult.changes})`);
+
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({
+        success: true,
+        message: `Jogador '${nickname}' foi completamente removido do ranking!`,
+        removido_memoria: existedInMem,
+        removido_sqlite: dbResult.changes > 0,
+        jogadores_restantes: playersStore.size
+      }));
+    } catch (err) {
+      console.error('[ADMIN] Erro ao deletar jogador:', err);
+      res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Erro interno ao excluir jogador' }));
     }
     return;
   }
