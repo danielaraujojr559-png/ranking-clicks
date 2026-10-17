@@ -39,6 +39,8 @@ const stmtUpsert = db.prepare(`
     updated_at = excluded.updated_at
 `);
 const stmtDelete = db.prepare('DELETE FROM players WHERE nickname = ?');
+const stmtGetPlayer = db.prepare('SELECT nickname, clicks_hoje, clicks_totais FROM players WHERE nickname = ?');
+
 
 
 // Objeto / Mapa em memoria para suportar multiplos jogadores concorrentes
@@ -282,6 +284,112 @@ const server = http.createServer((req, res) => {
       console.error('[ADMIN] Erro ao deletar jogador:', err);
       res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({ error: 'Erro interno ao excluir jogador' }));
+    }
+    return;
+  }
+
+  // ---------------------------------------------------------------------------
+  // GET/POST /api/admin/merge/:oldName/:newName?senha=1234 -> Funde cliques de 2 contas
+  // ---------------------------------------------------------------------------
+  if ((req.method === 'GET' || req.method === 'POST') && url.pathname.startsWith('/api/admin/merge/')) {
+    const pathParts = url.pathname.slice('/api/admin/merge/'.length).split('/').filter(Boolean);
+    const oldName = decodeURIComponent(pathParts[0] || '').trim();
+    const newName = decodeURIComponent(pathParts[1] || '').trim();
+    const senha = url.searchParams.get('senha');
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234';
+
+    if (senha !== ADMIN_PASSWORD) {
+      res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Acesso negado: senha incorreta ou ausente (?senha=1234)' }));
+      return;
+    }
+
+    if (!oldName || !newName) {
+      res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Parâmetros incompletos. Formato esperado: /api/admin/merge/:oldName/:newName?senha=1234' }));
+      return;
+    }
+
+    if (oldName.toLowerCase() === newName.toLowerCase()) {
+      res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'oldName e newName não podem ser o mesmo jogador' }));
+      return;
+    }
+
+    try {
+      const oldPlayerDb = stmtGetPlayer.get(oldName);
+      const newPlayerDb = stmtGetPlayer.get(newName);
+      const oldPlayerMem = playersStore.get(oldName);
+      const newPlayerMem = playersStore.get(newName);
+
+      if (!oldPlayerDb && !oldPlayerMem) {
+        res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ error: `Jogador antigo '${oldName}' não foi encontrado no ranking.` }));
+        return;
+      }
+
+      const oldHoje = Math.max(
+        oldPlayerMem ? Number(oldPlayerMem.clicks_hoje) || 0 : 0,
+        oldPlayerDb ? Number(oldPlayerDb.clicks_hoje) || 0 : 0
+      );
+      const oldTotal = Math.max(
+        oldPlayerMem ? Number(oldPlayerMem.clicks_totais) || 0 : 0,
+        oldPlayerDb ? Number(oldPlayerDb.clicks_totais) || 0 : 0
+      );
+
+      const newHojeExisting = Math.max(
+        newPlayerMem ? Number(newPlayerMem.clicks_hoje) || 0 : 0,
+        newPlayerDb ? Number(newPlayerDb.clicks_hoje) || 0 : 0
+      );
+      const newTotalExisting = Math.max(
+        newPlayerMem ? Number(newPlayerMem.clicks_totais) || 0 : 0,
+        newPlayerDb ? Number(newPlayerDb.clicks_totais) || 0 : 0
+      );
+
+      const mergedHoje = newHojeExisting + oldHoje;
+      const mergedTotal = newTotalExisting + oldTotal;
+
+      // 1. Transação SQLite: UPSERT com a soma no newName e DELETE no oldName
+      db.exec('BEGIN');
+      try {
+        stmtUpsert.run(newName, mergedHoje, mergedTotal);
+        stmtDelete.run(oldName);
+        db.exec('COMMIT');
+      } catch (txErr) {
+        try { db.exec('ROLLBACK'); } catch (_) {}
+        throw txErr;
+      }
+
+      // 2. Atualiza memória (playersStore)
+      const nowFormatted = new Date().toLocaleString('pt-BR');
+      playersStore.set(newName, {
+        nickname: newName,
+        clicks_hoje: mergedHoje,
+        clicks_totais: mergedTotal,
+        updated_at: nowFormatted
+      });
+      playersStore.delete(oldName);
+
+      console.log(`[ADMIN MERGE] '${oldName}' fundido em '${newName}'. Hoje: ${mergedHoje} (+${oldHoje}), Total: ${mergedTotal} (+${oldTotal}).`);
+
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({
+        success: true,
+        message: `Cliques de '${oldName}' foram fundidos com sucesso em '${newName}'!`,
+        merged: {
+          nickname: newName,
+          clicks_hoje: mergedHoje,
+          clicks_totais: mergedTotal,
+          adicionados_hoje: oldHoje,
+          adicionados_total: oldTotal
+        },
+        old_player_removido: oldName,
+        jogadores_restantes: playersStore.size
+      }));
+    } catch (err) {
+      console.error('[ADMIN MERGE] Erro ao fundir jogadores:', err);
+      res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Erro interno ao fundir jogadores' }));
     }
     return;
   }
