@@ -1,20 +1,19 @@
 {
   "name": "por-que-voce-nao-para-de-clicar-um-pouco-server",
-  "version": "2.0.0",
-  "description": "Servidor de Ranking para o projeto 'Por que Voce Nao Para de Clicar um Pouco'",
+  "version": "3.0.0",
+  "description": "Servidor de Ranking — Vercel + Turso (libSQL)",
   "main": "server.js",
   "scripts": {
-    "start": "node --experimental-sqlite server.js"
+    "start": "node server.js",
+    "dev":   "node server.js"
   },
   "engines": {
-    "node": ">=22.5.0"
+    "node": ">=18.0.0"
   },
-  "keywords": [
-    "gaming",
-    "click-counter",
-    "ranking",
-    "sqlite"
-  ],
+  "dependencies": {
+    "@libsql/client": "^0.14.0"
+  },
+  "keywords": ["gaming", "click-counter", "ranking", "turso", "libsql", "vercel"],
   "author": "Antigravity",
   "license": "MIT"
 }

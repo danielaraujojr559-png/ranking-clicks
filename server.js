@@ -1,97 +1,77 @@
 // =============================================================================
-// server.js — Servidor de Ranking ('Por que Voce Nao Para de Clicar um Pouco')
+// server.js — Ranking Backend (Vercel Serverless + Turso/libSQL)
+// =============================================================================
+// Deploy: Vercel (serverless functions)
+// Database: Turso (libSQL) — persistência permanente e gratuita
+// Env vars necessárias no painel da Vercel:
+//   TURSO_DATABASE_URL  — ex: libsql://seu-db-usuario.turso.io
+//   TURSO_AUTH_TOKEN    — token gerado no Turso CLI
+//   ADMIN_PASSWORD      — senha para rotas de admin (default: "1234")
 // =============================================================================
 const http = require('http');
 const path = require('path');
-const fs = require('fs');
-const os = require('os');
+const fs   = require('fs');
 
 // ---------------------------------------------------------------------------
-// Guardas de processo: impedem que erros não capturados derrubem o servidor
+// Guardas de processo globais
 // ---------------------------------------------------------------------------
-process.on('uncaughtException', (err) => {
-  console.error('[FATAL] Erro nao capturado — servidor MANTIDO em pé:', err);
-});
-process.on('unhandledRejection', (reason) => {
-  console.error('[FATAL] Promise rejeitada sem catch — servidor MANTIDO em pé:', reason);
-});
+process.on('uncaughtException',   (err)    => console.error('[FATAL] uncaughtException:', err));
+process.on('unhandledRejection',  (reason) => console.error('[FATAL] unhandledRejection:', reason));
 
 // ---------------------------------------------------------------------------
-// Inicializa SQLite nativo (node:sqlite, requer Node >= 22.5 + flag --experimental-sqlite)
-// No Render (plano gratuito) o sistema de ficheiros do projeto é efémero após deploy.
-// O /tmp é o único diretório com persistência garantida entre cold starts no mesmo container.
+// Cliente Turso/libSQL — conexão única reutilizada entre invocações
 // ---------------------------------------------------------------------------
+const { createClient } = require('@libsql/client');
+
 let db;
 try {
-  const { DatabaseSync } = require('node:sqlite');
+  const dbUrl   = process.env.TURSO_DATABASE_URL;
+  const dbToken = process.env.TURSO_AUTH_TOKEN;
 
-  // Usa /tmp no ambiente de produção (Render) ou __dirname localmente
-  const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER;
-  const dbDir  = isProduction ? '/tmp' : __dirname;
-  const dbPath = path.join(dbDir, 'ranking.db');
+  if (!dbUrl) {
+    throw new Error('TURSO_DATABASE_URL não definida. Adicione no painel da Vercel / .env local.');
+  }
 
-  console.log(`[SQLite] Modo: ${isProduction ? 'Producao (Render /tmp)' : 'Local (__dirname)'}`);
-  console.log(`[SQLite] Caminho do banco: ${dbPath}`);
-
-  db = new DatabaseSync(dbPath);
-  console.log('[SQLite] Conectado com sucesso.');
+  db = createClient({
+    url:       dbUrl,
+    authToken: dbToken || undefined,
+  });
+  console.log('[Turso] Cliente libSQL criado. URL:', dbUrl.split('@').pop()); // não loga o token
 } catch (err) {
-  console.error('[ERRO CRITICO] Falha ao inicializar SQLite:', err.message);
-  console.error('[ERRO CRITICO] Verifique se o Node.js >= 22.5 e se a flag --experimental-sqlite esta ativa.');
+  console.error('[ERRO CRITICO] Falha ao criar cliente libSQL:', err.message);
   process.exit(1);
 }
 
-
-
-
-// Cria tabela e indices
-db.exec(`
-  CREATE TABLE IF NOT EXISTS players (
-    nickname TEXT PRIMARY KEY,
-    clicks_hoje INTEGER NOT NULL DEFAULT 0,
-    clicks_totais INTEGER NOT NULL DEFAULT 0,
-    updated_at TEXT NOT NULL
-  );
-  CREATE INDEX IF NOT EXISTS idx_hoje ON players(clicks_hoje DESC);
-  CREATE INDEX IF NOT EXISTS idx_total ON players(clicks_totais DESC);
-`);
-
-// Prepared statements
-const stmtUpsert = db.prepare(`
-  INSERT INTO players (nickname, clicks_hoje, clicks_totais, updated_at)
-  VALUES (?, ?, ?, datetime('now', 'localtime'))
-  ON CONFLICT(nickname) DO UPDATE SET
-    clicks_hoje = excluded.clicks_hoje,
-    clicks_totais = excluded.clicks_totais,
-    updated_at = excluded.updated_at
-`);
-const stmtDelete = db.prepare('DELETE FROM players WHERE nickname = ?');
-const stmtGetPlayer = db.prepare('SELECT nickname, clicks_hoje, clicks_totais FROM players WHERE nickname = ?');
-
-
-
-// Objeto / Mapa em memoria para suportar multiplos jogadores concorrentes
-const playersStore = new Map();
-
-// Carrega os jogadores existentes do SQLite para a memoria
-try {
-  const existingRows = db.prepare('SELECT nickname, clicks_hoje, clicks_totais, updated_at FROM players').all();
-  for (const row of existingRows) {
-    playersStore.set(row.nickname, {
-      nickname: row.nickname,
-      clicks_hoje: Number(row.clicks_hoje) || 0,
-      clicks_totais: Number(row.clicks_totais) || 0,
-      updated_at: row.updated_at
-    });
-  }
-  console.log(`[Multiplayer] ${playersStore.size} jogador(es) ativos na memoria.`);
-} catch (err) {
-  console.warn('[Multiplayer] Inicializacao da memoria:', err.message);
+// ---------------------------------------------------------------------------
+// Inicialização da tabela (executada uma vez na cold start)
+// ---------------------------------------------------------------------------
+async function initDatabase() {
+  await db.executeMultiple(`
+    CREATE TABLE IF NOT EXISTS players (
+      nickname     TEXT PRIMARY KEY,
+      clicks_hoje  INTEGER NOT NULL DEFAULT 0,
+      clicks_totais INTEGER NOT NULL DEFAULT 0,
+      updated_at   TEXT    NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_hoje  ON players(clicks_hoje  DESC);
+    CREATE INDEX IF NOT EXISTS idx_total ON players(clicks_totais DESC);
+  `);
+  console.log('[Turso] Tabela "players" OK.');
 }
 
-const PORT = process.env.PORT || 3000;
-const server = http.createServer((req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+// Promise de inicialização — aguardada antes de servir qualquer pedido
+const dbReady = initDatabase().catch((err) => {
+  console.error('[Turso] Falha na inicialização da tabela:', err);
+});
+
+// ---------------------------------------------------------------------------
+// Handler principal (async) — exportado para a Vercel e usado localmente
+// ---------------------------------------------------------------------------
+async function handler(req, res) {
+  // Aguarda DB estar pronto (na Vercel isso já terá sido resolvido antes)
+  await dbReady;
+
+  res.setHeader('Access-Control-Allow-Origin',  '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -101,340 +81,311 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  const base = `http://${req.headers.host || 'localhost'}`;
+  const url  = new URL(req.url, base);
 
-  // ---------------------------------------------------------------------------
-  // POST /sync -> Sincronizacao dos cliques
-  // ---------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  // POST /sync → Sincronização dos cliques
+  // -------------------------------------------------------------------------
   if (req.method === 'POST' && url.pathname === '/sync') {
     let body = '';
-    req.on('data', chunk => {
-      body += chunk;
-      if (body.length > 64 * 1024) req.destroy();
-    });
+    await new Promise((resolve, reject) => {
+      req.on('data', (chunk) => {
+        body += chunk;
+        if (body.length > 64 * 1024) { req.destroy(); reject(new Error('Payload too large')); }
+      });
+      req.on('end',   resolve);
+      req.on('error', reject);
+    }).catch(() => {});
 
-    req.on('end', () => {
-      try {
-        const data = JSON.parse(body);
-        let { nickname, clicks_hoje, clicks_totais } = data;
+    try {
+      const data = JSON.parse(body);
+      let { nickname, clicks_hoje, clicks_totais } = data;
 
-        if (!nickname || typeof nickname !== 'string') {
-          nickname = 'Jogador_Anonimo';
-        }
-        nickname = nickname.trim().substring(0, 32);
-        clicks_hoje = Number(clicks_hoje) || 0;
-        clicks_totais = Number(clicks_totais) || 0;
+      if (!nickname || typeof nickname !== 'string') nickname = 'Jogador_Anonimo';
+      nickname      = nickname.trim().replace(/['"\\]/g, '').substring(0, 32);
+      clicks_hoje   = Number(clicks_hoje)   || 0;
+      clicks_totais = Number(clicks_totais) || 0;
 
-        // 1. Armazena no objeto em memoria
-        const nowFormatted = new Date().toLocaleString('pt-BR');
-        playersStore.set(nickname, {
-          nickname,
-          clicks_hoje,
-          clicks_totais,
-          updated_at: nowFormatted
-        });
+      const updatedAt = new Date().toLocaleString('pt-BR');
 
-        // 2. Persiste no banco de dados SQLite
-        stmtUpsert.run(nickname, clicks_hoje, clicks_totais);
-        console.log(`[SYNC] ${new Date().toLocaleTimeString()} - '${nickname}' | Hoje: ${clicks_hoje} | Total: ${clicks_totais} (Jogadores: ${playersStore.size})`);
+      await db.execute({
+        sql: `
+          INSERT INTO players (nickname, clicks_hoje, clicks_totais, updated_at)
+          VALUES (?, ?, ?, ?)
+          ON CONFLICT(nickname) DO UPDATE SET
+            clicks_hoje   = excluded.clicks_hoje,
+            clicks_totais = excluded.clicks_totais,
+            updated_at    = excluded.updated_at
+        `,
+        args: [nickname, clicks_hoje, clicks_totais, updatedAt],
+      });
 
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true, nickname, clicks_hoje, clicks_totais }));
-      } catch (err) {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Payload invalido' }));
-      }
-    });
+      console.log(`[SYNC] '${nickname}' | Hoje: ${clicks_hoje} | Total: ${clicks_totais}`);
+
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, nickname, clicks_hoje, clicks_totais }));
+    } catch (err) {
+      console.error('[SYNC] Erro:', err.message);
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'Payload invalido ou erro de DB' }));
+    }
     return;
   }
 
-  // ---------------------------------------------------------------------------
-  // Servir arquivos estaticos da pasta 'public' (ex: /fundo.gif)
-  // ---------------------------------------------------------------------------
-  const publicDir = path.join(__dirname, 'public');
-  const safePath = path.normalize(url.pathname).replace(/^(\.\.[\/\\])+/, '');
+  // -------------------------------------------------------------------------
+  // Servir ficheiros estáticos da pasta 'public' (GIFs, etc.)
+  // -------------------------------------------------------------------------
+  const publicDir      = path.join(__dirname, 'public');
+  const safePath       = path.normalize(url.pathname).replace(/^(\.\.[\\/])+/, '');
   const publicFilePath = path.join(publicDir, safePath);
-  if ((req.method === 'GET' || req.method === 'HEAD') && fs.existsSync(publicFilePath) && fs.statSync(publicFilePath).isFile()) {
-    const ext = path.extname(publicFilePath).toLowerCase();
+
+  if ((req.method === 'GET' || req.method === 'HEAD') &&
+      fs.existsSync(publicFilePath) && fs.statSync(publicFilePath).isFile()) {
     const mimeTypes = {
-      '.gif': 'image/gif',
-      '.png': 'image/png',
-      '.jpg': 'image/jpeg',
-      '.jpeg': 'image/jpeg',
-      '.svg': 'image/svg+xml',
-      '.css': 'text/css',
-      '.js': 'application/javascript',
+      '.gif': 'image/gif', '.png': 'image/png', '.jpg': 'image/jpeg',
+      '.svg': 'image/svg+xml', '.css': 'text/css', '.js': 'application/javascript',
       '.ico': 'image/x-icon'
     };
+    const ext  = path.extname(publicFilePath).toLowerCase();
     const stat = fs.statSync(publicFilePath);
     res.writeHead(200, {
-      'Content-Type': mimeTypes[ext] || 'application/octet-stream',
+      'Content-Type':   mimeTypes[ext] || 'application/octet-stream',
       'Content-Length': stat.size
     });
     if (req.method === 'HEAD') return res.end();
     return res.end(fs.readFileSync(publicFilePath));
   }
 
-  // ---------------------------------------------------------------------------
-  // GET/HEAD /bg-left.gif ou /gkeFN9gA4sx... -> GIF Esquerda (Tung Tung Sahur)
-  // ---------------------------------------------------------------------------
-  if ((req.method === 'GET' || req.method === 'HEAD') &&
-      (url.pathname === '/bg-left.gif' || url.pathname.includes('gkeFN9gA4sx'))) {
-    const imgPath = path.join(__dirname, 'bg-left.gif');
-    if (fs.existsSync(imgPath)) {
-      const stat = fs.statSync(imgPath);
-      res.writeHead(200, {
-        'Content-Type': 'image/gif',
-        'Content-Length': stat.size
-      });
-      if (req.method === 'HEAD') return res.end();
-      return res.end(fs.readFileSync(imgPath));
+  // -------------------------------------------------------------------------
+  // GET /bg-left.gif, /bg-right.gif, /background.gif
+  // -------------------------------------------------------------------------
+  const gifRoutes = {
+    '/bg-left.gif':    'bg-left.gif',
+    '/bg-right.gif':   'bg-right.gif',
+    '/background.gif': 'bg-left.gif',
+  };
+  for (const [route, file] of Object.entries(gifRoutes)) {
+    if ((req.method === 'GET' || req.method === 'HEAD') && url.pathname === route) {
+      const imgPath = path.join(__dirname, file);
+      if (fs.existsSync(imgPath)) {
+        const stat = fs.statSync(imgPath);
+        res.writeHead(200, { 'Content-Type': 'image/gif', 'Content-Length': stat.size });
+        if (req.method === 'HEAD') return res.end();
+        return res.end(fs.readFileSync(imgPath));
+      }
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      return res.end('Imagem nao encontrada');
     }
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    return res.end('Imagem nao encontrada');
   }
 
-  // ---------------------------------------------------------------------------
-  // GET/HEAD /bg-right.gif ou /uooPxAQnt1j... -> GIF Direita (Triple T)
-  // ---------------------------------------------------------------------------
-  if ((req.method === 'GET' || req.method === 'HEAD') &&
-      (url.pathname === '/bg-right.gif' || url.pathname.includes('uooPxAQnt1j'))) {
-    const imgPath = path.join(__dirname, 'bg-right.gif');
-    if (fs.existsSync(imgPath)) {
-      const stat = fs.statSync(imgPath);
-      res.writeHead(200, {
-        'Content-Type': 'image/gif',
-        'Content-Length': stat.size
-      });
-      if (req.method === 'HEAD') return res.end();
-      return res.end(fs.readFileSync(imgPath));
-    }
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    return res.end('Imagem nao encontrada');
-  }
-
-  // ---------------------------------------------------------------------------
-  // GET/HEAD /background.gif -> Fundo animado legado
-  // ---------------------------------------------------------------------------
-  if ((req.method === 'GET' || req.method === 'HEAD') && url.pathname === '/background.gif') {
-    const imgPath = path.join(__dirname, 'bg-left.gif');
-    if (fs.existsSync(imgPath)) {
-      const stat = fs.statSync(imgPath);
-      res.writeHead(200, {
-        'Content-Type': 'image/gif',
-        'Content-Length': stat.size
-      });
-      if (req.method === 'HEAD') return res.end();
-      return res.end(fs.readFileSync(imgPath));
-    }
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    return res.end('Imagem nao encontrada');
-  }
-
-  // ---------------------------------------------------------------------------
-  // GET /ranking -> Interface Web do Ranking
-  // ---------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  // GET / ou /ranking → Interface Web HTML
+  // -------------------------------------------------------------------------
   if (req.method === 'GET' && (url.pathname === '/ranking' || url.pathname === '/')) {
     try {
-      const htmlPath = path.join(__dirname, 'ranking.html');
-      const html = fs.readFileSync(htmlPath, 'utf8');
+      const html = fs.readFileSync(path.join(__dirname, 'ranking.html'), 'utf8');
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(html);
-    } catch (err) {
+    } catch {
       res.writeHead(500, { 'Content-Type': 'text/plain' });
       res.end('Erro ao carregar ranking.html');
     }
     return;
   }
 
-  // ---------------------------------------------------------------------------
-  // GET /api/ranking -> API REST JSON para o auto-refresh com multiplos jogadores
-  // ---------------------------------------------------------------------------
+  // -------------------------------------------------------------------------
+  // GET /api/ranking → API JSON com ranking ordenado
+  // -------------------------------------------------------------------------
   if (req.method === 'GET' && url.pathname === '/api/ranking') {
     try {
-      const allPlayers = Array.from(playersStore.values());
+      const [todayResult, totalResult] = await Promise.all([
+        db.execute({
+          sql:  'SELECT nickname, clicks_hoje, clicks_totais, updated_at FROM players ORDER BY clicks_hoje  DESC LIMIT 50',
+          args: [],
+        }),
+        db.execute({
+          sql:  'SELECT nickname, clicks_hoje, clicks_totais, updated_at FROM players ORDER BY clicks_totais DESC LIMIT 50',
+          args: [],
+        }),
+      ]);
 
-      const topToday = [...allPlayers]
-        .sort((a, b) => b.clicks_hoje - a.clicks_hoje)
-        .slice(0, 50);
-
-      const topTotal = [...allPlayers]
-        .sort((a, b) => b.clicks_totais - a.clicks_totais)
-        .slice(0, 50);
+      const mapRow = (r) => ({
+        nickname:      String(r.nickname),
+        clicks_hoje:   Number(r.clicks_hoje),
+        clicks_totais: Number(r.clicks_totais),
+        updated_at:    String(r.updated_at),
+      });
 
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ top_today: topToday, top_total: topTotal }));
+      res.end(JSON.stringify({
+        top_today: todayResult.rows.map(mapRow),
+        top_total: totalResult.rows.map(mapRow),
+      }));
     } catch (err) {
+      console.error('[API/RANKING] Erro:', err.message);
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Falha ao buscar dados' }));
     }
     return;
   }
 
-  // ---------------------------------------------------------------------------
-  // GET/DELETE /api/admin/delete/:nickname?senha=1234 -> Deleta jogador do ranking
-  // ---------------------------------------------------------------------------
-  if ((req.method === 'GET' || req.method === 'DELETE') && url.pathname.startsWith('/api/admin/delete/')) {
-    const rawNickname = url.pathname.slice('/api/admin/delete/'.length);
-    const nickname = decodeURIComponent(rawNickname).trim();
-    const senha = url.searchParams.get('senha');
-    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234';
+  // -------------------------------------------------------------------------
+  // GET/DELETE /api/admin/delete/:nickname?senha=... → Remove jogador
+  // -------------------------------------------------------------------------
+  if ((req.method === 'GET' || req.method === 'DELETE') &&
+      url.pathname.startsWith('/api/admin/delete/')) {
 
-    if (senha !== ADMIN_PASSWORD) {
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234';
+    if (url.searchParams.get('senha') !== ADMIN_PASSWORD) {
       res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ error: 'Acesso negado: senha incorreta ou ausente (?senha=1234)' }));
+      res.end(JSON.stringify({ error: 'Acesso negado: senha incorreta ou ausente (?senha=...)' }));
       return;
     }
 
+    const nickname = decodeURIComponent(url.pathname.slice('/api/admin/delete/'.length)).trim();
     if (!nickname) {
       res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ error: 'Nickname não informado na URL' }));
+      res.end(JSON.stringify({ error: 'Nickname nao informado' }));
       return;
     }
 
     try {
-      const existedInMem = playersStore.has(nickname);
-      playersStore.delete(nickname);
-      const dbResult = stmtDelete.run(nickname);
+      const result = await db.execute({
+        sql:  'DELETE FROM players WHERE nickname = ?',
+        args: [nickname],
+      });
 
-      console.log(`[ADMIN] Jogador '${nickname}' removido por admin. (Memória: ${existedInMem}, SQLite afetados: ${dbResult.changes})`);
+      console.log(`[ADMIN DELETE] '${nickname}' removido. Linhas afetadas: ${result.rowsAffected}`);
 
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({
-        success: true,
-        message: `Jogador '${nickname}' foi completamente removido do ranking!`,
-        removido_memoria: existedInMem,
-        removido_sqlite: dbResult.changes > 0,
-        jogadores_restantes: playersStore.size
+        success:         true,
+        message:         `Jogador '${nickname}' removido!`,
+        removido_sqlite: result.rowsAffected > 0,
       }));
     } catch (err) {
-      console.error('[ADMIN] Erro ao deletar jogador:', err);
+      console.error('[ADMIN DELETE] Erro:', err.message);
       res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({ error: 'Erro interno ao excluir jogador' }));
     }
     return;
   }
 
-  // ---------------------------------------------------------------------------
-  // GET/POST /api/admin/merge/:oldName/:newName?senha=1234 -> Funde cliques de 2 contas
-  // ---------------------------------------------------------------------------
-  if ((req.method === 'GET' || req.method === 'POST') && url.pathname.startsWith('/api/admin/merge/')) {
-    const pathParts = url.pathname.slice('/api/admin/merge/'.length).split('/').filter(Boolean);
-    const oldName = decodeURIComponent(pathParts[0] || '').trim();
-    const newName = decodeURIComponent(pathParts[1] || '').trim();
-    const senha = url.searchParams.get('senha');
-    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234';
+  // -------------------------------------------------------------------------
+  // GET/POST /api/admin/merge/:oldName/:newName?senha=... → Funde 2 contas
+  // -------------------------------------------------------------------------
+  if ((req.method === 'GET' || req.method === 'POST') &&
+      url.pathname.startsWith('/api/admin/merge/')) {
 
-    if (senha !== ADMIN_PASSWORD) {
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234';
+    if (url.searchParams.get('senha') !== ADMIN_PASSWORD) {
       res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ error: 'Acesso negado: senha incorreta ou ausente (?senha=1234)' }));
+      res.end(JSON.stringify({ error: 'Acesso negado: senha incorreta ou ausente (?senha=...)' }));
       return;
     }
+
+    const parts   = url.pathname.slice('/api/admin/merge/'.length).split('/').filter(Boolean);
+    const oldName = decodeURIComponent(parts[0] || '').trim();
+    const newName = decodeURIComponent(parts[1] || '').trim();
 
     if (!oldName || !newName) {
       res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ error: 'Parâmetros incompletos. Formato esperado: /api/admin/merge/:oldName/:newName?senha=1234' }));
+      res.end(JSON.stringify({ error: 'Formato: /api/admin/merge/:oldName/:newName?senha=...' }));
       return;
     }
-
     if (oldName.toLowerCase() === newName.toLowerCase()) {
       res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ error: 'oldName e newName não podem ser o mesmo jogador' }));
+      res.end(JSON.stringify({ error: 'oldName e newName nao podem ser iguais' }));
       return;
     }
 
     try {
-      const oldPlayerDb = stmtGetPlayer.get(oldName);
-      const newPlayerDb = stmtGetPlayer.get(newName);
-      const oldPlayerMem = playersStore.get(oldName);
-      const newPlayerMem = playersStore.get(newName);
+      const [oldRes, newRes] = await Promise.all([
+        db.execute({ sql: 'SELECT clicks_hoje, clicks_totais FROM players WHERE nickname = ?', args: [oldName] }),
+        db.execute({ sql: 'SELECT clicks_hoje, clicks_totais FROM players WHERE nickname = ?', args: [newName] }),
+      ]);
 
-      if (!oldPlayerDb && !oldPlayerMem) {
+      const oldRow = oldRes.rows[0];
+      if (!oldRow) {
         res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
-        res.end(JSON.stringify({ error: `Jogador antigo '${oldName}' não foi encontrado no ranking.` }));
+        res.end(JSON.stringify({ error: `Jogador '${oldName}' nao encontrado` }));
         return;
       }
+      const newRow = newRes.rows[0];
 
-      const oldHoje = Math.max(
-        oldPlayerMem ? Number(oldPlayerMem.clicks_hoje) || 0 : 0,
-        oldPlayerDb ? Number(oldPlayerDb.clicks_hoje) || 0 : 0
-      );
-      const oldTotal = Math.max(
-        oldPlayerMem ? Number(oldPlayerMem.clicks_totais) || 0 : 0,
-        oldPlayerDb ? Number(oldPlayerDb.clicks_totais) || 0 : 0
-      );
+      const mergedHoje  = Number(oldRow.clicks_hoje)   + (newRow ? Number(newRow.clicks_hoje)   : 0);
+      const mergedTotal = Number(oldRow.clicks_totais)  + (newRow ? Number(newRow.clicks_totais) : 0);
+      const updatedAt   = new Date().toLocaleString('pt-BR');
 
-      const newHojeExisting = Math.max(
-        newPlayerMem ? Number(newPlayerMem.clicks_hoje) || 0 : 0,
-        newPlayerDb ? Number(newPlayerDb.clicks_hoje) || 0 : 0
-      );
-      const newTotalExisting = Math.max(
-        newPlayerMem ? Number(newPlayerMem.clicks_totais) || 0 : 0,
-        newPlayerDb ? Number(newPlayerDb.clicks_totais) || 0 : 0
-      );
+      // Transação atómica: UPSERT no novo nick + DELETE no antigo
+      await db.batch([
+        {
+          sql:  `
+            INSERT INTO players (nickname, clicks_hoje, clicks_totais, updated_at)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(nickname) DO UPDATE SET
+              clicks_hoje   = excluded.clicks_hoje,
+              clicks_totais = excluded.clicks_totais,
+              updated_at    = excluded.updated_at
+          `,
+          args: [newName, mergedHoje, mergedTotal, updatedAt],
+        },
+        { sql: 'DELETE FROM players WHERE nickname = ?', args: [oldName] },
+      ], 'write');
 
-      const mergedHoje = newHojeExisting + oldHoje;
-      const mergedTotal = newTotalExisting + oldTotal;
-
-      // 1. Transação SQLite: UPSERT com a soma no newName e DELETE no oldName
-      db.exec('BEGIN');
-      try {
-        stmtUpsert.run(newName, mergedHoje, mergedTotal);
-        stmtDelete.run(oldName);
-        db.exec('COMMIT');
-      } catch (txErr) {
-        try { db.exec('ROLLBACK'); } catch (_) {}
-        throw txErr;
-      }
-
-      // 2. Atualiza memória (playersStore)
-      const nowFormatted = new Date().toLocaleString('pt-BR');
-      playersStore.set(newName, {
-        nickname: newName,
-        clicks_hoje: mergedHoje,
-        clicks_totais: mergedTotal,
-        updated_at: nowFormatted
-      });
-      playersStore.delete(oldName);
-
-      console.log(`[ADMIN MERGE] '${oldName}' fundido em '${newName}'. Hoje: ${mergedHoje} (+${oldHoje}), Total: ${mergedTotal} (+${oldTotal}).`);
+      console.log(`[ADMIN MERGE] '${oldName}' → '${newName}'. Total: ${mergedTotal}`);
 
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({
         success: true,
-        message: `Cliques de '${oldName}' foram fundidos com sucesso em '${newName}'!`,
-        merged: {
-          nickname: newName,
-          clicks_hoje: mergedHoje,
-          clicks_totais: mergedTotal,
-          adicionados_hoje: oldHoje,
-          adicionados_total: oldTotal
-        },
+        message: `Cliques de '${oldName}' fundidos em '${newName}'!`,
+        merged:  { nickname: newName, clicks_hoje: mergedHoje, clicks_totais: mergedTotal },
         old_player_removido: oldName,
-        jogadores_restantes: playersStore.size
       }));
     } catch (err) {
-      console.error('[ADMIN MERGE] Erro ao fundir jogadores:', err);
+      console.error('[ADMIN MERGE] Erro:', err.message);
       res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({ error: 'Erro interno ao fundir jogadores' }));
     }
     return;
   }
 
+  // -------------------------------------------------------------------------
+  // 404 fallback
+  // -------------------------------------------------------------------------
   res.writeHead(404, { 'Content-Type': 'text/plain' });
   res.end('Rota nao encontrada. Acesse /ranking');
-});
+}
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`[RankingServer] ONLINE — porta ${PORT} (0.0.0.0)`);
-  console.log(`[RankingServer] Ranking: http://localhost:${PORT}/ranking`);
-  console.log(`[RankingServer] Node.js ${process.version} | PID ${process.pid}`);
-});
+// ---------------------------------------------------------------------------
+// Exporta para Vercel (serverless function)
+// ---------------------------------------------------------------------------
+module.exports = handler;
 
-server.on('error', (err) => {
-  console.error('[RankingServer] Falha ao iniciar servidor:', err.message);
-  if (err.code === 'EADDRINUSE') {
-    console.error(`[RankingServer] Porta ${PORT} ja esta em uso. Defina a variavel PORT no Render.`);
-  }
-  process.exit(1);
-});
+// ---------------------------------------------------------------------------
+// Servidor HTTP local (ignorado pela Vercel, usado em desenvolvimento)
+// ---------------------------------------------------------------------------
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  const server = http.createServer((req, res) => {
+    handler(req, res).catch((err) => {
+      console.error('[Handler Error]', err);
+      if (!res.headersSent) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Internal Server Error' }));
+      }
+    });
+  });
+
+  server.on('error', (err) => {
+    console.error('[Server Error]', err.message);
+    if (err.code === 'EADDRINUSE') console.error(`Porta ${PORT} em uso.`);
+    process.exit(1);
+  });
+
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`[RankingServer] ONLINE — porta ${PORT}`);
+    console.log(`[RankingServer] Node.js ${process.version} | PID ${process.pid}`);
+  });
+}
