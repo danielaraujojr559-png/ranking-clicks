@@ -4,18 +4,45 @@
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 
-// Inicializa SQLite nativo (node:sqlite do Node 24)
+// ---------------------------------------------------------------------------
+// Guardas de processo: impedem que erros não capturados derrubem o servidor
+// ---------------------------------------------------------------------------
+process.on('uncaughtException', (err) => {
+  console.error('[FATAL] Erro nao capturado — servidor MANTIDO em pé:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('[FATAL] Promise rejeitada sem catch — servidor MANTIDO em pé:', reason);
+});
+
+// ---------------------------------------------------------------------------
+// Inicializa SQLite nativo (node:sqlite, requer Node >= 22.5 + flag --experimental-sqlite)
+// No Render (plano gratuito) o sistema de ficheiros do projeto é efémero após deploy.
+// O /tmp é o único diretório com persistência garantida entre cold starts no mesmo container.
+// ---------------------------------------------------------------------------
 let db;
 try {
   const { DatabaseSync } = require('node:sqlite');
-  const dbPath = path.join(__dirname, 'ranking.db');
+
+  // Usa /tmp no ambiente de produção (Render) ou __dirname localmente
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.RENDER;
+  const dbDir  = isProduction ? '/tmp' : __dirname;
+  const dbPath = path.join(dbDir, 'ranking.db');
+
+  console.log(`[SQLite] Modo: ${isProduction ? 'Producao (Render /tmp)' : 'Local (__dirname)'}`);
+  console.log(`[SQLite] Caminho do banco: ${dbPath}`);
+
   db = new DatabaseSync(dbPath);
-  console.log(`[SQLite] Conectado em: ${dbPath}`);
+  console.log('[SQLite] Conectado com sucesso.');
 } catch (err) {
-  console.error('[ERRO] Falha ao carregar SQLite:', err);
+  console.error('[ERRO CRITICO] Falha ao inicializar SQLite:', err.message);
+  console.error('[ERRO CRITICO] Verifique se o Node.js >= 22.5 e se a flag --experimental-sqlite esta ativa.');
   process.exit(1);
 }
+
+
+
 
 // Cria tabela e indices
 db.exec(`
@@ -399,5 +426,15 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`[RankingServer] Rodando em http://localhost:${PORT}/ranking`);
+  console.log(`[RankingServer] ONLINE — porta ${PORT} (0.0.0.0)`);
+  console.log(`[RankingServer] Ranking: http://localhost:${PORT}/ranking`);
+  console.log(`[RankingServer] Node.js ${process.version} | PID ${process.pid}`);
+});
+
+server.on('error', (err) => {
+  console.error('[RankingServer] Falha ao iniciar servidor:', err.message);
+  if (err.code === 'EADDRINUSE') {
+    console.error(`[RankingServer] Porta ${PORT} ja esta em uso. Defina a variavel PORT no Render.`);
+  }
+  process.exit(1);
 });

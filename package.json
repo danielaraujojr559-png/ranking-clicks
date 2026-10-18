@@ -4,7 +4,10 @@
   "description": "Servidor de Ranking para o projeto 'Por que Voce Nao Para de Clicar um Pouco'",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node --experimental-sqlite server.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
   },
   "keywords": [
     "gaming",
