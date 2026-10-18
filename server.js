@@ -25,8 +25,8 @@ const { createClient } = require('@libsql/client');
 
 let db;
 try {
-  const dbUrl   = process.env.TURSO_DATABASE_URL;
-  const dbToken = process.env.TURSO_AUTH_TOKEN;
+  let dbUrl   = (process.env.TURSO_DATABASE_URL || '').trim().replace(/[^\x20-\x7E]/g, '');
+  let dbToken = (process.env.TURSO_AUTH_TOKEN || '').trim().replace(/[^\x20-\x7E]/g, '');
 
   if (!dbUrl) {
     throw new Error('TURSO_DATABASE_URL não definida. Adicione no painel da Vercel / .env local.');
@@ -36,7 +36,7 @@ try {
     url:       dbUrl,
     authToken: dbToken || undefined,
   });
-  console.log('[Turso] Cliente libSQL criado. URL:', dbUrl.split('@').pop()); // não loga o token
+  console.log('[Turso] Cliente libSQL criado com sucesso.');
 } catch (err) {
   console.error('[ERRO CRITICO] Falha ao criar cliente libSQL:', err.message);
   process.exit(1);
@@ -83,6 +83,19 @@ async function handler(req, res) {
 
   const base = `http://${req.headers.host || 'localhost'}`;
   const url  = new URL(req.url, base);
+  
+  // Extrai o caminho real (suporta query path=$1 do vercel.json, headers ou URL nativa)
+  let rawPath = url.searchParams.get('path');
+  let pathname = url.pathname;
+  if (rawPath !== null && rawPath !== undefined) {
+    pathname = rawPath.startsWith('/') ? rawPath : '/' + rawPath;
+  } else if (req.headers['x-matched-path']) {
+    pathname = req.headers['x-matched-path'];
+  } else if (req.headers['x-forwarded-url']) {
+    pathname = new URL(req.headers['x-forwarded-url'], base).pathname;
+  }
+  url.pathname = pathname;
+  console.log(`[REQ] ${req.method} raw: ${req.url} -> resolved pathname: ${pathname}`);
 
   // -------------------------------------------------------------------------
   // POST /sync → Sincronização dos cliques
