@@ -779,30 +779,43 @@ html, body {
 .vista-bar-label {
   position: relative;
   z-index: 2;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-segoe);
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 800;
   color: #042407;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
   margin-left: 8px;
 }
 
 .lcd-vitrificado {
-  display: inline-block;
-  padding: 3px 8px;
-  background: linear-gradient(180deg, #021a30 0%, #000e1c 100%);
-  border: 1px solid #005599;
-  border-radius: 4px;
-  color: #00ff66;
-  font-family: 'Courier New', monospace;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 12px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(215, 240, 255, 0.78) 48%, rgba(160, 215, 255, 0.84) 50%, rgba(195, 235, 255, 0.95) 100%);
+  border: 1px solid #58b2e8;
+  color: #003366;
+  font-family: var(--font-segoe);
+  font-weight: 800;
   font-size: 12px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 255, 102, 0.3);
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 1px 1px #ffffff, inset 0 -1px 2px rgba(0, 80, 160, 0.15), 0 2px 5px rgba(0, 50, 120, 0.12);
+  transition: all 0.15s ease;
+}
+
+.lcd-vitrificado:hover {
+  background: linear-gradient(180deg, #ffffff 0%, rgba(225, 245, 255, 0.90) 48%, rgba(180, 230, 255, 0.95) 50%, rgba(215, 245, 255, 1) 100%);
+  border-color: #0099ff;
+  box-shadow: 0 0 8px rgba(0, 168, 255, 0.5), inset 0 1px 2px #ffffff;
 }
 
 .lcd-vitrificado.secundario {
-  color: #7ce8ff;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 229, 255, 0.3);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(220, 242, 255, 0.78) 48%, rgba(170, 222, 255, 0.84) 50%, rgba(205, 238, 255, 0.95) 100%);
+  border: 1px solid #6cbded;
+  color: #002b55;
+  box-shadow: inset 0 1px 1px #ffffff, inset 0 -1px 2px rgba(0, 80, 160, 0.15), 0 2px 4px rgba(0, 50, 120, 0.10);
 }
 
 /* Barra de Status Inferior */
@@ -989,13 +1002,16 @@ html, body {
 }
 
 .track-badge {
-  font-size: 10.5px;
-  padding: 3px 8px;
-  background: #021a30;
-  color: #00ff66;
-  border-radius: 4px;
-  font-family: 'Courier New', monospace;
-  font-weight: 700;
+  font-size: 11px;
+  padding: 3px 10px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(215, 240, 255, 0.78) 48%, rgba(160, 215, 255, 0.84) 50%, rgba(195, 235, 255, 0.95) 100%);
+  border: 1px solid #58b2e8;
+  color: #003366;
+  border-radius: 12px;
+  font-family: var(--font-segoe);
+  font-weight: 800;
+  box-shadow: inset 0 1px 1px #ffffff, 0 1px 3px rgba(0, 50, 120, 0.12);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* Responsividade */
