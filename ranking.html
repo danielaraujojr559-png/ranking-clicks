@@ -1331,15 +1331,20 @@ html, body {
 
 <script>
 /* =============================================================================
-   1. SISTEMA DE WALLPAPERS 100% AUTOMÁTICO (ROTAÇÃO A CADA 30 SEGUNDOS)
-   Alterna suavemente com transição cross-fade entre os 5 papéis de parede Frutiger Aero.
+   1. SISTEMA DE WALLPAPERS 100% AUTOMÁTICO (ROTAÇÃO A CADA 15 SEGUNDOS)
+   Alterna suavemente com transição cross-fade entre os 10 papéis de parede Frutiger Aero.
    ============================================================================= */
 const WALLPAPERS = [
   { name: 'Sunflowers & Blue Sky', url: '/wp_sunflowers.jpg' },
+  { name: 'Laptop & Butterfly Utopia', url: '/wp_laptop_butterfly.jpg' },
   { name: 'Ladybug on Fresh Green Grass', url: '/wp_ladybug.jpg' },
+  { name: 'Daisies, Signpost & Balloons', url: '/wp_daisy_balloons.jpg' },
   { name: 'Asadal Mobile & Eco Utopia', url: '/wp_asadal_phone.jpg' },
+  { name: 'City, Sunflower & Airplane', url: '/wp_city_sunflower.jpg' },
   { name: 'Dew Drops, Bubbles & Butterfly', url: '/wp_butterfly_dew.jpg' },
-  { name: 'Coastal City & Azure Waters', url: '/wp_coastal_city.jpg' }
+  { name: 'Snail, Tree & Sunbeams', url: '/wp_snail_sunbeams.jpg' },
+  { name: 'Coastal City & Azure Waters', url: '/wp_coastal_city.jpg' },
+  { name: 'Country Prairie, Farm & Tree', url: '/wp_country_tree.jpg' }
 ];
 
 let currentWpIndex = 0;
@@ -1374,9 +1379,9 @@ function autoRotateWallpaper() {
   }
 }
 
-// Inicia no primeiro wallpaper e troca automaticamente a cada 30 segundos (30.000 ms)
+// Inicia no primeiro wallpaper e troca automaticamente a cada 15 segundos (15.000 ms)
 pickInitialWallpaper();
-setInterval(autoRotateWallpaper, 30000);
+setInterval(autoRotateWallpaper, 15000);
 
 /* =============================================================================
    2. EFEITOS SONOROS DE CLIQUE E FEEDBACK TÁTIL
@@ -1620,13 +1625,20 @@ function loadTrack(index, autoPlay = true) {
 function startPlayback() {
   initWebAudioEngine();
   if (webAudioCtx && webAudioCtx.state === 'suspended') {
-    webAudioCtx.resume();
+    webAudioCtx.resume().catch(() => {});
   }
 
   isAudioPlaying = true;
   updatePlayPauseUI(true);
 
-  audioEl.play().catch(() => {});
+  const p = audioEl.play();
+  if (p !== undefined) {
+    p.then(() => {
+      updatePlayPauseUI(true);
+    }).catch(err => {
+      console.log('Autoplay aguardando interação inicial do usuário:', err);
+    });
+  }
 
   if (timerInterval) clearInterval(timerInterval);
   timerInterval = setInterval(() => {
@@ -1959,11 +1971,34 @@ function countdownTick() {
   }
 }
 
+function initAutoplayOnEntry() {
+  loadTrack(0, true);
+
+  // Fallback para políticas de autoplay estritas dos navegadores
+  const unlockAudio = () => {
+    if (!isAudioPlaying) {
+      startPlayback();
+    } else if (webAudioCtx && webAudioCtx.state === 'suspended') {
+      webAudioCtx.resume().catch(() => {});
+    }
+    ['click', 'touchstart', 'keydown', 'scroll', 'pointerdown'].forEach(ev => {
+      window.removeEventListener(ev, unlockAudio, { capture: true });
+    });
+  };
+
+  ['click', 'touchstart', 'keydown', 'scroll', 'pointerdown'].forEach(ev => {
+    window.addEventListener(ev, unlockAudio, { capture: true, once: true });
+  });
+}
+
 // Inicializações ao carregar o DOM
 document.addEventListener('DOMContentLoaded', () => {
   renderFullPlaylistView();
   fetchRankingData();
   setInterval(countdownTick, 1000);
+
+  // Inicia a música e ambiência de mar imediatamente ao entrar
+  initAutoplayOnEntry();
 
   // Efeitos sonoros de clique adicionados a todos os botões e links
   const clickElements = document.querySelectorAll('button, a, .win7-btn');
