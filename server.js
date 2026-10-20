@@ -147,10 +147,10 @@ async function handler(req, res) {
   }
 
   // -------------------------------------------------------------------------
-  // GET /download ou /MouseClickCounter.exe → Download do executável C++
+  // GET /download, /download/MouseClickCounter.exe ou /MouseClickCounter.exe → Download do executável C++
   // -------------------------------------------------------------------------
   if ((req.method === 'GET' || req.method === 'HEAD') &&
-      (url.pathname === '/download' || url.pathname === '/MouseClickCounter.exe' || url.pathname === '/public/MouseClickCounter.exe')) {
+      (url.pathname === '/download' || url.pathname === '/download/MouseClickCounter.exe' || url.pathname === '/MouseClickCounter.exe' || url.pathname === '/public/MouseClickCounter.exe')) {
     const exeCandidates = [
       path.join(__dirname, 'public', 'MouseClickCounter.exe'),
       path.join(__dirname, 'MouseClickCounter.exe'),
