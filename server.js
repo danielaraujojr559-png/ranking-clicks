@@ -8,9 +8,10 @@
 //   TURSO_AUTH_TOKEN    — token gerado no Turso CLI
 //   ADMIN_PASSWORD      — senha para rotas de admin (default: "1234")
 // =============================================================================
-const http = require('http');
-const path = require('path');
-const fs   = require('fs');
+const http  = require('http');
+const https = require('https');
+const path  = require('path');
+const fs    = require('fs');
 
 // ---------------------------------------------------------------------------
 // Guardas de processo globais
@@ -142,6 +143,65 @@ async function handler(req, res) {
       console.error('[SYNC] Erro:', err.message);
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Payload invalido ou erro de DB' }));
+    }
+    return;
+  }
+
+  // -------------------------------------------------------------------------
+  // GET /api/audio?url=... → Proxy de streaming para .mp3 do frutigeraeroarchive
+  // -------------------------------------------------------------------------
+  if (req.method === 'GET' && url.pathname === '/api/audio') {
+    let targetUrl = url.searchParams.get('url');
+    if (!targetUrl) {
+      res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end('URL de audio ausente');
+    }
+    if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+      if (targetUrl.startsWith('/')) {
+        targetUrl = 'https://frutigeraeroarchive.org' + targetUrl;
+      } else {
+        targetUrl = 'https://frutigeraeroarchive.org/' + targetUrl;
+      }
+    }
+    try {
+      const client = targetUrl.startsWith('https://') ? https : http;
+      const proxyReq = client.get(targetUrl, {
+        headers: {
+          'Referer': 'https://frutigeraeroarchive.org/music',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
+      }, (proxyRes) => {
+        if (proxyRes.statusCode >= 300 && proxyRes.statusCode < 400 && proxyRes.headers.location) {
+          const redirLoc = proxyRes.headers.location;
+          const redirClient = redirLoc.startsWith('https://') ? https : http;
+          redirClient.get(redirLoc, (redirRes) => {
+            res.writeHead(redirRes.statusCode, {
+              'Content-Type': redirRes.headers['content-type'] || 'audio/mpeg',
+              'Content-Length': redirRes.headers['content-length'] || '',
+              'Accept-Ranges': 'bytes',
+              'Cache-Control': 'public, max-age=86400',
+              'Access-Control-Allow-Origin': '*'
+            });
+            redirRes.pipe(res);
+          });
+          return;
+        }
+        res.writeHead(proxyRes.statusCode, {
+          'Content-Type': proxyRes.headers['content-type'] || 'audio/mpeg',
+          'Content-Length': proxyRes.headers['content-length'] || '',
+          'Accept-Ranges': 'bytes',
+          'Cache-Control': 'public, max-age=86400',
+          'Access-Control-Allow-Origin': '*'
+        });
+        proxyRes.pipe(res);
+      });
+      proxyReq.on('error', (err) => {
+        res.writeHead(502, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.end('Erro ao buscar audio remoto: ' + err.message);
+      });
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Erro interno no proxy: ' + e.message);
     }
     return;
   }
