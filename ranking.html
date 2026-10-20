@@ -48,15 +48,16 @@ html, body {
   color: #1a2a3a;
 }
 
-/* ── 1. CENÁRIO EM TELA CHEIA (NATUREZA HIPER-REALISTA & ARTWORK FRUTIGER AERO) ─ */
+/* ── 1. CENÁRIO EM TELA CHEIA (WALLPAPER ASADAL 1920x1080 HD MASTER EM ALTA DEFINIÇÃO) ─ */
 body {
   position: relative;
   background-color: #0078D7;
   background-image:
     /* Suave feixe de luz solar superior (Lens Flare) */
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.08) 25%, transparent 60%),
-    url('/frutiger-bg.webp'),
-    url('frutiger-bg.webp'),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 25%, transparent 60%),
+    url('/frutiger-bg-hd.jpg'),
+    url('frutiger-bg-hd.jpg'),
+    url('/frutiger-bg.jpg'),
     linear-gradient(
       180deg,
       #0055b3 0%,
@@ -69,9 +70,11 @@ body {
       var(--grass-deep)   100%
     );
   background-size: cover;
-  background-position: center center;
+  background-position: center top;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
   display: flex;
   flex-direction: column;
   align-items: center;

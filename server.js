@@ -198,31 +198,40 @@ async function handler(req, res) {
     res.writeHead(200, {
       'Content-Type':   mimeTypes[ext] || 'application/octet-stream',
       'Content-Length': stat.size,
-      'Cache-Control':  ext === '.webp' || ext === '.png' || ext === '.gif' ? 'public, max-age=86400, immutable' : 'public, max-age=3600'
+      'Cache-Control':  ['.webp', '.png', '.gif', '.jpg', '.jpeg'].includes(ext) ? 'public, max-age=86400, immutable' : 'public, max-age=3600'
     });
     if (req.method === 'HEAD') return res.end();
     return res.end(fs.readFileSync(publicFilePath));
   }
 
   // -------------------------------------------------------------------------
-  // GET /frutiger-bg.webp, /background.webp → Wallpaper Frutiger Aero Oficial
+  // GET Wallpapers Frutiger Aero HD Oficial (1920x1080 / 1920x1200 / WebP)
   // -------------------------------------------------------------------------
-  if ((req.method === 'GET' || req.method === 'HEAD') &&
-      (url.pathname === '/frutiger-bg.webp' || url.pathname === '/background.webp' || url.pathname === '/public/frutiger-bg.webp')) {
+  const wallpaperRoutes = [
+    '/frutiger-bg-hd.jpg',
+    '/frutiger-bg.jpg',
+    '/frutiger-bg-1920x1080.jpg',
+    '/frutiger-bg-1920x1200.jpg',
+    '/frutiger-bg.webp',
+    '/background.webp'
+  ];
+  if ((req.method === 'GET' || req.method === 'HEAD') && wallpaperRoutes.includes(url.pathname)) {
+    const filename = path.basename(url.pathname);
     const bgCandidates = [
-      path.join(__dirname, 'public', 'frutiger-bg.webp'),
-      path.join(__dirname, 'frutiger-bg.webp'),
-      path.join(process.cwd(), 'public', 'frutiger-bg.webp'),
-      path.join(process.cwd(), 'frutiger-bg.webp'),
+      path.join(__dirname, 'public', filename),
+      path.join(__dirname, filename),
+      path.join(process.cwd(), 'public', filename),
+      path.join(process.cwd(), filename),
     ];
     let bgPath = null;
     for (const p of bgCandidates) {
       if (fs.existsSync(p)) { bgPath = p; break; }
     }
     if (bgPath) {
+      const ext = path.extname(bgPath).toLowerCase();
       const stat = fs.statSync(bgPath);
       res.writeHead(200, {
-        'Content-Type':  'image/webp',
+        'Content-Type':  ext === '.webp' ? 'image/webp' : 'image/jpeg',
         'Content-Length': stat.size,
         'Cache-Control': 'public, max-age=86400, immutable'
       });
