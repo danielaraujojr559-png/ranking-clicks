@@ -150,7 +150,7 @@ async function handler(req, res) {
   // -------------------------------------------------------------------------
   // GET /api/audio?url=... → Proxy de streaming para .mp3 do frutigeraeroarchive
   // -------------------------------------------------------------------------
-  if (req.method === 'GET' && url.pathname === '/api/audio') {
+  if ((req.method === 'GET' || req.method === 'HEAD') && url.pathname === '/api/audio') {
     let targetUrl = url.searchParams.get('url');
     if (!targetUrl) {
       res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -182,6 +182,7 @@ async function handler(req, res) {
               'Cache-Control': 'public, max-age=86400',
               'Access-Control-Allow-Origin': '*'
             });
+            if (req.method === 'HEAD') return res.end();
             redirRes.pipe(res);
           });
           return;
@@ -193,6 +194,7 @@ async function handler(req, res) {
           'Cache-Control': 'public, max-age=86400',
           'Access-Control-Allow-Origin': '*'
         });
+        if (req.method === 'HEAD') return res.end();
         proxyRes.pipe(res);
       });
       proxyReq.on('error', (err) => {
