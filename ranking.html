@@ -3,505 +3,602 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MouseClickCounter — Ranking Global (Windows Aero Edition)</title>
+<title>MouseClickCounter - Ranking Global (Windows Aero Edition)</title>
 <style>
-/* ============================================================
-   FRUTIGER AERO / WINDOWS 7 AERO GLASS — RANKING GLOBAL
-   Estética: 2006-2011 · Vista · Win7 · MSN Messenger
-   ============================================================ */
+/* =============================================================================
+   FRUTIGER AERO (2006–2011) / WINDOWS 7 AERO GLASS RANKING EXPERIENCE
+   Pure Authentic Aesthetics: Vista Aurora, Aqua Gel Buttons, Glossy Orbs,
+   Glass Reflections, Vista Green Progress Bars & Windows Status Bar.
+   ============================================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ── VARIÁVEIS ─────────────────────────────────────────────── */
-:root {
-  --sky-top:      #0055c8;
-  --sky-mid:      #38b6ff;
-  --sky-low:      #b5f2ff;
-  --grass-top:    #7ed957;
-  --grass-bot:    #28a745;
-  --aero-bg:      rgba(220,240,255,0.45);
-  --aero-border1: rgba(255,255,255,0.80);
-  --aero-border2: rgba(0,60,110,0.60);
-  --glass-shine:  linear-gradient(135deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.05) 45%,transparent 45.1%);
-  --gold:   #f5c518;
-  --silver: #c0c0c0;
-  --bronze: #cd7f32;
-  --font:   'Segoe UI','Trebuchet MS','Tahoma',sans-serif;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ── CORPO / CENÁRIO ECO-FUTURISMO ─────────────────────────── */
+:root {
+  --sky-1: #0078d7;
+  --sky-2: #38b6ff;
+  --sky-3: #b5f2ff;
+  --grass-1: #7ed957;
+  --grass-2: #28a745;
+  --font-stack: 'Segoe UI', 'Trebuchet MS', 'Tahoma', sans-serif;
+}
+
 html, body {
   min-height: 100vh;
-  font-family: var(--font);
+  font-family: var(--font-stack);
   overflow-x: hidden;
 }
 
+/* ── 1. CENÁRIO DE FUNDO (ECO-FUTURISMO BRILHANTE) ────────── */
 body {
-  background:
-    linear-gradient(
-      to bottom,
-      var(--sky-top)  0%,
-      var(--sky-mid)  40%,
-      var(--sky-low)  68%,
-      var(--grass-top) 70%,
-      var(--grass-bot) 100%
-    );
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    #0078d7 0%,
+    #38b6ff 38%,
+    #b5f2ff 62%,
+    #7ed957 68%,
+    #28a745 100%
+  );
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 28px 12px 40px;
-  position: relative;
+  padding: 24px 16px 48px;
 }
 
-/* ── AURORA DE FEIXES DIAGONAIS (SVG inline / CSS) ─────────── */
-body::before {
-  content: '';
+/* Colinas relvadas iluminadas no fundo */
+.vista-hills {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 38vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.vista-hills svg {
+  width: 100%;
+  height: 100%;
+  preserve-aspect-ratio: none;
+}
+
+/* Efeito 'Aurora do Windows Vista' (feixes diagonais luminosos e translúcidos) */
+.vista-aurora {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
   background:
-    /* Feixes de luz diagonais translúcidos */
-    linear-gradient(118deg,
+    radial-gradient(ellipse 90% 60% at 75% 25%, rgba(130, 240, 255, 0.40) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 50% at 20% 40%, rgba(170, 255, 140, 0.35) 0%, transparent 60%),
+    linear-gradient(125deg,
       transparent 0%,
-      rgba(255,255,255,.07) 15%,
-      transparent 16%,
-      transparent 30%,
-      rgba(255,255,255,.10) 42%,
-      transparent 43%,
-      transparent 60%,
-      rgba(255,255,255,.06) 71%,
-      transparent 72%
+      rgba(255, 255, 255, 0.08) 18%,
+      transparent 22%,
+      rgba(150, 235, 255, 0.18) 38%,
+      rgba(180, 255, 160, 0.14) 48%,
+      transparent 55%,
+      rgba(255, 255, 255, 0.10) 70%,
+      transparent 78%
     );
+  mix-blend-mode: screen;
 }
 
-/* ── BOLHAS DE SABÃO FLUTUANTES ─────────────────────────────── */
-.bubbles { position:fixed; inset:0; pointer-events:none; z-index:1; overflow:hidden; }
+/* ── BOLHAS DE SABÃO / ÁGUA FLUTUANTES EM CSS ────────────── */
+.bubbles-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
 
 .bubble {
   position: absolute;
-  bottom: -120px;
+  bottom: -110px;
   border-radius: 50%;
   background: radial-gradient(
-    circle at 32% 28%,
-    rgba(255,255,255,.80) 0%,
-    rgba(160,220,255,.45) 30%,
-    rgba(100,180,255,.18) 65%,
-    rgba(0,120,220,.08) 100%
+    circle at 35% 30%,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(190, 240, 255, 0.50) 30%,
+    rgba(120, 205, 255, 0.22) 65%,
+    rgba(0, 140, 240, 0.12) 100%
   );
   box-shadow:
-    inset 0 0 8px rgba(255,255,255,.6),
-    0 2px 8px rgba(0,120,220,.18);
-  animation: floatUp linear infinite;
-  opacity: .75;
+    inset 0 0 10px rgba(255, 255, 255, 0.8),
+    inset -2px -2px 6px rgba(0, 110, 220, 0.25),
+    0 4px 12px rgba(0, 90, 180, 0.20);
+  animation: floatUpAnimation linear infinite;
 }
 
-/* 14 bolhas de tamanhos/posições/durações variadas */
-.bubble:nth-child(1)  { width:28px;height:28px; left:5%;   animation-duration:12s; animation-delay:0s; }
-.bubble:nth-child(2)  { width:18px;height:18px; left:12%;  animation-duration:9s;  animation-delay:2s; }
-.bubble:nth-child(3)  { width:40px;height:40px; left:22%;  animation-duration:15s; animation-delay:1s; }
-.bubble:nth-child(4)  { width:14px;height:14px; left:35%;  animation-duration:10s; animation-delay:4s; }
-.bubble:nth-child(5)  { width:32px;height:32px; left:48%;  animation-duration:13s; animation-delay:0.5s; }
-.bubble:nth-child(6)  { width:22px;height:22px; left:58%;  animation-duration:11s; animation-delay:3s; }
-.bubble:nth-child(7)  { width:50px;height:50px; left:68%;  animation-duration:17s; animation-delay:1.5s; }
-.bubble:nth-child(8)  { width:16px;height:16px; left:78%;  animation-duration:8s;  animation-delay:5s; }
-.bubble:nth-child(9)  { width:36px;height:36px; left:88%;  animation-duration:14s; animation-delay:2.5s; }
-.bubble:nth-child(10) { width:24px;height:24px; left:94%;  animation-duration:10s; animation-delay:6s; }
-.bubble:nth-child(11) { width:20px;height:20px; left:3%;   animation-duration:16s; animation-delay:7s; }
-.bubble:nth-child(12) { width:44px;height:44px; left:43%;  animation-duration:19s; animation-delay:3.5s; }
-.bubble:nth-child(13) { width:12px;height:12px; left:72%;  animation-duration:7s;  animation-delay:1s; }
-.bubble:nth-child(14) { width:30px;height:30px; left:55%;  animation-duration:12s; animation-delay:8s; }
-
-@keyframes floatUp {
-  0%   { transform: translateY(0)   translateX(0) scale(1);    opacity:.75; }
-  25%  { transform: translateY(-25vh) translateX(12px)  scale(1.04); }
-  50%  { transform: translateY(-50vh) translateX(-8px)  scale(1.08); opacity:.6; }
-  75%  { transform: translateY(-75vh) translateX(14px)  scale(1.03); }
-  100% { transform: translateY(-105vh) translateX(0)  scale(.95); opacity:0; }
+/* Brilho branco no canto superior esquerdo (reflexo especular da bolha) */
+.bubble::after {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 28%;
+  height: 22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%);
+  transform: rotate(-35deg);
 }
 
-/* ── JANELA AERO GLASS PRINCIPAL ───────────────────────────── */
+/* Reflexo suave no canto inferior oposto */
+.bubble::before {
+  content: '';
+  position: absolute;
+  bottom: 15%;
+  right: 18%;
+  width: 22%;
+  height: 16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.55) 0%, transparent 100%);
+}
+
+.bubble:nth-child(1)  { width: 34px; height: 34px; left: 4%;  animation-duration: 13s; animation-delay: 0s; }
+.bubble:nth-child(2)  { width: 20px; height: 20px; left: 14%; animation-duration: 9s;  animation-delay: 2.5s; }
+.bubble:nth-child(3)  { width: 48px; height: 48px; left: 24%; animation-duration: 16s; animation-delay: 1.2s; }
+.bubble:nth-child(4)  { width: 16px; height: 16px; left: 36%; animation-duration: 10s; animation-delay: 4.8s; }
+.bubble:nth-child(5)  { width: 38px; height: 38px; left: 49%; animation-duration: 14s; animation-delay: 0.5s; }
+.bubble:nth-child(6)  { width: 26px; height: 26px; left: 60%; animation-duration: 11s; animation-delay: 3.2s; }
+.bubble:nth-child(7)  { width: 56px; height: 56px; left: 71%; animation-duration: 18s; animation-delay: 1.8s; }
+.bubble:nth-child(8)  { width: 18px; height: 18px; left: 82%; animation-duration: 8.5s; animation-delay: 5.5s; }
+.bubble:nth-child(9)  { width: 42px; height: 42px; left: 91%; animation-duration: 15s; animation-delay: 2.1s; }
+.bubble:nth-child(10) { width: 24px; height: 24px; left: 8%;  animation-duration: 12s; animation-delay: 7s; }
+.bubble:nth-child(11) { width: 50px; height: 50px; left: 42%; animation-duration: 17s; animation-delay: 8.5s; }
+.bubble:nth-child(12) { width: 22px; height: 22px; left: 77%; animation-duration: 10.5s; animation-delay: 6.2s; }
+
+@keyframes floatUpAnimation {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.9);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateY(-28vh) translateX(14px) scale(1.02);
+  }
+  50% {
+    transform: translateY(-56vh) translateX(-10px) scale(1.05);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translateY(-84vh) translateX(12px) scale(1.01);
+  }
+  100% {
+    transform: translateY(-115vh) translateX(0) scale(0.95);
+    opacity: 0;
+  }
+}
+
+/* ── 2. CONTENTOR PRINCIPAL: JANELA AERO GLASS DO WINDOWS 7 ─ */
 .aero-window {
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 860px;
+  max-width: 890px;
   border-radius: 8px;
-  /* Dupla borda Aero */
-  border: 1px solid var(--aero-border1);
-  outline: 1px solid var(--aero-border2);
-  outline-offset: 1px;
+
+  /* Dupla borda Aero com vidro fosco */
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background: var(--aero-bg);
+  background: rgba(220, 240, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.80);
+  outline: 1px solid rgba(0, 60, 110, 0.60);
+  outline-offset: 1px;
+
   box-shadow:
-    0  4px 32px rgba(0,60,140,.35),
-    0  1px  2px rgba(255,255,255,.60) inset,
-    0 -1px  1px rgba(0,60,110,.25) inset;
+    0 10px 40px rgba(0, 40, 100, 0.38),
+    0 2px 4px rgba(0, 30, 80, 0.20),
+    0 1px 0 rgba(255, 255, 255, 0.70) inset,
+    0 -1px 0 rgba(0, 60, 120, 0.25) inset;
   overflow: hidden;
 }
 
-/* Reflexo de vidro diagonal */
+/* Reflexo de vidro diagonal autêntico do Windows Aero */
 .aero-window::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--glass-shine);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 45%, transparent 45.1%);
   pointer-events: none;
   z-index: 2;
   border-radius: 8px;
 }
 
-/* ── BARRA DE TÍTULO WIN7 ───────────────────────────────────── */
+/* ── BARRA DE TÍTULO WINDOWS 7 AERO ───────────────────────── */
 .title-bar {
   position: relative;
   z-index: 5;
   display: flex;
   align-items: center;
-  padding: 7px 10px 7px 12px;
+  padding: 8px 12px 8px 14px;
   background: linear-gradient(
-    to bottom,
-    rgba(180,220,255,.90) 0%,
-    rgba(100,180,255,.75) 55%,
-    rgba(60,140,240,.65) 100%
+    180deg,
+    rgba(215, 238, 255, 0.85) 0%,
+    rgba(140, 200, 255, 0.70) 50%,
+    rgba(80, 160, 245, 0.65) 50.1%,
+    rgba(50, 135, 235, 0.75) 100%
   );
-  border-bottom: 1px solid rgba(0,80,160,.40);
-  box-shadow: 0 1px 0 rgba(255,255,255,.60) inset;
-  gap: 10px;
+  border-bottom: 1px solid rgba(0, 70, 140, 0.45);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset;
   user-select: none;
 }
 
-/* Ícone orbe verde-azul */
-.title-orb {
-  width: 22px; height: 22px;
-  flex-shrink: 0;
+/* Ícone de rato brilhante + orbe verde-azul */
+.title-icon-orb {
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%,
-    #ffffff 0%, #72e8ff 25%, #00b4d8 55%, #005f73 100%);
+  margin-right: 10px;
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #7bf5ff 25%, #00b4d8 55%, #004b6e 100%);
   box-shadow:
-    0 0 6px rgba(0,180,220,.8),
-    0 1px 3px rgba(0,0,0,.3),
-    inset 0 1px 2px rgba(255,255,255,.9);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px;
+    0 0 8px rgba(0, 210, 255, 0.8),
+    0 1px 3px rgba(0, 0, 0, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
 }
 
 .title-text {
   flex: 1;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: .3px;
-  text-shadow: 0 0 8px #fff, 0 0 14px #fff, 0 1px 2px rgba(0,40,100,.8);
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  text-shadow: 0 0 8px #ffffff, 0 0 12px #ffffff, 0 1px 3px rgba(0, 30, 80, 0.9);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Botões da janela Win7 */
-.win-btns { display:flex; gap:2px; flex-shrink:0; }
+/* 3 botões clássicos da janela do Windows 7 (_, □, X) */
+.win7-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 10px;
+}
 
-.win-btn {
-  width: 26px; height: 18px;
+.win7-btn {
+  width: 28px;
+  height: 19px;
   border-radius: 3px;
-  border: 1px solid rgba(0,60,110,.55);
+  border: 1px solid rgba(0, 50, 100, 0.55);
   cursor: pointer;
-  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
   font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
   color: #ffffff;
-  text-shadow: 0 1px 1px rgba(0,0,0,.5);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
   background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,.55) 0%,
-    rgba(255,255,255,.20) 50%,
-    rgba(100,170,255,.45) 50.1%,
-    rgba(60,130,230,.60) 100%
+    180deg,
+    rgba(255, 255, 255, 0.65) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(100, 175, 255, 0.50) 50.1%,
+    rgba(50, 130, 230, 0.70) 100%
   );
   box-shadow:
-    0 1px 0 rgba(255,255,255,.6) inset,
-    0 -1px 0 rgba(0,60,110,.3) inset;
-  transition: box-shadow .1s, background .1s;
-  user-select: none;
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 -1px 0 rgba(0, 50, 100, 0.3) inset;
+  transition: all 0.12s ease;
 }
 
-.win-btn:hover {
+.win7-btn:hover {
   background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,.75) 0%,
-    rgba(255,255,255,.35) 50%,
-    rgba(120,200,255,.60) 50.1%,
-    rgba(0,120,255,.80) 100%
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.40) 50%,
+    rgba(120, 200, 255, 0.65) 50.1%,
+    rgba(0, 130, 255, 0.85) 100%
   );
-  box-shadow: 0 0 8px rgba(0,180,255,.7), 0 1px 0 rgba(255,255,255,.7) inset;
+  box-shadow:
+    0 0 10px rgba(0, 200, 255, 0.85),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
 }
 
-.win-btn.close-btn {
+/* Botão X vermelho largo com efeito glossy marcante */
+.win7-btn.win7-close {
+  width: 44px;
   background: linear-gradient(
-    to bottom,
-    rgba(255,200,190,.80) 0%,
-    rgba(255,120,100,.50) 50%,
-    rgba(220,50,30,.70) 50.1%,
-    rgba(160,20,10,.85) 100%
+    180deg,
+    rgba(255, 210, 200, 0.85) 0%,
+    rgba(255, 140, 120, 0.55) 50%,
+    rgba(225, 55, 35, 0.75) 50.1%,
+    rgba(165, 25, 15, 0.90) 100%
   );
-  width: 38px;
+  border-color: rgba(140, 20, 10, 0.7);
 }
 
-.win-btn.close-btn:hover {
+.win7-btn.win7-close:hover {
   background: linear-gradient(
-    to bottom,
-    rgba(255,220,210,1) 0%,
-    rgba(255,150,130,.80) 50%,
-    rgba(255,70,50,.95) 50.1%,
-    rgba(190,30,10,1) 100%
+    180deg,
+    rgba(255, 235, 225, 1) 0%,
+    rgba(255, 160, 140, 0.85) 50%,
+    rgba(255, 60, 40, 0.98) 50.1%,
+    rgba(200, 30, 15, 1) 100%
   );
-  box-shadow: 0 0 12px rgba(255,60,30,.9), 0 1px 0 rgba(255,200,190,.7) inset;
+  box-shadow:
+    0 0 14px rgba(255, 60, 30, 0.95),
+    0 1px 0 rgba(255, 220, 210, 0.8) inset;
 }
 
-/* ── TABS (HOJE / TOTAL) ────────────────────────────────────── */
-.tab-bar {
+/* ── 3. BOTÕES E ABAS 'GLOSSY GEL / AQUA' (CORTE 50/50) ────── */
+.nav-tab-bar {
   position: relative;
   z-index: 4;
   display: flex;
-  gap: 6px;
-  padding: 10px 16px 0;
-  background: rgba(200,230,255,.30);
-  border-bottom: 1px solid rgba(0,80,160,.30);
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px 10px;
+  background: rgba(195, 228, 255, 0.35);
+  border-bottom: 1px solid rgba(0, 75, 150, 0.25);
+  flex-wrap: wrap;
 }
 
-.tab-btn {
-  padding: 6px 22px;
-  border-radius: 6px 6px 0 0;
-  border: 1px solid rgba(0,80,160,.50);
-  border-bottom: none;
+/* Efeito Gel Pill / Glossy com corte a 50% */
+.aqua-btn {
+  padding: 7px 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 65, 130, 0.65);
   cursor: pointer;
-  font-family: var(--font);
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: .2px;
-  color: #003875;
-  /* GEL PILL — corte 50/50 */
+  font-family: var(--font-stack);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #003060;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  /* Corte seco exato a 50% da altura */
   background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,.75) 0%,
-    rgba(255,255,255,.20) 50%,
-    rgba(60,160,255,.55) 50.1%,
-    rgba(0,100,230,.70) 100%
+    180deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.20) 50%,
+    rgba(0, 180, 255, 0.55) 50.1%,
+    rgba(0, 110, 230, 0.75) 100%
   );
   box-shadow:
-    0 1px 0 rgba(255,255,255,.7) inset,
-    0 -1px 0 rgba(0,60,140,.25) inset;
-  transition: box-shadow .15s, filter .15s;
+    0 1px 0 rgba(255, 255, 255, 0.75) inset,
+    0 -1px 0 rgba(0, 50, 120, 0.3) inset,
+    0 2px 6px rgba(0, 40, 100, 0.15);
+  transition: all 0.15s ease;
 }
 
-.tab-btn:hover {
-  box-shadow: 0 0 12px rgba(0,210,255,.9), 0 1px 0 rgba(255,255,255,.8) inset;
+.aqua-btn:hover {
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.9), 0 1px 0 rgba(255, 255, 255, 0.85) inset;
   filter: brightness(1.12);
 }
 
-.tab-btn.active {
+.aqua-btn.active {
   background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,.90) 0%,
-    rgba(255,255,255,.50) 50%,
-    rgba(130,200,255,.70) 50.1%,
-    rgba(60,150,255,.85) 100%
+    180deg,
+    rgba(255, 255, 255, 0.90) 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(0, 210, 255, 0.80) 50.1%,
+    rgba(0, 140, 255, 0.95) 100%
   );
-  color: #001f5c;
-  box-shadow: 0 0 10px rgba(0,180,255,.6), 0 2px 0 rgba(255,255,255,.9) inset;
-}
-
-/* ── CONTEÚDO / ÁREA INTERNA ───────────────────────────────── */
-.aero-content {
-  position: relative;
-  z-index: 3;
-  background: rgba(255,255,255,.88);
-  border: 1px solid rgba(0,80,160,.18);
-  box-shadow: inset 0 2px 6px rgba(0,60,140,.12), inset 0 -1px 3px rgba(0,60,140,.08);
-  margin: 0 8px;
-  border-radius: 0 0 4px 4px;
-  overflow: hidden;
-}
-
-/* ── BOTÃO ATUALIZAR ────────────────────────────────────────── */
-.refresh-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px 8px;
-  background: linear-gradient(to bottom,rgba(220,235,255,.60),rgba(200,225,255,.40));
-  border-bottom: 1px solid rgba(0,80,160,.15);
-}
-
-.refresh-btn {
-  padding: 5px 18px;
-  border-radius: 14px;
-  border: 1px solid rgba(0,80,160,.60);
-  cursor: pointer;
-  font-family: var(--font);
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,.45);
-  /* GEL PILL verde-lima */
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,.75) 0%,
-    rgba(255,255,255,.20) 50%,
-    rgba(50,200,80,.75) 50.1%,
-    rgba(20,140,40,.85) 100%
-  );
+  color: #001f4d;
   box-shadow:
-    0 1px 0 rgba(255,255,255,.7) inset,
-    0 2px 6px rgba(0,0,0,.20);
-  transition: box-shadow .15s, filter .15s;
+    0 0 14px rgba(0, 210, 255, 0.95),
+    0 2px 0 rgba(255, 255, 255, 0.9) inset;
 }
 
-.refresh-btn:hover {
-  box-shadow: 0 0 12px rgba(0,210,100,.9), 0 1px 0 rgba(255,255,255,.7) inset;
+/* Botão de Atualizar Agora (Gel Pill Verde Lima radiante) */
+.aqua-btn.btn-refresh {
+  margin-left: auto;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  border-color: rgba(10, 120, 30, 0.7);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.20) 50%,
+    rgba(60, 215, 80, 0.75) 50.1%,
+    rgba(20, 145, 45, 0.90) 100%
+  );
+}
+
+.aqua-btn.btn-refresh:hover {
+  box-shadow: 0 0 12px rgba(40, 230, 90, 0.95), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
   filter: brightness(1.1);
 }
 
-.refresh-btn:active { transform: scale(.97); }
-
-.next-refresh-label {
-  font-size: 11px;
-  color: #334;
-  opacity: .75;
+.aqua-btn:active {
+  transform: scale(0.97);
 }
 
-/* ── PÓDIO TOP 3 ─────────────────────────────────────────────── */
-.podium-row {
+/* ── 4. CONTEÚDO PRINCIPAL (ÁREA CLARA CHANFRADA INSET) ───── */
+.aero-content-area {
+  position: relative;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.88);
+  margin: 8px 10px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 70, 140, 0.20);
+  box-shadow:
+    inset 1px 1px 3px rgba(0, 30, 80, 0.25),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+}
+
+/* ── DESTAQUE DO PÓDIO (TOP 1, 2 E 3 COM ORBES 3D) ────────── */
+.podium-container {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 14px;
-  padding: 18px 12px 12px;
-  background: linear-gradient(to bottom, rgba(220,240,255,.50), rgba(200,225,255,.20));
-  border-bottom: 1px solid rgba(0,80,160,.14);
+  gap: 16px;
+  padding: 20px 16px 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(215, 238, 255, 0.55) 0%,
+    rgba(185, 222, 255, 0.25) 100%
+  );
+  border-bottom: 1px solid rgba(0, 80, 160, 0.15);
 }
 
 .podium-card {
   flex: 1;
-  max-width: 240px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.70);
+  max-width: 250px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
   text-align: center;
-  padding: 10px 8px 12px;
+  padding: 12px 10px 14px;
   position: relative;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 16px rgba(0,0,0,.15), 0 1px 0 rgba(255,255,255,.8) inset;
+  box-shadow:
+    0 6px 20px rgba(0, 40, 100, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  backdrop-filter: blur(8px);
 }
 
-/* Orbes 3D do pódio */
+.podium-card.rank-1 {
+  background: linear-gradient(135deg, rgba(255, 248, 180, 0.70) 0%, rgba(255, 225, 75, 0.35) 100%);
+  transform: translateY(-10px);
+  border-color: rgba(255, 235, 130, 0.95);
+}
+
+.podium-card.rank-2 {
+  background: linear-gradient(135deg, rgba(230, 240, 255, 0.70) 0%, rgba(180, 205, 235, 0.35) 100%);
+}
+
+.podium-card.rank-3 {
+  background: linear-gradient(135deg, rgba(250, 230, 205, 0.70) 0%, rgba(210, 165, 115, 0.35) 100%);
+}
+
+/* Orbes 3D Brilhantes */
 .podium-orb {
-  width: 52px; height: 52px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   margin: 0 auto 8px;
-  box-shadow: 0 4px 14px rgba(0,0,0,.3), inset 0 2px 6px rgba(255,255,255,.55);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
 }
 
+.podium-orb::after {
+  content: '';
+  position: absolute;
+  top: 14%;
+  left: 22%;
+  width: 32%;
+  height: 22%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
+  transform: rotate(-35deg);
+}
+
+/* Dourado Glossy (Top 1) */
 .orb-gold {
-  background: radial-gradient(circle at 33% 28%,
-    #fff8d0 0%, #f5c518 35%, #d4a017 65%, #7a5800 100%);
-  box-shadow: 0 4px 16px rgba(212,160,23,.7), inset 0 2px 6px rgba(255,255,200,.7);
+  background: radial-gradient(circle at 35% 30%, #fffbe6 0%, #ffd700 35%, #d4a017 65%, #7a5500 100%);
+  box-shadow:
+    0 4px 18px rgba(212, 160, 23, 0.75),
+    inset 0 2px 6px rgba(255, 255, 210, 0.9);
 }
 
+/* Prateado Cromado (Top 2) */
 .orb-silver {
-  background: radial-gradient(circle at 33% 28%,
-    #ffffff 0%, #e8e8e8 30%, #b0b0b0 60%, #505050 100%);
-  box-shadow: 0 4px 16px rgba(150,150,150,.6), inset 0 2px 6px rgba(255,255,255,.8);
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #ebebeb 30%, #b8b8b8 60%, #4a4a4a 100%);
+  box-shadow:
+    0 4px 18px rgba(160, 160, 160, 0.65),
+    inset 0 2px 6px rgba(255, 255, 255, 0.95);
 }
 
+/* Bronze Vitrificado (Top 3) */
 .orb-bronze {
-  background: radial-gradient(circle at 33% 28%,
-    #fff0d8 0%, #cd9156 30%, #9e5c28 60%, #4a2000 100%);
-  box-shadow: 0 4px 16px rgba(160,100,40,.6), inset 0 2px 6px rgba(255,220,160,.6);
+  background: radial-gradient(circle at 35% 30%, #fff2e0 0%, #d48f52 30%, #a85f24 60%, #522700 100%);
+  box-shadow:
+    0 4px 18px rgba(168, 95, 36, 0.65),
+    inset 0 2px 6px rgba(255, 225, 180, 0.85);
 }
 
-.podium-card.rank1 {
-  background: linear-gradient(135deg,rgba(255,245,160,.60),rgba(255,220,60,.25));
-  transform: translateY(-12px);
-}
-.podium-card.rank2 {
-  background: linear-gradient(135deg,rgba(220,230,255,.60),rgba(160,180,220,.25));
-}
-.podium-card.rank3 {
-  background: linear-gradient(135deg,rgba(240,220,190,.60),rgba(200,160,100,.25));
-}
-
-.podium-rank-badge {
-  font-size: 22px;
+.podium-title-rank {
+  font-size: 11px;
   font-weight: 700;
-  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.rank1 .podium-rank-badge { color:#d4a017; text-shadow: 0 0 10px rgba(255,220,0,.9); }
-.rank2 .podium-rank-badge { color:#909090; text-shadow: 0 0 8px rgba(200,200,200,.8); }
-.rank3 .podium-rank-badge { color:#9e5c28; text-shadow: 0 0 8px rgba(180,120,60,.8); }
+.rank-1 .podium-title-rank { color: #b8860b; }
+.rank-2 .podium-title-rank { color: #708090; }
+.rank-3 .podium-title-rank { color: #9c5520; }
 
-.podium-name {
-  font-size: 13px;
+.podium-player-name {
+  font-size: 14px;
   font-weight: 700;
-  color: #002060;
-  margin: 4px 0 2px;
+  color: #002244;
+  margin: 3px 0 2px;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.podium-clicks {
-  font-size: 11px;
-  color: #334;
-  margin-bottom: 6px;
+.podium-click-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334455;
+  margin-bottom: 8px;
 }
 
-/* Barra de progresso Vista (verde brilhante animada) */
+/* ── BARRAS DE PROGRESSO ESTILO WINDOWS VISTA ──────────────── */
 .vista-progress-track {
-  height: 12px;
-  border-radius: 6px;
-  background: rgba(0,0,0,.12);
-  border: 1px solid rgba(0,0,0,.18);
+  height: 14px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.20);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.28);
   overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,.20);
+  position: relative;
 }
 
-.vista-progress-bar {
+.vista-progress-fill {
   height: 100%;
   border-radius: 6px;
   background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,.80) 0%,
-    rgba(130,255,100,.85) 50%,
-    rgba(30,180,30,.95) 50.1%,
-    rgba(10,120,10,1) 100%
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(145, 255, 115, 0.85) 48%,
+    rgba(35, 195, 35, 0.95) 50%,
+    rgba(12, 130, 12, 1) 100%
   );
-  box-shadow: 0 0 8px rgba(30,200,30,.7);
+  box-shadow: 0 0 10px rgba(35, 215, 35, 0.8);
   position: relative;
-  transition: width .8s cubic-bezier(.25,.8,.25,1);
+  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Brilho deslizante da progress bar */
-.vista-progress-bar::after {
+/* Shimmer luminoso correndo continuamente pela barra de carregamento */
+.vista-progress-fill::after {
   content: '';
   position: absolute;
-  top: 0; left: -60%;
-  width: 40%;
+  top: 0;
+  left: -60%;
+  width: 50%;
   height: 100%;
-  background: linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
-  animation: progressShine 2.2s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.70), transparent);
+  animation: vistaShineAnimation 2.2s linear infinite;
 }
 
-@keyframes progressShine {
-  0%   { left:-60%; }
-  100% { left:120%; }
+@keyframes vistaShineAnimation {
+  0%   { left: -60%; }
+  100% { left: 130%; }
 }
 
-/* ── TABELA PRINCIPAL ────────────────────────────────────────── */
-.ranking-table-wrap {
-  padding: 6px 10px 14px;
+/* ── TABELA DE CLASSIFICAÇÃO (WINDOWS EXPLORER / MSN) ──────── */
+.ranking-table-scroll {
+  padding: 8px 12px 14px;
   overflow-x: auto;
 }
 
@@ -509,449 +606,512 @@ table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 2px;
-  font-size: 12.5px;
+  font-size: 13px;
 }
 
-thead tr th {
-  padding: 7px 10px;
+thead th {
+  padding: 8px 12px;
   text-align: left;
   font-weight: 700;
   font-size: 11px;
-  letter-spacing: .4px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
-  color: #003875;
+  color: #003366;
   background: linear-gradient(
-    to bottom,
-    rgba(200,225,255,.90) 0%,
-    rgba(160,200,255,.75) 100%
+    180deg,
+    rgba(215, 235, 255, 0.95) 0%,
+    rgba(175, 210, 255, 0.85) 100%
   );
-  border-top: 1px solid rgba(0,80,160,.25);
-  border-bottom: 2px solid rgba(0,80,160,.35);
+  border-top: 1px solid rgba(0, 80, 160, 0.30);
+  border-bottom: 2px solid rgba(0, 80, 160, 0.40);
 }
 
-thead tr th:first-child { border-radius: 4px 0 0 0; }
-thead tr th:last-child  { border-radius: 0 4px 0 0; }
-
-tbody tr {
-  cursor: default;
-  transition: background .12s, box-shadow .12s;
-}
+thead th:first-child { border-radius: 4px 0 0 0; }
+thead th:last-child  { border-radius: 0 4px 0 0; }
 
 tbody tr td {
-  padding: 7px 10px;
-  border-bottom: 1px solid rgba(0,80,160,.09);
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(0, 80, 160, 0.08);
   color: #1a2a3a;
   vertical-align: middle;
 }
 
+tbody tr:nth-child(even) td {
+  background: rgba(235, 245, 255, 0.45);
+}
+
+/* Efeito glossy azul-celeste suave ao passar o rato (estilo Windows Explorer 7) */
 tbody tr:hover td {
   background: linear-gradient(
-    to bottom,
-    rgba(200,235,255,.70) 0%,
-    rgba(160,210,255,.45) 50%,
-    rgba(100,180,255,.35) 50.1%,
-    rgba(60,150,255,.25) 100%
-  );
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), inset 0 -1px 0 rgba(0,80,160,.18);
+    180deg,
+    rgba(210, 238, 255, 0.85) 0%,
+    rgba(170, 215, 255, 0.60) 50%,
+    rgba(120, 190, 255, 0.45) 50.1%,
+    rgba(70, 160, 255, 0.35) 100%
+  ) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.70),
+    inset 0 -1px 0 rgba(0, 90, 180, 0.25);
+  cursor: default;
 }
 
-tbody tr:nth-child(even) td { background: rgba(230,242,255,.45); }
-tbody tr:nth-child(even):hover td {
-  background: linear-gradient(
-    to bottom,
-    rgba(200,235,255,.75) 0%,
-    rgba(160,210,255,.50) 50%,
-    rgba(100,180,255,.40) 50.1%,
-    rgba(60,150,255,.30) 100%
-  );
-}
-
-/* Medalha de posição */
+/* Insígnia da posição */
 .rank-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px; height: 24px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   font-weight: 700;
   font-size: 11px;
-  color: #fff;
-  background: linear-gradient(135deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.15) 50%,rgba(40,100,200,.70) 50.1%,rgba(0,60,180,1) 100%);
-  box-shadow: 0 1px 4px rgba(0,40,120,.4), inset 0 1px 2px rgba(255,255,255,.55);
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(50, 120, 220, 0.75) 50.1%, rgba(0, 70, 190, 1) 100%);
+  box-shadow: 0 1px 4px rgba(0, 40, 120, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.6);
 }
 
-.rank-badge.gold   { background:linear-gradient(135deg,#fffae0 0%,#f5d060 50%,#c8920a 50.1%,#9a6e00 100%); color:#3a2000; }
-.rank-badge.silver { background:linear-gradient(135deg,#ffffff 0%,#d8d8d8 50%,#909090 50.1%,#606060 100%); color:#202020; }
-.rank-badge.bronze { background:linear-gradient(135deg,#fff0d8 0%,#d4a060 50%,#9e5c28 50.1%,#6a3000 100%); color:#fff; }
+.rank-badge.top-1 {
+  background: linear-gradient(135deg, #fffbe0 0%, #f5d060 50%, #c8920a 50.1%, #9a6e00 100%);
+  color: #3b2000;
+}
+.rank-badge.top-2 {
+  background: linear-gradient(135deg, #ffffff 0%, #dedede 50%, #9e9e9e 50.1%, #636363 100%);
+  color: #222222;
+}
+.rank-badge.top-3 {
+  background: linear-gradient(135deg, #fff3e0 0%, #d8a065 50%, #a25c27 50.1%, #6e3200 100%);
+  color: #ffffff;
+}
 
-/* Contador LCD vitrificado */
-.lcd-count {
+.player-nickname {
+  font-weight: 600;
+  color: #002255;
+}
+
+/* Contador estilo LCD / Vitrificado com fonte nítida */
+.lcd-vitrificado {
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 5px;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-family: 'Courier New', Consolas, monospace;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #003030;
+  color: #003622;
   background: linear-gradient(
-    to bottom,
-    rgba(180,255,220,.80) 0%,
-    rgba(180,255,220,.60) 45%,
-    rgba(40,180,80,.60) 50%,
-    rgba(20,130,50,.70) 100%
+    180deg,
+    rgba(195, 255, 230, 0.85) 0%,
+    rgba(170, 255, 215, 0.60) 48%,
+    rgba(50, 195, 100, 0.65) 50%,
+    rgba(25, 145, 65, 0.80) 100%
   );
-  border: 1px solid rgba(0,120,40,.40);
+  border: 1px solid rgba(0, 130, 50, 0.45);
   box-shadow:
-    inset 0 1px 3px rgba(255,255,255,.50),
-    inset 0 -1px 2px rgba(0,80,30,.25),
-    0 1px 4px rgba(0,0,0,.15);
+    inset 0 1px 3px rgba(255, 255, 255, 0.65),
+    inset 0 -1px 2px rgba(0, 90, 35, 0.30),
+    0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* ── STATUS BAR CLÁSSICA ─────────────────────────────────────── */
-.status-bar {
+.lcd-vitrificado.secundario {
+  background: linear-gradient(
+    180deg,
+    rgba(215, 235, 255, 0.85) 0%,
+    rgba(190, 225, 255, 0.60) 48%,
+    rgba(70, 140, 235, 0.55) 50%,
+    rgba(30, 95, 205, 0.70) 100%
+  );
+  border-color: rgba(0, 90, 180, 0.40);
+  color: #001f55;
+}
+
+/* ── 5. STATUS BAR CLÁSSICA DO WINDOWS ─────────────────────── */
+.win-status-bar {
   position: relative;
   z-index: 4;
   display: flex;
   align-items: center;
-  gap: 0;
-  padding: 4px 10px;
+  padding: 5px 12px;
   background: linear-gradient(
-    to bottom,
-    rgba(200,215,235,.85) 0%,
-    rgba(170,190,220,.80) 100%
+    180deg,
+    rgba(215, 225, 240, 0.90) 0%,
+    rgba(185, 200, 225, 0.85) 100%
   );
-  border-top: 1px solid rgba(0,60,110,.30);
-  box-shadow: 0 -1px 0 rgba(255,255,255,.50) inset;
-  font-size: 11px;
-  color: #223;
+  border-top: 1px solid rgba(0, 70, 130, 0.35);
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.60) inset;
+  font-size: 11.5px;
+  color: #1a2a3a;
   flex-wrap: wrap;
 }
 
-.status-segment {
+.status-cell {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 0 12px;
-  border-right: 1px solid rgba(0,60,110,.25);
+  gap: 6px;
+  padding: 0 14px;
+  border-right: 1px solid rgba(0, 60, 120, 0.20);
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.60);
 }
 
-.status-segment:first-child { padding-left: 4px; }
-.status-segment:last-child  { border-right: none; }
+.status-cell:first-child { padding-left: 2px; }
+.status-cell:last-child {
+  border-right: none;
+  box-shadow: none;
+  margin-left: auto;
+}
 
-/* Orbe de status verde a piscar */
-.status-orb {
-  width: 8px; height: 8px;
+/* Orbe verde a piscar autêntico */
+.pulsing-green-orb {
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #afffb0, #22dd44, #006620);
-  box-shadow: 0 0 5px #22ff44;
-  animation: orbPulse 2s ease-in-out infinite;
+  background: radial-gradient(circle at 35% 30%, #b8ffb8 0%, #20e040 50%, #006b18 100%);
+  box-shadow: 0 0 6px #20ff44;
+  animation: orbPulsingAnim 2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
-@keyframes orbPulse {
-  0%,100% { box-shadow: 0 0 4px #22ff44, 0 0 8px rgba(34,255,68,.5); opacity:1; }
-  50%      { box-shadow: 0 0 8px #22ff44, 0 0 16px rgba(34,255,68,.8); opacity:.7; }
+@keyframes orbPulsingAnim {
+  0%, 100% {
+    box-shadow: 0 0 4px #20ff44, 0 0 8px rgba(32, 255, 68, 0.5);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 9px #20ff44, 0 0 16px rgba(32, 255, 68, 0.85);
+    opacity: 0.65;
+  }
 }
 
-/* ── TAB PANELS ──────────────────────────────────────────────── */
-.tab-panel { display:none; }
-.tab-panel.active { display:block; }
+/* Painéis de Abas */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
-/* ── EMPTY STATE ─────────────────────────────────────────────── */
-.empty-msg {
+.empty-state-msg {
   text-align: center;
-  padding: 30px 20px;
-  color: #667;
+  padding: 36px 20px;
+  color: #556677;
   font-size: 13px;
   font-style: italic;
 }
 
-/* ── LOADING SPINNER ─────────────────────────────────────────── */
-.loading-wrap {
+.loading-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 30px 20px;
-  color: #334;
+  gap: 12px;
+  padding: 28px 20px;
+  color: #223344;
   font-size: 13px;
 }
 
-.vista-spinner {
-  width: 28px; height: 28px;
-  border: 3px solid rgba(0,120,220,.20);
-  border-top-color: rgba(0,120,220,.90);
+.vista-spinner-ring {
+  width: 26px;
+  height: 26px;
+  border: 3px solid rgba(0, 130, 240, 0.20);
+  border-top-color: rgba(0, 130, 240, 0.95);
   border-radius: 50%;
-  animation: spin .8s linear infinite;
+  animation: spinCycle 0.75s linear infinite;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spinCycle {
+  to { transform: rotate(360deg); }
+}
 
-/* ── TOOLTIP DA UPDATED_AT ───────────────────────────────────── */
-.player-name { font-weight: 600; color: #002060; }
-
-/* ── RESPONSIVO ──────────────────────────────────────────────── */
-@media (max-width: 600px) {
-  .podium-row { flex-direction: column; align-items: center; }
-  .podium-card { max-width: 90%; transform: none !important; }
-  .title-text { font-size: 10.5px; }
-  .lcd-count { font-size: 10px; padding: 2px 6px; }
+@media (max-width: 650px) {
+  .podium-container { flex-direction: column; align-items: center; }
+  .podium-card { max-width: 95%; transform: none !important; }
+  .title-text { font-size: 11.5px; }
+  .status-cell { padding: 0 8px; }
 }
 </style>
 </head>
 <body>
 
-<!-- Bolhas de sabão flutuantes -->
-<div class="bubbles">
-  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-  <div class="bubble"></div><div class="bubble"></div>
+<!-- Colinas radiantes de fundo (Windows Vista / Frutiger Aero) -->
+<div class="vista-hills">
+  <svg viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,160 C320,80 580,240 960,140 C1200,80 1340,180 1440,160 L1440,320 L0,320 Z" fill="url(#hillGrad1)" opacity="0.85"/>
+    <path d="M0,210 C240,150 620,290 1020,190 C1280,120 1380,220 1440,200 L1440,320 L0,320 Z" fill="url(#hillGrad2)" opacity="0.95"/>
+    <defs>
+      <linearGradient id="hillGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#98e860" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#28a745" stop-opacity="1"/>
+      </linearGradient>
+      <linearGradient id="hillGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#7ed957" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#1e7e34" stop-opacity="1"/>
+      </linearGradient>
+    </defs>
+  </svg>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     JANELA AERO GLASS
-     ═══════════════════════════════════════════════════════════ -->
+<!-- Aurora do Windows Vista (Feixes de Luz Diagonais) -->
+<div class="vista-aurora"></div>
+
+<!-- Bolhas de sabão / água flutuantes com reflexo especular no canto superior esquerdo -->
+<div class="bubbles-container">
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JANELA NATIVA 'WINDOWS 7 AERO GLASS'
+     ═══════════════════════════════════════════════════════════════ -->
 <div class="aero-window">
 
-  <!-- Barra de Título Win7 -->
+  <!-- Barra de Título do Windows 7 -->
   <div class="title-bar">
-    <div class="title-orb">🖱️</div>
-    <div class="title-text">MouseClickCounter — Ranking Global &nbsp;·&nbsp; Windows Aero Edition</div>
-    <div class="win-btns">
-      <div class="win-btn" title="Minimizar">&#x2014;</div>
-      <div class="win-btn" title="Maximizar">&#x25A1;</div>
-      <div class="win-btn close-btn" title="Fechar">&#x2715;</div>
+    <div class="title-icon-orb">🖱️</div>
+    <div class="title-text">MouseClickCounter - Ranking Global (Windows Aero Edition)</div>
+    <div class="win7-controls">
+      <div class="win7-btn" title="Minimizar">&#x2014;</div>
+      <div class="win7-btn" title="Maximizar">&#x25A1;</div>
+      <div class="win7-btn win7-close" title="Fechar">&#x2715;</div>
     </div>
   </div>
 
-  <!-- Tabs -->
-  <div class="tab-bar">
-    <button class="tab-btn active" id="tab-today"   onclick="switchTab('today')">🖱️ Cliques de Hoje</button>
-    <button class="tab-btn"        id="tab-total"   onclick="switchTab('total')">🔥 Total Geral</button>
+  <!-- Barra de Abas e Botões Glossy Gel / Aqua -->
+  <div class="nav-tab-bar">
+    <button class="aqua-btn active" id="tab-today" onclick="switchAeroTab('today')">
+      🖱️ Cliques de Hoje
+    </button>
+    <button class="aqua-btn" id="tab-total" onclick="switchAeroTab('total')">
+      🔥 Total Geral
+    </button>
+    <button class="aqua-btn btn-refresh" onclick="fetchRankingData()">
+      ⟳ Atualizar Agora
+    </button>
   </div>
 
-  <!-- Conteúdo interno -->
-  <div class="aero-content">
+  <!-- Conteúdo Interior da Janela (Área Clara Chanfrada Inset) -->
+  <div class="aero-content-area">
 
-    <!-- Linha do botão Atualizar -->
-    <div class="refresh-row">
-      <button class="refresh-btn" onclick="loadRanking()">⟳ Atualizar Agora</button>
-      <span class="next-refresh-label" id="next-refresh-lbl">Próxima atualização em 30s…</span>
+    <!-- Indicador de Carregamento -->
+    <div id="loading-spinner-box" class="loading-indicator">
+      <div class="vista-spinner-ring"></div>
+      <span>Carregando dados da rede Turso...</span>
     </div>
 
-    <!-- Estado de carregamento -->
-    <div id="loading-state" class="loading-wrap">
-      <div class="vista-spinner"></div>
-      A carregar ranking…
-    </div>
-
-    <!-- ─ TAB: HOJE ─ -->
-    <div class="tab-panel active" id="panel-today">
-      <!-- Pódio -->
-      <div class="podium-row" id="podium-today"></div>
-      <!-- Tabela -->
-      <div class="ranking-table-wrap">
-        <table id="table-today">
-          <thead><tr>
-            <th style="width:44px">#</th>
-            <th>Jogador</th>
-            <th>Cliques Hoje</th>
-            <th>Total Histórico</th>
-            <th>Atualizado</th>
-          </tr></thead>
+    <!-- ── ABA: CLIQUES DE HOJE ── -->
+    <div class="tab-content active" id="content-today">
+      <div class="podium-container" id="podium-today"></div>
+      <div class="ranking-table-scroll">
+        <table id="tbl-today">
+          <thead>
+            <tr>
+              <th style="width: 50px; text-align: center;">Pos</th>
+              <th>Jogador</th>
+              <th>Cliques Hoje</th>
+              <th>Total Histórico</th>
+              <th>Última Atividade</th>
+            </tr>
+          </thead>
           <tbody></tbody>
         </table>
       </div>
     </div>
 
-    <!-- ─ TAB: TOTAL ─ -->
-    <div class="tab-panel" id="panel-total">
-      <div class="podium-row" id="podium-total"></div>
-      <div class="ranking-table-wrap">
-        <table id="table-total">
-          <thead><tr>
-            <th style="width:44px">#</th>
-            <th>Jogador</th>
-            <th>Total Histórico</th>
-            <th>Cliques Hoje</th>
-            <th>Atualizado</th>
-          </tr></thead>
+    <!-- ── ABA: TOTAL GERAL ── -->
+    <div class="tab-content" id="content-total">
+      <div class="podium-container" id="podium-total"></div>
+      <div class="ranking-table-scroll">
+        <table id="tbl-total">
+          <thead>
+            <tr>
+              <th style="width: 50px; text-align: center;">Pos</th>
+              <th>Jogador</th>
+              <th>Total Geral</th>
+              <th>Cliques Hoje</th>
+              <th>Última Atividade</th>
+            </tr>
+          </thead>
           <tbody></tbody>
         </table>
       </div>
     </div>
 
-  </div><!-- /aero-content -->
+  </div><!-- /aero-content-area -->
 
-  <!-- Status Bar -->
-  <div class="status-bar">
-    <div class="status-segment">
-      <div class="status-orb"></div>
+  <!-- ── 5. STATUS BAR CLÁSSICA DO WINDOWS ────────────────────── -->
+  <div class="win-status-bar">
+    <div class="status-cell">
+      <div class="pulsing-green-orb"></div>
       <span>Servidor Turso Online</span>
     </div>
-    <div class="status-segment" id="sb-players">👥 Jogadores: —</div>
-    <div class="status-segment" id="sb-total-clicks">🖱️ Cliques totais: —</div>
-    <div class="status-segment" id="sb-refresh">🔄 Próx. atualização: 30s</div>
+    <div class="status-cell" id="stat-total-players">
+      👥 Jogadores Registrados: &mdash;
+    </div>
+    <div class="status-cell" id="stat-global-clicks">
+      🖱️ Soma Global: &mdash;
+    </div>
+    <div class="status-cell" id="stat-countdown">
+      🔄 Auto-refresh em 30s
+    </div>
   </div>
 
 </div><!-- /aero-window -->
 
 <script>
-/* ============================================================
-   JAVASCRIPT — Ranking Logic
-   ============================================================ */
+/* =============================================================================
+   LÓGICA JAVASCRIPT DO RANKING FRUTIGER AERO
+   ============================================================================= */
 
-let currentTab     = 'today';
-let rankingData    = { top_today: [], top_total: [] };
-let countdown      = 30;
-let countdownTimer = null;
+let activeTabName   = 'today';
+let cachedData      = { top_today: [], top_total: [] };
+let refreshSeconds  = 30;
+let refreshTimer    = null;
 
-/* ── Troca de aba ─────────────────────────────────────────── */
-function switchTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-'   + tab).classList.add('active');
-  document.getElementById('panel-' + tab).classList.add('active');
+function switchAeroTab(tabName) {
+  activeTabName = tabName;
+  document.querySelectorAll('.aqua-btn:not(.btn-refresh)').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(panel => panel.classList.remove('active'));
+
+  document.getElementById('tab-' + tabName).classList.add('active');
+  document.getElementById('content-' + tabName).classList.add('active');
 }
 
-/* ── Formata número com separador de milhar ───────────────── */
-function fmtNum(n) {
-  return Number(n).toLocaleString('pt-BR');
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 
-/* ── Orbe de pódio ────────────────────────────────────────── */
-function orbClass(pos) {
-  return pos === 0 ? 'orb-gold' : pos === 1 ? 'orb-silver' : 'orb-bronze';
-}
-function cardClass(pos) {
-  return pos === 0 ? 'rank1' : pos === 1 ? 'rank2' : 'rank3';
-}
-function badgeClass(pos) {
-  return pos === 0 ? 'gold' : pos === 1 ? 'silver' : 'bronze';
-}
-function medalEmoji(pos) {
-  return ['🥇','🥈','🥉'][pos] || (pos + 1);
+function formatNumber(val) {
+  return Number(val || 0).toLocaleString('pt-BR');
 }
 
-/* ── Constrói pódio top-3 ─────────────────────────────────── */
-function buildPodium(containerId, rows, mainKey, secKey) {
-  const wrap = document.getElementById(containerId);
-  wrap.innerHTML = '';
-  if (!rows || rows.length === 0) { wrap.innerHTML = '<div class="empty-msg">Ainda sem dados para exibir.</div>'; return; }
+function renderPodium(containerId, list, primaryKey) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
 
-  const top3 = rows.slice(0, 3);
-  const maxVal = Number(top3[0][mainKey]) || 1;
+  if (!list || list.length === 0) {
+    container.innerHTML = '<div class="empty-state-msg">Nenhum jogador pontuou ainda nesta classificação.</div>';
+    return;
+  }
 
-  top3.forEach((row, i) => {
-    const pct = Math.max(6, Math.round((Number(row[mainKey]) / maxVal) * 100));
-    const card = document.createElement('div');
-    card.className = `podium-card ${cardClass(i)}`;
-    card.innerHTML = `
-      <div class="podium-orb ${orbClass(i)}"></div>
-      <div class="podium-rank-badge">${medalEmoji(i)}</div>
-      <div class="podium-name" title="${esc(row.nickname)}">${esc(row.nickname)}</div>
-      <div class="podium-clicks">🖱️ ${fmtNum(row[mainKey])} cliques</div>
-      <div class="vista-progress-track">
-        <div class="vista-progress-bar" style="width:${pct}%"></div>
-      </div>`;
-    wrap.appendChild(card);
+  const topThree = list.slice(0, 3);
+  const highestScore = Number(topThree[0][primaryKey]) || 1;
+
+  topThree.forEach((player, idx) => {
+    const rankNum = idx + 1;
+    const cardEl = document.createElement('div');
+    cardEl.className = `podium-card rank-${rankNum}`;
+
+    const orbType = idx === 0 ? 'orb-gold' : (idx === 1 ? 'orb-silver' : 'orb-bronze');
+    const medalSymbol = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : '🥉');
+    const rankTitle = idx === 0 ? '1º Lugar' : (idx === 1 ? '2º Lugar' : '3º Lugar');
+
+    const score = Number(player[primaryKey]) || 0;
+    const progressPercent = Math.max(8, Math.round((score / highestScore) * 100));
+
+    cardEl.innerHTML = `
+      <div class="podium-orb ${orbType}">${medalSymbol}</div>
+      <div class="podium-title-rank">${rankTitle}</div>
+      <div class="podium-player-name" title="${escapeHtml(player.nickname)}">${escapeHtml(player.nickname)}</div>
+      <div class="podium-click-count">🖱️ ${formatNumber(score)} cliques</div>
+      <div class="vista-progress-track" title="${progressPercent}% em relação ao 1º lugar">
+        <div class="vista-progress-fill" style="width: ${progressPercent}%;"></div>
+      </div>
+    `;
+
+    container.appendChild(cardEl);
   });
 }
 
-/* ── Constrói tabela ──────────────────────────────────────── */
-function buildTable(tableId, rows, mainKey, secKey) {
+function renderTable(tableId, list, primaryKey, secondaryKey) {
   const tbody = document.querySelector(`#${tableId} tbody`);
   tbody.innerHTML = '';
-  if (!rows || rows.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="empty-msg">Nenhum jogador encontrado.</td></tr>';
+
+  if (!list || list.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="empty-state-msg">Nenhum dado registrado.</td></tr>';
     return;
   }
-  rows.forEach((row, i) => {
+
+  list.forEach((player, idx) => {
     const tr = document.createElement('tr');
-    const pos = i;
-    const badge = pos < 3
-      ? `<span class="rank-badge ${badgeClass(pos)}">${medalEmoji(pos)}</span>`
-      : `<span class="rank-badge">${i + 1}</span>`;
+    const rank = idx + 1;
+    const topBadgeClass = rank === 1 ? 'top-1' : (rank === 2 ? 'top-2' : (rank === 3 ? 'top-3' : ''));
+
     tr.innerHTML = `
-      <td style="text-align:center">${badge}</td>
-      <td class="player-name">${esc(row.nickname)}</td>
-      <td><span class="lcd-count">${fmtNum(row[mainKey])}</span></td>
-      <td><span class="lcd-count" style="background:linear-gradient(to bottom,rgba(200,220,255,.80) 0%,rgba(200,220,255,.50) 45%,rgba(80,120,220,.50) 50%,rgba(40,80,200,.60) 100%);color:#001060">${fmtNum(row[secKey])}</span></td>
-      <td style="font-size:11px;color:#445;white-space:nowrap">${esc(row.updated_at)}</td>`;
+      <td style="text-align: center;">
+        <span class="rank-badge ${topBadgeClass}">${rank}</span>
+      </td>
+      <td class="player-nickname">${escapeHtml(player.nickname)}</td>
+      <td>
+        <span class="lcd-vitrificado">${formatNumber(player[primaryKey])}</span>
+      </td>
+      <td>
+        <span class="lcd-vitrificado secundario">${formatNumber(player[secondaryKey])}</span>
+      </td>
+      <td style="font-size: 11.5px; color: #445566; white-space: nowrap;">
+        ${escapeHtml(player.updated_at || 'Recente')}
+      </td>
+    `;
+
     tbody.appendChild(tr);
   });
 }
 
-/* ── Escapa HTML ──────────────────────────────────────────── */
-function esc(str) {
-  return String(str)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;');
+function updateStatusBarStats(data) {
+  const allList = data.top_total || [];
+  const totalCount = allList.length;
+  const globalSum = allList.reduce((acc, curr) => acc + (Number(curr.clicks_totais) || 0), 0);
+
+  document.getElementById('stat-total-players').textContent = `👥 Jogadores Registrados: ${totalCount}`;
+  document.getElementById('stat-global-clicks').textContent = `🖱️ Soma Global: ${formatNumber(globalSum)} cliques`;
 }
 
-/* ── Atualiza Status Bar ──────────────────────────────────── */
-function updateStatusBar(data) {
-  const allRows = data.top_total || [];
-  const totalPlayers = allRows.length;
-  const totalClicks  = allRows.reduce((s, r) => s + Number(r.clicks_totais), 0);
-  document.getElementById('sb-players').textContent       = `👥 Jogadores: ${totalPlayers}`;
-  document.getElementById('sb-total-clicks').textContent  = `🖱️ Cliques globais: ${fmtNum(totalClicks)}`;
-}
-
-/* ── Carrega dados da API ─────────────────────────────────── */
-async function loadRanking() {
+async function fetchRankingData() {
   resetCountdown();
-  document.getElementById('loading-state').style.display = 'flex';
+  const spinner = document.getElementById('loading-spinner-box');
+  spinner.style.display = 'flex';
+
   try {
-    const res  = await fetch('/api/ranking');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch('/api/ranking');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    rankingData = data;
+    cachedData = data;
 
-    buildPodium('podium-today', data.top_today, 'clicks_hoje',   'clicks_totais');
-    buildTable ('table-today',  data.top_today, 'clicks_hoje',   'clicks_totais');
-    buildPodium('podium-total', data.top_total, 'clicks_totais', 'clicks_hoje');
-    buildTable ('table-total',  data.top_total, 'clicks_totais', 'clicks_hoje');
-    updateStatusBar(data);
+    renderPodium('podium-today', data.top_today, 'clicks_hoje');
+    renderTable('tbl-today', data.top_today, 'clicks_hoje', 'clicks_totais');
 
-  } catch(err) {
-    document.querySelector('#table-today tbody').innerHTML =
-      `<tr><td colspan="5" class="empty-msg" style="color:#a00">Erro ao carregar: ${err.message}</td></tr>`;
+    renderPodium('podium-total', data.top_total, 'clicks_totais');
+    renderTable('tbl-total', data.top_total, 'clicks_totais', 'clicks_hoje');
+
+    updateStatusBarStats(data);
+  } catch (err) {
+    console.error('Falha ao carregar ranking:', err);
+    document.querySelector('#tbl-today tbody').innerHTML =
+      `<tr><td colspan="5" class="empty-state-msg" style="color: #c00;">Erro ao conectar com a API: ${err.message}</td></tr>`;
   } finally {
-    document.getElementById('loading-state').style.display = 'none';
+    spinner.style.display = 'none';
   }
 }
 
-/* ── Contador regressivo ──────────────────────────────────── */
 function resetCountdown() {
-  countdown = 30;
-  updateCountdownUI();
+  refreshSeconds = 30;
+  updateCountdownDisplay();
 }
 
-function updateCountdownUI() {
-  const txt = `🔄 Próx. atualização: ${countdown}s`;
-  document.getElementById('sb-refresh').textContent = txt;
-  document.getElementById('next-refresh-lbl').textContent = `Próxima atualização em ${countdown}s…`;
+function updateCountdownDisplay() {
+  document.getElementById('stat-countdown').textContent = `🔄 Auto-refresh em ${refreshSeconds}s`;
 }
 
-function tickCountdown() {
-  countdown--;
-  if (countdown <= 0) {
-    loadRanking();
+function countdownTick() {
+  refreshSeconds--;
+  if (refreshSeconds <= 0) {
+    fetchRankingData();
   } else {
-    updateCountdownUI();
+    updateCountdownDisplay();
   }
 }
 
-/* ── Init ─────────────────────────────────────────────────── */
-loadRanking();
-setInterval(tickCountdown, 1000);
+// Inicialização imediata
+fetchRankingData();
+setInterval(countdownTick, 1000);
 </script>
 </body>
 </html>

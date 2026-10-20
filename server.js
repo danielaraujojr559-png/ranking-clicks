@@ -196,11 +196,21 @@ async function handler(req, res) {
   // GET / ou /ranking → Interface Web HTML
   // -------------------------------------------------------------------------
   if (req.method === 'GET' && (url.pathname === '/ranking' || url.pathname === '/')) {
-    try {
-      const html = fs.readFileSync(path.join(__dirname, 'ranking.html'), 'utf8');
+    const candidates = [
+      path.join(__dirname, 'ranking.html'),
+      path.join(process.cwd(), 'ranking.html'),
+      path.join(process.cwd(), 'backend', 'ranking.html')
+    ];
+    let html = null;
+    for (const p of candidates) {
+      if (fs.existsSync(p)) {
+        try { html = fs.readFileSync(p, 'utf8'); break; } catch (_) {}
+      }
+    }
+    if (html) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(html);
-    } catch {
+    } else {
       res.writeHead(500, { 'Content-Type': 'text/plain' });
       res.end('Erro ao carregar ranking.html');
     }
