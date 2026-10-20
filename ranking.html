@@ -6,9 +6,9 @@
 <title>MouseClickCounter - Portal Oficial (Frutiger Aero 2005–2013 · CARI Archive)</title>
 <style>
 /* =============================================================================
-   FRUTIGER AERO & ASADAL DESIGN (2005–2013) — CARI OFFICIAL AESTHETICS TAXONOMY
-   Pillars: Macro Nature, Vista Aurora Waves, Dewdrop Bokeh, Realistic Aero Glass,
-   Skeuomorphic 50/50 Glossy Gel, WMP11 Mirrored Ribbon & Crystal Audio Synthesis.
+   FRUTIGER AERO & ASADAL LIQUID GLASS ARCHIVE (2005–2013)
+   CARI Taxonomy: Pure Skeuomorphism, 3D Rendered Elements, Zero Text Emojis,
+   Cobalt Blue MP3 Gadget, Glass-encased Morpho Butterfly & Liquid Glass Tubes.
    ============================================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800&display=swap');
@@ -20,93 +20,91 @@
 }
 
 :root {
-  /* CARI Frutiger Aero Official Palette */
-  --sky-deep:     #004899;
-  --sky-azure:    #0078d7;
-  --sky-cyan:     #38b6ff;
-  --sky-light:    #b5f2ff;
-
-  --aurora-cyan:  #00e5ff;
-  --aurora-turq:  #00b4d8;
-  --aurora-mint:  #80ffdb;
-
-  --grass-sun:    #aacc00;
-  --grass-fresh:  #55a630;
-  --grass-deep:   #2b9348;
-
-  --font-cari:    'Segoe UI', 'Frutiger', 'Trebuchet MS', 'Tahoma', sans-serif;
+  --sky-deep:      #003882;
+  --sky-azure:     #0072ce;
+  --sky-cyan:      #29b6f6;
+  --sky-tropical:  #80d8ff;
+  --ocean-blue:    #0091ea;
+  --ocean-deep:    #005b9f;
+  --grass-sun:     #9ccc65;
+  --grass-fresh:   #4caf50;
+  --grass-deep:    #2e7d32;
+  --font-aero:     'Segoe UI', 'Frutiger', 'Trebuchet MS', 'Tahoma', sans-serif;
 }
 
 html, body {
   min-height: 100vh;
-  font-family: var(--font-cari);
+  font-family: var(--font-aero);
   overflow-x: hidden;
 }
 
-/* ── 1. CENÁRIO ESTILO ASADAL / VISTA (MACRO NATUREZA + AURORA) ─ */
+/* ── 1. CENÁRIO RICO EM CAMADAS (CÉU, OCEANO TROPICAL, COLINAS) ─ */
 body {
   position: relative;
-  background: linear-gradient(
-    180deg,
-    var(--sky-deep)   0%,
-    var(--sky-azure)  28%,
-    var(--sky-cyan)   48%,
-    var(--sky-light)  62%,
-    var(--grass-sun)  66%,
-    var(--grass-fresh) 82%,
-    var(--grass-deep) 100%
-  );
+  background:
+    /* Reflexos de luz na água caustics e céu */
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.45) 0%, transparent 70%),
+    linear-gradient(
+      180deg,
+      var(--sky-deep)     0%,
+      var(--sky-azure)    24%,
+      var(--sky-cyan)     44%,
+      var(--sky-tropical) 58%,
+      var(--ocean-blue)   60%,
+      var(--grass-sun)    66%,
+      var(--grass-fresh)  82%,
+      var(--grass-deep)   100%
+    );
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 20px 14px 48px;
+  padding: 18px 12px 50px;
 }
 
-/* Colinas de relva fresca iluminada pelo sol (Asadal style) */
-.asadal-hills {
+/* Ondas do mar tropical e colinas com iluminação Asadal */
+.landscape-layers {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 38vh;
+  height: 42vh;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
 }
 
-.asadal-hills svg {
+.landscape-layers svg {
   width: 100%;
   height: 100%;
   preserve-aspect-ratio: none;
 }
 
-/* Aurora Boreal Asadal com tons terciários (#00e5ff, #00b4d8, #80ffdb) */
-.vista-aurora-ribbons {
+/* Feixes de Luz Aurora Asadal (Ciano, Turquesa e Verde-Luz) */
+.aurora-ribbons {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 2;
   background:
-    radial-gradient(ellipse 95% 65% at 75% 20%, rgba(0, 229, 255, 0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 80% 55% at 20% 35%, rgba(128, 255, 219, 0.30) 0%, transparent 55%),
-    radial-gradient(ellipse 65% 45% at 50% 15%, rgba(0, 180, 216, 0.25) 0%, transparent 60%),
-    linear-gradient(128deg,
+    radial-gradient(ellipse 90% 60% at 75% 18%, rgba(0, 229, 255, 0.38) 0%, transparent 60%),
+    radial-gradient(ellipse 75% 55% at 20% 32%, rgba(128, 255, 219, 0.32) 0%, transparent 55%),
+    linear-gradient(130deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.12) 18%,
-      transparent 22%,
-      rgba(0, 229, 255, 0.20) 36%,
-      rgba(128, 255, 219, 0.18) 46%,
-      transparent 54%,
-      rgba(255, 255, 255, 0.10) 68%,
-      transparent 76%
+      rgba(255, 255, 255, 0.15) 16%,
+      transparent 20%,
+      rgba(0, 229, 255, 0.22) 34%,
+      rgba(128, 255, 219, 0.20) 44%,
+      transparent 52%,
+      rgba(255, 255, 255, 0.12) 66%,
+      transparent 74%
     );
   mix-blend-mode: screen;
 }
 
-/* ── EFEITO BOKEH (CÍRCULOS SUAVES DE LUZ SOLAR) ───────────── */
-.bokeh-layer {
+/* ── CÍRCULOS DE BOKEH SOLAR SUAVES ────────────────────────── */
+.bokeh-canvas {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -117,26 +115,25 @@ body {
 .bokeh-orb {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(200, 245, 255, 0.45) 50%, transparent 80%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(185, 240, 255, 0.40) 45%, transparent 75%);
   filter: blur(4px);
   opacity: 0.35;
-  animation: bokehPulse 8s ease-in-out infinite alternate;
+  animation: bokehFloat 9s ease-in-out infinite alternate;
 }
 
-.bokeh-orb:nth-child(1) { width: 140px; height: 140px; top: 8%;  left: 12%; animation-duration: 9s; }
-.bokeh-orb:nth-child(2) { width: 220px; height: 220px; top: 15%; right: 10%; animation-duration: 11s; animation-delay: 2s; }
-.bokeh-orb:nth-child(3) { width: 90px;  height: 90px;  top: 35%; left: 35%; animation-duration: 7s;  animation-delay: 1s; }
-.bokeh-orb:nth-child(4) { width: 180px; height: 180px; top: 48%; right: 28%; animation-duration: 12s; animation-delay: 3s; }
-.bokeh-orb:nth-child(5) { width: 120px; height: 120px; top: 22%; left: 75%; animation-duration: 8.5s; animation-delay: 4s; }
+.bokeh-orb:nth-child(1) { width: 140px; height: 140px; top: 10%; left: 8%;  animation-duration: 9s; }
+.bokeh-orb:nth-child(2) { width: 220px; height: 220px; top: 16%; right: 8%; animation-duration: 11s; animation-delay: 2s; }
+.bokeh-orb:nth-child(3) { width: 90px;  height: 90px;  top: 36%; left: 30%; animation-duration: 7s;  animation-delay: 1s; }
+.bokeh-orb:nth-child(4) { width: 170px; height: 170px; top: 48%; right: 24%; animation-duration: 12s; animation-delay: 3s; }
 
-@keyframes bokehPulse {
-  0%   { transform: scale(0.9) translate(0, 0); opacity: 0.28; }
-  50%  { transform: scale(1.1) translate(15px, -10px); opacity: 0.42; }
-  100% { transform: scale(0.95) translate(-10px, 8px); opacity: 0.32; }
+@keyframes bokehFloat {
+  0%   { transform: translate(0, 0) scale(0.92); opacity: 0.30; }
+  50%  { transform: translate(16px, -12px) scale(1.08); opacity: 0.45; }
+  100% { transform: translate(-12px, 8px) scale(0.96); opacity: 0.32; }
 }
 
-/* ── BOLHAS DE ORVALHO / ÁGUA FLUTUANTES (CRISTALINAS) ──────── */
-.bubbles-container {
+/* ── 2. ELEMENTOS FLUTUANTES 3D (GLOBO, CORAÇÃO, BORBOLETA) ── */
+.floating-elements-layer {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -144,6 +141,86 @@ body {
   overflow: hidden;
 }
 
+/* Globo Terrestre Glossy 3D (Canto Superior Esquerdo) */
+.floating-globe {
+  position: absolute;
+  top: 32px;
+  left: 24px;
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, #00b0ff 0%, #0077c2 55%, #003c8f 100%);
+  box-shadow:
+    0 10px 30px rgba(0, 80, 180, 0.50),
+    0 0 25px rgba(0, 229, 255, 0.65),
+    inset -8px -8px 18px rgba(0, 20, 60, 0.70),
+    inset 4px 4px 10px rgba(255, 255, 255, 0.85);
+  animation: globeHover 7s ease-in-out infinite alternate;
+}
+
+.floating-globe svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+@keyframes globeHover {
+  0%   { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(12px) rotate(4deg); }
+}
+
+/* Coração de Vidro Líquido Cromado (Liquid Glass Heart) */
+.floating-glass-heart {
+  position: absolute;
+  top: 130px;
+  right: 28px;
+  width: 76px;
+  height: 76px;
+  animation: heartFloat 6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 10px 20px rgba(0, 60, 140, 0.45));
+}
+
+@keyframes heartFloat {
+  0%   { transform: translateY(0) scale(0.96) rotate(-5deg); }
+  100% { transform: translateY(-14px) scale(1.04) rotate(5deg); }
+}
+
+/* Orbe de Cristal com Borboleta Azul (Morpho) */
+.floating-butterfly-orb {
+  position: absolute;
+  bottom: 120px;
+  left: 36px;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(180, 240, 255, 0.4) 35%, rgba(0, 140, 255, 0.15) 70%, rgba(0, 60, 160, 0.25) 100%);
+  box-shadow:
+    inset 0 0 12px rgba(255, 255, 255, 0.9),
+    0 10px 25px rgba(0, 80, 160, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: butterflyFloat 8s ease-in-out infinite alternate;
+}
+
+.floating-butterfly-orb::after {
+  content: '';
+  position: absolute;
+  top: 14%; left: 20%;
+  width: 30%; height: 20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.7) 60%, transparent 100%);
+  transform: rotate(-35deg);
+}
+
+@keyframes butterflyFloat {
+  0%   { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-16px) scale(1.05); }
+}
+
+/* Bolhas de água límpida subindo */
 .bubble {
   position: absolute;
   bottom: -110px;
@@ -152,7 +229,7 @@ body {
     circle at 35% 30%,
     rgba(255, 255, 255, 0.90) 0%,
     rgba(190, 240, 255, 0.55) 28%,
-    rgba(120, 210, 255, 0.22) 65%,
+    rgba(120, 210, 255, 0.20) 65%,
     rgba(0, 140, 240, 0.12) 100%
   );
   box-shadow:
@@ -162,31 +239,24 @@ body {
   animation: floatUpAnimation linear infinite;
 }
 
-/* Brilho branco curvo no canto superior esquerdo */
 .bubble::after {
   content: '';
   position: absolute;
-  top: 15%;
-  left: 20%;
-  width: 28%;
-  height: 22%;
+  top: 15%; left: 20%;
+  width: 28%; height: 22%;
   border-radius: 50%;
   background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
   transform: rotate(-35deg);
 }
 
-.bubble:nth-child(1)  { width: 34px; height: 34px; left: 4%;  animation-duration: 13s; animation-delay: 0s; }
-.bubble:nth-child(2)  { width: 20px; height: 20px; left: 14%; animation-duration: 9s;  animation-delay: 2.5s; }
-.bubble:nth-child(3)  { width: 48px; height: 48px; left: 24%; animation-duration: 16s; animation-delay: 1.2s; }
-.bubble:nth-child(4)  { width: 16px; height: 16px; left: 36%; animation-duration: 10s; animation-delay: 4.8s; }
-.bubble:nth-child(5)  { width: 38px; height: 38px; left: 49%; animation-duration: 14s; animation-delay: 0.5s; }
-.bubble:nth-child(6)  { width: 26px; height: 26px; left: 60%; animation-duration: 11s; animation-delay: 3.2s; }
-.bubble:nth-child(7)  { width: 56px; height: 56px; left: 71%; animation-duration: 18s; animation-delay: 1.8s; }
-.bubble:nth-child(8)  { width: 18px; height: 18px; left: 82%; animation-duration: 8.5s; animation-delay: 5.5s; }
-.bubble:nth-child(9)  { width: 42px; height: 42px; left: 91%; animation-duration: 15s; animation-delay: 2.1s; }
-.bubble:nth-child(10) { width: 24px; height: 24px; left: 8%;  animation-duration: 12s; animation-delay: 7s; }
-.bubble:nth-child(11) { width: 50px; height: 50px; left: 42%; animation-duration: 17s; animation-delay: 8.5s; }
-.bubble:nth-child(12) { width: 22px; height: 22px; left: 77%; animation-duration: 10.5s; animation-delay: 6.2s; }
+.bubble:nth-child(1)  { width: 34px; height: 34px; left: 6%;  animation-duration: 13s; animation-delay: 0s; }
+.bubble:nth-child(2)  { width: 22px; height: 22px; left: 16%; animation-duration: 9s;  animation-delay: 2.5s; }
+.bubble:nth-child(3)  { width: 46px; height: 46px; left: 26%; animation-duration: 16s; animation-delay: 1.2s; }
+.bubble:nth-child(4)  { width: 18px; height: 18px; left: 38%; animation-duration: 10s; animation-delay: 4.8s; }
+.bubble:nth-child(5)  { width: 36px; height: 36px; left: 52%; animation-duration: 14s; animation-delay: 0.5s; }
+.bubble:nth-child(6)  { width: 28px; height: 28px; left: 66%; animation-duration: 11s; animation-delay: 3.2s; }
+.bubble:nth-child(7)  { width: 52px; height: 52px; left: 78%; animation-duration: 18s; animation-delay: 1.8s; }
+.bubble:nth-child(8)  { width: 20px; height: 20px; left: 88%; animation-duration: 8.5s; animation-delay: 5.5s; }
 
 @keyframes floatUpAnimation {
   0% { transform: translateY(0) translateX(0) scale(0.9); opacity: 0.8; }
@@ -196,42 +266,227 @@ body {
   100% { transform: translateY(-115vh) translateX(0) scale(0.95); opacity: 0; }
 }
 
-/* ── 2. JANELA DE VIDRO TRANSLÚCIDO (AERO GLASS REALISTA) ──── */
+/* ── 3. REPRODUTOR DE ÁUDIO SKEUOMÓRFICO: GADGET MP3 PLAYER AZUL ─ */
+.mp3-player-gadget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50;
+  width: 290px;
+  border-radius: 26px;
+  background: linear-gradient(
+    145deg,
+    #2171c7 0%,
+    #0c4da2 45%,
+    #062a63 80%,
+    #031633 100%
+  );
+  border: 3px solid #b8d2eb;
+  box-shadow:
+    0 12px 35px rgba(0, 20, 50, 0.65),
+    inset 0 3px 6px rgba(255, 255, 255, 0.85),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.65),
+    0 0 20px rgba(0, 180, 255, 0.40);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  user-select: none;
+}
+
+/* Brilho de carcaça plástica de acrílico translúcido */
+.mp3-player-gadget::before {
+  content: '';
+  position: absolute;
+  top: 3px; left: 8px; right: 8px;
+  height: 45%;
+  border-radius: 20px 20px 60px 60px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
+.mp3-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #a0d4ff;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.mp3-header span.brand {
+  color: #ffffff;
+  text-shadow: 0 0 8px #00e5ff;
+}
+
+/* Visor LCD Azul Escuro com letras ciano neon */
+.mp3-lcd-screen {
+  border-radius: 8px;
+  background: #031326;
+  border: 2px solid #00508c;
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.85),
+    0 1px 0 rgba(255, 255, 255, 0.4);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mp3-lcd-row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #00f0ff;
+  text-shadow: 0 0 6px #00f0ff;
+}
+
+.mp3-lcd-track {
+  font-size: 10px;
+  color: #7ce8ff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mp3-lcd-equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 14px;
+  margin-top: 2px;
+}
+
+.mp3-eq-bar {
+  flex: 1;
+  background: #00ff66;
+  box-shadow: 0 0 6px #00ff66;
+  border-radius: 1px;
+  animation: eqBounceAnim 0.7s ease-in-out infinite alternate;
+}
+
+.mp3-eq-bar:nth-child(1) { height: 6px;  animation-delay: 0.1s; }
+.mp3-eq-bar:nth-child(2) { height: 12px; animation-delay: 0.3s; }
+.mp3-eq-bar:nth-child(3) { height: 9px;  animation-delay: 0.5s; }
+.mp3-eq-bar:nth-child(4) { height: 14px; animation-delay: 0.2s; }
+.mp3-eq-bar:nth-child(5) { height: 8px;  animation-delay: 0.4s; }
+.mp3-eq-bar:nth-child(6) { height: 13px; animation-delay: 0.15s; }
+
+@keyframes eqBounceAnim {
+  0%   { height: 3px; }
+  100% { height: 14px; }
+}
+
+/* Controles físicos prateados e botão rotativo */
+.mp3-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mp3-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #7890a8;
+  background: linear-gradient(145deg, #ffffff 0%, #d8e4f0 45%, #9cb0c4 100%);
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.45),
+    inset 0 1px 2px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.mp3-btn:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
+}
+
+.mp3-btn:active {
+  transform: scale(0.94);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.mp3-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #003366;
+}
+
+/* Botão rotativo principal com anel LED verde-neon */
+.mp3-jog-dial {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #b8c8d8 50%, #607588 100%);
+  border: 2px solid #00ff66;
+  box-shadow:
+    0 0 12px #00ff66,
+    inset 0 2px 4px #ffffff,
+    0 3px 6px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.mp3-jog-dial:hover {
+  box-shadow: 0 0 18px #00ff66, inset 0 2px 6px #ffffff;
+}
+
+.mp3-jog-dial svg {
+  width: 18px;
+  height: 18px;
+  fill: #00441b;
+}
+
+/* ── 4. JANELA PRINCIPAL COM TEXTURA LIQUID GLASS ───────────── */
 .aero-window {
   position: relative;
   z-index: 10;
   width: 100%;
   max-width: 980px;
-  border-radius: 8px;
+  border-radius: 10px;
 
-  /* Efeito de Vidro Fosco de Alta Fidelidade */
-  backdrop-filter: blur(18px) saturate(190%);
-  -webkit-backdrop-filter: blur(18px) saturate(190%);
-  background: rgba(220, 240, 255, 0.45);
+  /* Efeito de Vidro Líquido Refletivo */
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  background: rgba(220, 242, 255, 0.48);
 
-  /* Moldura chanfrada com bisel luminoso */
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.90);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.90),
-    inset 0 -1px 0 rgba(0, 80, 150, 0.40),
-    0 20px 50px rgba(0, 30, 60, 0.50);
-  outline: 1px solid rgba(0, 60, 110, 0.65);
+    inset 0 2px 4px rgba(255, 255, 255, 0.95),
+    inset 0 -2px 4px rgba(0, 70, 160, 0.50),
+    inset 2px 0 3px rgba(255, 255, 255, 0.70),
+    inset -2px 0 3px rgba(0, 70, 160, 0.40),
+    0 25px 60px rgba(0, 35, 80, 0.55);
+  outline: 1px solid rgba(0, 70, 130, 0.65);
   outline-offset: 1px;
   overflow: hidden;
 }
 
-/* Reflexo de vidro diagonal atravessando a moldura */
+/* Reflexo de vidro líquido diagonal */
 .aero-window::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.05) 48%, transparent 48.1%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.05) 48%, transparent 48.1%);
   pointer-events: none;
   z-index: 2;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
-/* ── BARRA DE TÍTULO COMPLETA DO WINDOWS VISTA / 7 ─────────── */
+/* ── BARRA DE TÍTULO WINDOWS 7 AERO ───────────────────────── */
 .title-bar {
   position: relative;
   z-index: 5;
@@ -240,13 +495,13 @@ body {
   padding: 8px 12px 8px 14px;
   background: linear-gradient(
     180deg,
-    rgba(215, 238, 255, 0.85) 0%,
-    rgba(140, 200, 255, 0.70) 50%,
-    rgba(80, 160, 245, 0.65) 50.1%,
-    rgba(50, 135, 235, 0.75) 100%
+    rgba(215, 238, 255, 0.88) 0%,
+    rgba(140, 200, 255, 0.72) 50%,
+    rgba(80, 160, 245, 0.68) 50.1%,
+    rgba(50, 135, 235, 0.78) 100%
   );
   border-bottom: 1px solid rgba(0, 70, 140, 0.45);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.70) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset;
   user-select: none;
 }
 
@@ -263,8 +518,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
   flex-shrink: 0;
+}
+
+.title-icon-orb svg {
+  width: 14px;
+  height: 14px;
+  fill: #ffffff;
 }
 
 .title-text {
@@ -277,62 +537,6 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-/* Mini Player Aero Widget no topo */
-.aero-mini-player {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(0, 30, 60, 0.45);
-  padding: 3px 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.40);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
-  margin-right: 10px;
-}
-
-.equalizer-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 12px;
-}
-
-.eq-bar {
-  width: 3px;
-  background: #39ff14;
-  border-radius: 1px;
-  box-shadow: 0 0 4px #39ff14;
-  animation: eqBounce 0.8s ease-in-out infinite alternate;
-}
-
-.eq-bar:nth-child(1) { height: 6px;  animation-delay: 0.1s; }
-.eq-bar:nth-child(2) { height: 11px; animation-delay: 0.3s; }
-.eq-bar:nth-child(3) { height: 8px;  animation-delay: 0.5s; }
-.eq-bar:nth-child(4) { height: 12px; animation-delay: 0.2s; }
-
-@keyframes eqBounce {
-  0%   { height: 3px; }
-  100% { height: 12px; }
-}
-
-.btn-sound-toggle {
-  background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.25) 50%, rgba(0,180,255,0.65) 50.1%, rgba(0,100,220,0.85) 100%);
-  border: 1px solid rgba(0,60,120,0.6);
-  border-radius: 10px;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: #ffffff;
-  padding: 2px 8px;
-  cursor: pointer;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
-  transition: all 0.15s ease;
-}
-
-.btn-sound-toggle:hover {
-  box-shadow: 0 0 8px rgba(0, 210, 255, 0.9);
-  filter: brightness(1.15);
 }
 
 .win7-controls {
@@ -383,7 +587,7 @@ body {
   box-shadow: 0 0 14px rgba(255, 60, 30, 0.95);
 }
 
-/* ── 3. BARRA DE NAVEGAÇÃO MEDIA PLAYER 11 (RIBBON ESCURA ESPELHADA) */
+/* ── BARRA DE NAVEGAÇÃO WMP11 RIBBON ESCURA COM ÍCONES 3D ── */
 .wmp-ribbon-bar {
   position: relative;
   z-index: 4;
@@ -407,12 +611,12 @@ body {
 .wmp-tab-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   padding: 11px 24px;
   border: none;
   background: transparent;
   cursor: pointer;
-  font-family: var(--font-cari);
+  font-family: var(--font-aero);
   font-size: 13px;
   font-weight: 700;
   color: #b0cce8;
@@ -448,7 +652,13 @@ body {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
-/* ── 4. BANNER DE DOWNLOAD (SKEUOMÓRFICO GEL 50/50) ─────────── */
+.wmp-tab-btn svg.tab-icon {
+  width: 18px;
+  height: 18px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+}
+
+/* ── 5. BANNER DE DOWNLOAD COM BOTÃO GEL GIGANTE ───────────── */
 .download-hero-banner {
   margin: 12px 14px 6px;
   padding: 16px 20px;
@@ -488,7 +698,7 @@ body {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .download-banner-info p {
@@ -497,7 +707,7 @@ body {
   margin-top: 4px;
 }
 
-/* BOTÃO GIGANTE VERDE-LIMA AQUA / GEL (CORTE EXATO 50/50) */
+/* BOTÃO GIGANTE GEL VERDE-LIMA AQUA COM CORTE 50/50 */
 .btn-emerald-download {
   display: inline-flex;
   flex-direction: column;
@@ -509,11 +719,10 @@ body {
   cursor: pointer;
   text-decoration: none;
   color: #ffffff;
-  font-family: var(--font-cari);
+  font-family: var(--font-aero);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
   position: relative;
 
-  /* Corte seco aos 50% */
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.80) 0%,
@@ -550,17 +759,24 @@ body {
   gap: 8px;
 }
 
+.btn-emerald-download-title svg {
+  width: 18px;
+  height: 18px;
+  fill: #ffffff;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+}
+
 .btn-emerald-download-sub {
   font-size: 11px;
   font-weight: 600;
   opacity: 0.92;
 }
 
-/* ── 5. ÁREA CLARA INSET DA JANELA ─────────────────────────── */
+/* ── 6. ÁREA CLARA INSET DA JANELA (LIQUID GLASS) ─────────── */
 .aero-content-area {
   position: relative;
   z-index: 3;
-  background: rgba(255, 255, 255, 0.90);
+  background: rgba(255, 255, 255, 0.92);
   margin: 10px 14px 12px;
   border-radius: 6px;
   border: 1px solid rgba(0, 70, 140, 0.25);
@@ -582,11 +798,14 @@ body {
 }
 
 .aqua-pill-btn {
-  padding: 6px 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 18px;
   border-radius: 18px;
   border: 1px solid rgba(0, 65, 130, 0.65);
   cursor: pointer;
-  font-family: var(--font-cari);
+  font-family: var(--font-aero);
   font-size: 12.5px;
   font-weight: 700;
   color: #003060;
@@ -605,6 +824,12 @@ body {
   transition: all 0.15s ease;
 }
 
+.aqua-pill-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: #003875;
+}
+
 .aqua-pill-btn:hover {
   box-shadow: 0 0 12px rgba(0, 210, 255, 0.9);
   filter: brightness(1.12);
@@ -616,6 +841,10 @@ body {
   box-shadow: 0 0 12px rgba(0, 210, 255, 0.95), 0 2px 0 rgba(255, 255, 255, 0.9) inset;
 }
 
+.aqua-pill-btn.active svg {
+  fill: #001f4d;
+}
+
 .aqua-pill-btn.btn-refresh {
   margin-left: auto;
   color: #ffffff;
@@ -624,12 +853,11 @@ body {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 
-.aqua-pill-btn.btn-refresh:hover {
-  box-shadow: 0 0 12px rgba(40, 230, 90, 0.95);
-  filter: brightness(1.1);
+.aqua-pill-btn.btn-refresh svg {
+  fill: #ffffff;
 }
 
-/* ── PÓDIO TOP 3 COM ORBES 3D ──────────────────────────────── */
+/* ── PÓDIO TOP 3 COM ORBES 3D E COROAS METÁLICAS ───────────── */
 .podium-container {
   display: flex;
   justify-content: center;
@@ -673,16 +901,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+}
+
+.podium-orb svg {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
 }
 
 .podium-orb::after {
   content: '';
   position: absolute;
-  top: 14%;
-  left: 22%;
-  width: 32%;
-  height: 22%;
+  top: 14%; left: 22%;
+  width: 32%; height: 22%;
   border-radius: 50%;
   background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
   transform: rotate(-35deg);
@@ -692,16 +923,19 @@ body {
   background: radial-gradient(circle at 35% 30%, #fffbe6 0%, #ffd700 35%, #d4a017 65%, #7a5500 100%);
   box-shadow: 0 4px 18px rgba(212, 160, 23, 0.75), inset 0 2px 6px rgba(255, 255, 210, 0.9);
 }
+.orb-gold svg { fill: #ffffff; }
 
 .orb-silver {
   background: radial-gradient(circle at 35% 30%, #ffffff 0%, #ebebeb 30%, #b8b8b8 60%, #4a4a4a 100%);
   box-shadow: 0 4px 18px rgba(160, 160, 160, 0.65), inset 0 2px 6px rgba(255, 255, 255, 0.95);
 }
+.orb-silver svg { fill: #ffffff; }
 
 .orb-bronze {
   background: radial-gradient(circle at 35% 30%, #fff2e0 0%, #d48f52 30%, #a85f24 60%, #522700 100%);
   box-shadow: 0 4px 18px rgba(168, 95, 36, 0.65), inset 0 2px 6px rgba(255, 225, 180, 0.85);
 }
+.orb-bronze svg { fill: #ffffff; }
 
 .podium-title-rank {
   font-size: 11px;
@@ -730,13 +964,13 @@ body {
   margin-bottom: 8px;
 }
 
-/* Barras de progresso estilo Windows Vista com feixes de luz animados */
+/* Barras de progresso estilo tubo de vidro líquido verde brillante */
 .vista-progress-track {
   height: 14px;
   border-radius: 7px;
-  background: rgba(0, 0, 0, 0.14);
-  border: 1px solid rgba(0, 0, 0, 0.22);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.30);
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(0, 0, 0, 0.28);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   position: relative;
 }
@@ -746,12 +980,12 @@ body {
   border-radius: 6px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.85) 0%,
-    rgba(145, 255, 115, 0.85) 48%,
-    rgba(35, 195, 35, 0.95) 50%,
-    rgba(12, 130, 12, 1) 100%
+    rgba(255, 255, 255, 0.90) 0%,
+    rgba(145, 255, 115, 0.90) 48%,
+    rgba(35, 215, 35, 0.98) 50%,
+    rgba(10, 140, 10, 1) 100%
   );
-  box-shadow: 0 0 10px rgba(35, 215, 35, 0.8);
+  box-shadow: 0 0 12px rgba(35, 235, 35, 0.85);
   position: relative;
   transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -759,11 +993,9 @@ body {
 .vista-progress-fill::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: -60%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.70), transparent);
+  top: 0; left: -60%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
   animation: vistaShineAnimation 2.2s linear infinite;
 }
 
@@ -772,7 +1004,7 @@ body {
   100% { left: 130%; }
 }
 
-/* ── TABELA COM CABEÇALHOS CHANFRADOS ──────────────────────── */
+/* ── TABELA COM CABEÇALHOS AZUL SAFIRA CHANFRADOS ──────────── */
 .ranking-table-scroll {
   padding: 8px 12px 14px;
   overflow-x: auto;
@@ -851,7 +1083,7 @@ tbody tr:hover td {
 
 .player-nickname { font-weight: 600; color: #002255; }
 
-/* VISOR LCD SKEUOMÓRFICO PARA OS NÚMEROS */
+/* VISOR LCD SKEUOMÓRFICO */
 .lcd-vitrificado {
   display: inline-block;
   padding: 4px 12px;
@@ -872,7 +1104,7 @@ tbody tr:hover td {
   color: #001f55;
 }
 
-/* ── 6. ABA: COMO O SOFTWARE FUNCIONA (AERO CARDS) ─────────── */
+/* ── 7. SEÇÃO 'COMO O SOFTWARE FUNCIONA' COM ÍCONES 3D ─────── */
 .how-it-works-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -899,8 +1131,15 @@ tbody tr:hover td {
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.aero-card-header svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffffff;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
 }
 
 .aero-card-body {
@@ -918,7 +1157,7 @@ tbody tr:hover td {
   font-weight: 700;
 }
 
-/* ── 7. ABA: DOWNLOAD & INSTALAÇÃO ─────────────────────────── */
+/* ── 8. SEÇÃO 'DOWNLOAD & INSTALAÇÃO' ──────────────────────── */
 .download-page-wrap {
   padding: 20px;
   display: flex;
@@ -992,7 +1231,7 @@ tbody tr:hover td {
   margin-top: 2px;
 }
 
-/* ── 8. STATUS BAR METÁLICA DO WINDOWS ─────────────────────── */
+/* ── STATUS BAR METÁLICA DO WINDOWS COM ÍCONES ─────────────── */
 .win-status-bar {
   position: relative;
   z-index: 4;
@@ -1014,6 +1253,12 @@ tbody tr:hover td {
   padding: 0 14px;
   border-right: 1px solid rgba(0, 60, 120, 0.20);
   box-shadow: 1px 0 0 rgba(255, 255, 255, 0.60);
+}
+
+.status-cell svg {
+  width: 14px;
+  height: 14px;
+  fill: #003366;
 }
 
 .status-cell:first-child { padding-left: 2px; }
@@ -1073,11 +1318,11 @@ tbody tr:hover td {
 
 @keyframes spinCycle { to { transform: rotate(360deg); } }
 
-@media (max-width: 650px) {
+@media (max-width: 750px) {
+  .mp3-player-gadget { display: none; }
+  .floating-globe, .floating-glass-heart, .floating-butterfly-orb { display: none; }
   .podium-container { flex-direction: column; align-items: center; }
   .podium-card { max-width: 95%; transform: none !important; }
-  .title-text { font-size: 11.5px; }
-  .status-cell { padding: 0 8px; }
   .download-hero-banner { flex-direction: column; text-align: center; }
   .btn-emerald-download { width: 100%; }
 }
@@ -1085,66 +1330,207 @@ tbody tr:hover td {
 </head>
 <body>
 
-<!-- Colinas de relva Asadal fresca ao horizonte -->
-<div class="asadal-hills">
+<!-- SVG DEFS COM GRADIENTES E FILTROS 3D GLOSSY REAIS -->
+<svg style="display: none;">
+  <defs>
+    <!-- Ícone Troféu Ouro 3D -->
+    <g id="icon-trophy">
+      <path d="M5 3h14v2h-1.5c-.3 3.5-2.2 6.5-5.5 7.5v2.5h3v2H9v-2h3V12.5C8.7 11.5 6.8 8.5 6.5 5H5V3zm2 2c.3 2.7 1.8 5 4.5 5.8V5H7zm10 0h-4.5v5.8c2.7-.8 4.2-3.1 4.5-5.8z"/>
+    </g>
+    <!-- Ícone Engrenagem Cyan 3D -->
+    <g id="icon-gears">
+      <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+    </g>
+    <!-- Ícone CD-ROM com anéis de refração -->
+    <g id="icon-cdrom">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-6c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/>
+    </g>
+    <!-- Ícone Seta Download 3D -->
+    <g id="icon-download-arrow">
+      <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+    </g>
+    <!-- Ícone Rato 3D -->
+    <g id="icon-mouse">
+      <path d="M13 2H11C7.69 2 5 4.69 5 8v8c0 3.31 2.69 6 6 6h2c3.31 0 6-2.69 6-6V8c0-3.31-2.69-6-6-6zm4 14c0 2.21-1.79 4-4 4h-2c-2.21 0-4-1.79-4-4V8c0-1.85 1.28-3.41 3-3.86V9h2V4.02c.32-.02.66-.02 1 0V9h2V4.14c1.72.45 3 2.01 3 3.86v8z"/>
+    </g>
+    <!-- Ícone Chama / Fogo 3D -->
+    <g id="icon-flame">
+      <path d="M12 2.5C9.5 7 6 9.5 6 14c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4.5-3.5-7-6-11.5zm0 15.5c-1.66 0-3-1.34-3-3 0-1.8 1.5-3.2 3-5.2 1.5 2 3 3.4 3 5.2 0 1.66-1.34 3-3 3z"/>
+    </g>
+    <!-- Ícone Sincronização 3D -->
+    <g id="icon-sync">
+      <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+    </g>
+    <!-- Ícone Relâmpago 3D -->
+    <g id="icon-lightning">
+      <path d="M7 2v11h3v9l7-12h-4l4-8H7z"/>
+    </g>
+    <!-- Ícone Foguete 3D -->
+    <g id="icon-rocket">
+      <path d="M12 2.5s-4 4-4 9.5c0 2.5 1 4.5 2 5.5v3.5l2-1 2 1V17.5c1-1 2-3 2-5.5 0-5.5-4-9.5-4-9.5zm-5 13l-3 3.5v1.5l4-1-1-4zm10 0l-1 4 4 1v-1.5l-3-3.5zM12 9.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+    </g>
+    <!-- Ícone Cadeado 3D -->
+    <g id="icon-lock">
+      <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+    </g>
+    <!-- Ícone Paleta Arte 3D -->
+    <g id="icon-palette">
+      <path d="M12 3C6.5 3 2 7.5 2 13c0 3.9 3.1 7 7 7 1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.4-.3-.4-.5-.9-.5-1.4 0-1.1.9-2 2-2h2.4c3.6 0 6.6-3 6.6-6.6 0-5-4.5-9.6-9-9.6zm-5.5 9c-.8 0-1.5-.7-1.5-1.5S5.7 9 6.5 9s1.5.7 1.5 1.5S7.3 12 6.5 12zm3-4C8.7 8 8 7.3 8 6.5S8.7 5 9.5 5s1.5.7 1.5 1.5S10.3 8 9.5 8zm5 0c-.8 0-1.5-.7-1.5-1.5S13.7 5 14.5 5s1.5.7 1.5 1.5S15.3 8 14.5 8zm3 4c-.8 0-1.5-.7-1.5-1.5S16.7 9 17.5 9s1.5.7 1.5 1.5-.7 1.5-1.5 1.5z"/>
+    </g>
+    <!-- Ícone Utilizador 3D -->
+    <g id="icon-users">
+      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+    </g>
+    <!-- Ícone Servidor Banco de Dados -->
+    <g id="icon-database">
+      <path d="M12 2C6.48 2 2 4.01 2 6.5v11C2 19.99 6.48 22 12 22s10-2.01 10-4.5v-11C22 4.01 17.52 2 12 2zm0 3c4.41 0 8 1.34 8 2s-3.59 2-8 2-8-1.34-8-2 3.59-2 8-2zm0 6.5c-4.41 0-8-1.34-8-2V8.18C5.64 9.28 8.64 10 12 10s6.36-.72 8-1.82v1.32c0 .66-3.59 2-8 2zm0 5.5c-4.41 0-8-1.34-8-2v-1.32c1.64 1.1 4.64 1.82 8 1.82s6.36-.72 8-1.82v1.32c0 .66-3.59 2-8 2z"/>
+    </g>
+    <!-- Ícone Coroa Ouro / Pódio -->
+    <g id="icon-crown">
+      <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ── CENÁRIO COM CAMADAS (ONDAS E COLINAS ASADAL) ─────────── -->
+<div class="landscape-layers">
   <svg viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,160 C320,80 580,240 960,140 C1200,80 1340,180 1440,160 L1440,320 L0,320 Z" fill="url(#hillGrad1)" opacity="0.85"/>
-    <path d="M0,210 C240,150 620,290 1020,190 C1280,120 1380,220 1440,200 L1440,320 L0,320 Z" fill="url(#hillGrad2)" opacity="0.95"/>
+    <!-- Camada de oceano azul tropical -->
+    <path d="M0,130 C380,50 640,210 1020,110 C1240,60 1380,150 1440,130 L1440,320 L0,320 Z" fill="#0088cc" opacity="0.45"/>
+    <!-- Colinas de relva Asadal fresca -->
+    <path d="M0,170 C320,90 580,250 960,150 C1200,90 1340,190 1440,170 L1440,320 L0,320 Z" fill="url(#hillGrad1)" opacity="0.88"/>
+    <path d="M0,220 C240,160 620,300 1020,200 C1280,130 1380,230 1440,210 L1440,320 L0,320 Z" fill="url(#hillGrad2)" opacity="0.96"/>
     <defs>
       <linearGradient id="hillGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#aacc00" stop-opacity="0.9"/>
-        <stop offset="100%" stop-color="#55a630" stop-opacity="1"/>
+        <stop offset="0%" stop-color="#9ccc65" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#4caf50" stop-opacity="1"/>
       </linearGradient>
       <linearGradient id="hillGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#55a630" stop-opacity="0.95"/>
-        <stop offset="100%" stop-color="#2b9348" stop-opacity="1"/>
+        <stop offset="0%" stop-color="#4caf50" stop-opacity="0.98"/>
+        <stop offset="100%" stop-color="#1b5e20" stop-opacity="1"/>
       </linearGradient>
     </defs>
   </svg>
 </div>
 
-<!-- Feixes de Luz Aurora Boreal Asadal (#00e5ff, #00b4d8, #80ffdb) -->
-<div class="vista-aurora-ribbons"></div>
+<!-- Feixes de Aurora Boreal Asadal -->
+<div class="aurora-ribbons"></div>
 
-<!-- Camada de Círculos Bokeh Suaves de Luz Solar -->
-<div class="bokeh-layer">
-  <div class="bokeh-orb"></div>
+<!-- Camada de Bokeh Solar -->
+<div class="bokeh-canvas">
   <div class="bokeh-orb"></div>
   <div class="bokeh-orb"></div>
   <div class="bokeh-orb"></div>
   <div class="bokeh-orb"></div>
 </div>
 
-<!-- Bolhas de orvalho / esferas de água flutuantes com reflexo curvo -->
-<div class="bubbles-container">
+<!-- ── ELEMENTOS FLUTUANTES 3D (COLAGEM FRUTIGER AERO) ─────── -->
+<div class="floating-elements-layer">
+  <!-- 1. Globo Terrestre Glossy 3D -->
+  <div class="floating-globe" title="Conexão Global Turso">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+      <!-- Paralelos e meridianos brilhantes -->
+      <ellipse cx="50" cy="50" rx="30" ry="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+      <ellipse cx="50" cy="50" rx="14" ry="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+      <line x1="4" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+      <line x1="12" y1="28" x2="88" y2="28" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+      <line x1="12" y1="72" x2="88" y2="72" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+      <!-- Brilho de corte de vidro 50% -->
+      <path d="M4,50 Q50,65 96,50 A48,48 0 0,0 4,50 Z" fill="rgba(255,255,255,0.25)"/>
+    </svg>
+  </div>
+
+  <!-- 2. Coração de Vidro Líquido Cromado 3D -->
+  <div class="floating-glass-heart" title="Pureza & Paixão Gamer">
+    <svg viewBox="0 0 80 80">
+      <defs>
+        <radialGradient id="heartGrad" cx="35%" cy="30%" r="70%">
+          <stop offset="0%" stop-color="#ffffff"/>
+          <stop offset="25%" stop-color="#a0e4ff"/>
+          <stop offset="55%" stop-color="#0091ea"/>
+          <stop offset="100%" stop-color="#002171"/>
+        </radialGradient>
+      </defs>
+      <path d="M40,70 C10,48 0,32 0,18 C0,7 8,0 20,0 C28,0 35,5 40,12 C45,5 52,0 60,0 C72,0 80,7 80,18 C80,32 70,48 40,70 Z" fill="url(#heartGrad)"/>
+      <!-- Brilho especular curvo -->
+      <path d="M22,6 C14,6 8,11 8,20 C8,28 16,40 32,54 C24,44 18,34 18,22 C18,12 24,6 30,6 Z" fill="rgba(255,255,255,0.7)"/>
+    </svg>
+  </div>
+
+  <!-- 3. Orbe com Borboleta Azul (Morpho) -->
+  <div class="floating-butterfly-orb" title="Natureza Digital">
+    <svg viewBox="0 0 40 40" style="width: 38px; height: 38px;">
+      <!-- Asas da borboleta azul -->
+      <path d="M20,18 C14,10 4,12 8,22 C10,26 18,24 20,20 Z" fill="#00e5ff" opacity="0.9"/>
+      <path d="M20,18 C26,10 36,12 32,22 C30,26 22,24 20,20 Z" fill="#00b4d8" opacity="0.9"/>
+      <path d="M20,20 C16,23 8,28 12,34 C16,38 19,28 20,22 Z" fill="#0091ea" opacity="0.85"/>
+      <path d="M20,20 C24,23 32,28 28,34 C24,38 21,28 20,22 Z" fill="#2979ff" opacity="0.85"/>
+      <!-- Corpo -->
+      <line x1="20" y1="14" x2="20" y2="28" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Bolhas de água flutuantes com reflexo especular -->
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div>
+</div>
+
+<!-- ── 4. REPRODUTOR DE ÁUDIO SKEUOMÓRFICO: GADGET MP3 PLAYER ─ -->
+<div class="mp3-player-gadget" id="aero-mp3-player">
+  <div class="mp3-header">
+    <span class="brand">AERO-SOUND</span>
+    <span id="mp3-status-txt">AUDIO STEREO</span>
+  </div>
+
+  <!-- Visor LCD Digital -->
+  <div class="mp3-lcd-screen">
+    <div class="mp3-lcd-row1">
+      <span id="mp3-timer">00:30</span>
+      <span style="font-size: 9px; color: #00ff66;">44.1kHz</span>
+    </div>
+    <div class="mp3-lcd-track" id="mp3-track-title">VISTA-ATMOSPHERE.SYNTH</div>
+    <div class="mp3-lcd-equalizer">
+      <div class="mp3-eq-bar"></div>
+      <div class="mp3-eq-bar"></div>
+      <div class="mp3-eq-bar"></div>
+      <div class="mp3-eq-bar"></div>
+      <div class="mp3-eq-bar"></div>
+      <div class="mp3-eq-bar"></div>
+    </div>
+  </div>
+
+  <!-- Controles Físicos do MP3 Player -->
+  <div class="mp3-controls-row">
+    <!-- Botão Mute / Unmute -->
+    <button class="mp3-btn" id="btn-mp3-mute" title="Ativar/Desativar Som" onclick="toggleAeroAudio()">
+      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+    </button>
+
+    <!-- Botão Principal Jog Dial (Play Sintetizador de Chime) -->
+    <div class="mp3-jog-dial" id="btn-jog-play" title="Tocar Acorde Nostálgico" onclick="playWindowsChime()">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+
+    <!-- Botão Next Song / Test Sound -->
+    <button class="mp3-btn" id="btn-mp3-next" title="Efeito Gota Cristalina" onclick="playAquaClickSound()">
+      <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+    </button>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     JANELA PRINCIPAL 'WINDOWS 7 AERO GLASS'
+     JANELA PRINCIPAL 'LIQUID GLASS' (WINDOWS 7 AERO)
      ═══════════════════════════════════════════════════════════════ -->
 <div class="aero-window">
 
-  <!-- Barra de Título do Windows 7 -->
+  <!-- Barra de Título do Windows 7 com Ícone 3D e Botões -->
   <div class="title-bar">
-    <div class="title-icon-orb">🖱️</div>
-    <div class="title-text">MouseClickCounter - Portal Oficial (Frutiger Aero 2005–2013)</div>
-
-    <!-- Mini Player Aero Widget no topo com equalizador e som -->
-    <div class="aero-mini-player">
-      <div class="equalizer-bars" title="Equalizador Aero">
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-        <div class="eq-bar"></div>
-      </div>
-      <button class="btn-sound-toggle" id="btn-sound-toggle" onclick="toggleAeroAudio()">
-        🔊 Sons Aero: ON
-      </button>
+    <div class="title-icon-orb">
+      <svg viewBox="0 0 24 24"><use href="#icon-mouse"/></svg>
     </div>
+    <div class="title-text">MouseClickCounter - Portal Oficial (Frutiger Aero 2005–2013)</div>
 
     <div class="win7-controls">
       <div class="win7-btn" title="Minimizar">&#x2014;</div>
@@ -1153,28 +1539,36 @@ tbody tr:hover td {
     </div>
   </div>
 
-  <!-- BARRA DE NAVEGAÇÃO MEDIA PLAYER 11 (RIBBON ESPELHADA) -->
+  <!-- BARRA DE NAVEGAÇÃO WMP11 (RIBBON ESPELHADA COM ÍCONES 3D) -->
   <nav class="wmp-ribbon-bar">
     <button class="wmp-tab-btn active" id="main-tab-ranking" onclick="switchMainTab('ranking')">
-      🏆 Ranking Global
+      <svg class="tab-icon" viewBox="0 0 24 24"><use href="#icon-trophy"/></svg>
+      <span>Ranking Global</span>
     </button>
     <button class="wmp-tab-btn" id="main-tab-how" onclick="switchMainTab('how')">
-      ⚙️ Como Funciona o Software
+      <svg class="tab-icon" viewBox="0 0 24 24"><use href="#icon-gears"/></svg>
+      <span>Como Funciona o Software</span>
     </button>
     <button class="wmp-tab-btn" id="main-tab-download" onclick="switchMainTab('download')">
-      💿 Baixar MouseClickCounter.exe
+      <svg class="tab-icon" viewBox="0 0 24 24"><use href="#icon-cdrom"/></svg>
+      <span>Baixar MouseClickCounter.exe</span>
     </button>
   </nav>
 
-  <!-- BANNER DE DESTAQUE COM BOTÃO GIGANTE VERDE-LIMA AQUA / GEL -->
+  <!-- BANNER DE DESTAQUE COM BOTÃO GIGANTE GEL AQUA -->
   <div class="download-hero-banner">
     <div class="download-banner-info">
-      <h3>🖱️ MouseClickCounter.exe <span>(Windows 7 / 10 / 11)</span></h3>
+      <h3>
+        <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: #0078d7;"><use href="#icon-mouse"/></svg>
+        <span>MouseClickCounter.exe</span>
+        <span style="font-size: 13px; font-weight: 600; color: #0078d7;">(Windows 7 / 10 / 11)</span>
+      </h3>
       <p>Contador C++ Win32 puro • Zero Input Lag • Instalação automática em %LOCALAPPDATA%</p>
     </div>
     <a href="/download/MouseClickCounter.exe" class="btn-emerald-download" onclick="triggerDownloadSound()">
       <div class="btn-emerald-download-title">
-        <span>⬇</span> Baixar para Windows (.EXE)
+        <svg viewBox="0 0 24 24"><use href="#icon-download-arrow"/></svg>
+        <span>Baixar para Windows (.EXE)</span>
       </div>
       <div class="btn-emerald-download-sub">
         Leve (&lt; 1MB) • Zero Input Lag • Inicia com o Windows
@@ -1190,16 +1584,19 @@ tbody tr:hover td {
          ═════════════════════════════════════════════════════════ -->
     <div class="main-tab-panel active" id="panel-main-ranking">
 
-      <!-- Sub-Abas do Ranking com corte 50/50 -->
+      <!-- Sub-Abas do Ranking (Pílulas Aqua Gel com Ícones 3D) -->
       <div class="sub-nav-bar">
         <button class="aqua-pill-btn active" id="subtab-today" onclick="switchRankingSubTab('today')">
-          🖱️ Cliques de Hoje
+          <svg viewBox="0 0 24 24"><use href="#icon-mouse"/></svg>
+          <span>Cliques de Hoje</span>
         </button>
         <button class="aqua-pill-btn" id="subtab-total" onclick="switchRankingSubTab('total')">
-          🔥 Total Geral
+          <svg viewBox="0 0 24 24"><use href="#icon-flame"/></svg>
+          <span>Total Geral</span>
         </button>
         <button class="aqua-pill-btn btn-refresh" onclick="fetchRankingData()">
-          ⟳ Atualizar Agora
+          <svg viewBox="0 0 24 24"><use href="#icon-sync"/></svg>
+          <span>Atualizar Agora</span>
         </button>
       </div>
 
@@ -1257,20 +1654,22 @@ tbody tr:hover td {
         <!-- Card 1: Motor C++ Win32 RawInput -->
         <div class="aero-card">
           <div class="aero-card-header">
-            <span>⚡</span> Motor C++ Win32 RawInput (Zero Input Lag)
+            <svg viewBox="0 0 24 24"><use href="#icon-lightning"/></svg>
+            <span>Motor C++ Win32 RawInput (Zero Input Lag)</span>
           </div>
           <div class="aero-card-body">
             O <strong>MouseClickCounter</strong> foi construído em <code>C++ nativo puro (Win32 API)</code> para gamers de alta performance.
-            Em vez de recorrer a hooks globais lentos (<code>WH_MOUSE_LL</code>) que bloqueiam o ponteiro do rato, o programa escuta os eventos diretamente do controlador de hardware através de <code>WM_INPUT</code>.
+            Em vez de recorrer a hooks globais lentos (<code>WH_MOUSE_LL</code>) que bloqueiam o ponteiro do rato, o programa escuta os eventos diretamente do hardware através de <code>WM_INPUT</code>.
             <br/><br/>
-            <strong>Desempenho:</strong> 0% de CPU, ~8 MB de memória RAM e <strong>zero milissegundos</strong> de atraso em jogos competitivos como Valorant, CS2, League of Legends e Warzone.
+            <strong>Desempenho:</strong> 0% de CPU, ~8 MB de memória RAM e <strong>zero milissegundos</strong> de atraso em jogos como Valorant, CS2, League of Legends e Warzone.
           </div>
         </div>
 
         <!-- Card 2: Auto-Instalação em %LOCALAPPDATA% -->
         <div class="aero-card">
           <div class="aero-card-header">
-            <span>🚀</span> Auto-Instalação Inteligente em %LOCALAPPDATA%
+            <svg viewBox="0 0 24 24"><use href="#icon-rocket"/></svg>
+            <span>Auto-Instalação Inteligente em %LOCALAPPDATA%</span>
           </div>
           <div class="aero-card-body">
             Ao ser aberto pela primeira vez (mesmo na pasta Downloads ou no Ambiente de Trabalho), o programa detecta onde está e copia-se silenciosamente para:
@@ -1278,35 +1677,37 @@ tbody tr:hover td {
             <code>%LOCALAPPDATA%\MouseClickCounter\MouseClickCounter.exe</code>
             <br/><br/>
             Ele regista a chave de arranque do Windows em <code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</code> apontando sempre para este diretório protegido.
-            Podes esvaziar a pasta Downloads à vontade — o programa iniciará sempre de forma transparente com o Windows!
+            Podes esvaziar a pasta Downloads à vontade — o programa iniciará sempre automaticamente com o Windows!
           </div>
         </div>
 
         <!-- Card 3: Privacidade Total -->
         <div class="aero-card">
           <div class="aero-card-header">
-            <span>🔒</span> Privacidade Total e Segurança Absoluta
+            <svg viewBox="0 0 24 24"><use href="#icon-lock"/></svg>
+            <span>Privacidade Total e Segurança Absoluta</span>
           </div>
           <div class="aero-card-body">
             O software possui um único propósito: <strong>contar cliques do rato</strong>.
             <br/><br/>
             • <strong>Zero captura de teclado:</strong> não existe qualquer função de keylogger.<br/>
             • <strong>Zero captura de tela:</strong> o programa nunca tira capturas de ecrã nem lê posições do cursor.<br/>
-            • <strong>Comunicação encriptada:</strong> sincroniza unicamente o Nickname e a contagem via HTTPS a cada 60 segundos com o banco Turso. Se desligares a internet, os cliques continuam guardados no Registo local.
+            • <strong>Comunicação encriptada:</strong> sincroniza unicamente o Nickname e a contagem via HTTPS a cada 60 segundos com o banco Turso. Se desligares a internet, os cliques continuam guardados com segurança no Registo local.
           </div>
         </div>
 
         <!-- Card 4: Como Personalizar o Nickname -->
         <div class="aero-card">
           <div class="aero-card-header">
-            <span>🎨</span> Como Personalizar o teu Nickname no System Tray
+            <svg viewBox="0 0 24 24"><use href="#icon-palette"/></svg>
+            <span>Como Personalizar o teu Nickname no System Tray</span>
           </div>
           <div class="aero-card-body">
             Por predefinição, o programa utiliza o nome da tua conta do Windows. Para alterares para a tua alcunha de gamer:
             <br/><br/>
             1. Olha para o canto inferior direito do ecrã (junto ao relógio do Windows).<br/>
-            2. Clica com o <strong>botão direito</strong> no ícone do rato 🖱️.<br/>
-            3. Clica na opção <strong>"✏️ Alterar Nickname"</strong>.<br/>
+            2. Clica com o <strong>botão direito</strong> no ícone do rato.<br/>
+            3. Clica na opção <strong>"Alterar Nickname"</strong>.<br/>
             4. Uma caixa de diálogo nativa do Windows abrir-se-á: digita o teu novo Nickname e clica em Salvar!<br/>
             5. O teu novo nome atualizar-se-á no ranking global na sincronização seguinte.
           </div>
@@ -1324,7 +1725,7 @@ tbody tr:hover td {
         <!-- InstallShield Wizard Box -->
         <div class="wizard-box">
           <div class="wizard-header">
-            <h4>Assistente de Instalação Rápida</h4>
+            <h4>Assistente de Instalação e Configuração Rápida</h4>
             <span style="font-size: 11.5px; color: #557799;">Versão 3.0 • Windows 7, 8, 10, 11 (64-bit)</span>
           </div>
 
@@ -1367,7 +1768,8 @@ tbody tr:hover td {
         <div style="text-align: center; padding: 10px 0;">
           <a href="/download/MouseClickCounter.exe" class="btn-emerald-download" style="padding: 14px 46px;" onclick="triggerDownloadSound()">
             <div class="btn-emerald-download-title" style="font-size: 16px;">
-              <span>⬇</span> Baixar MouseClickCounter.exe (.EXE Direto)
+              <svg viewBox="0 0 24 24"><use href="#icon-download-arrow"/></svg>
+              <span>Baixar MouseClickCounter.exe (.EXE Direto)</span>
             </div>
             <div class="btn-emerald-download-sub">
               Executável portátil nativo para Windows 7, 8, 10 e Windows 11
@@ -1380,20 +1782,23 @@ tbody tr:hover td {
 
   </div><!-- /aero-content-area -->
 
-  <!-- ── STATUS BAR METÁLICA DO WINDOWS ──────────────────────── -->
+  <!-- ── STATUS BAR METÁLICA DO WINDOWS COM ÍCONES ─────────────── -->
   <footer class="win-status-bar">
     <div class="status-cell">
       <div class="pulsing-green-orb"></div>
       <span>Servidor Turso Online</span>
     </div>
     <div class="status-cell" id="stat-total-players">
-      👥 Jogadores Registrados: &mdash;
+      <svg viewBox="0 0 24 24"><use href="#icon-users"/></svg>
+      <span id="stat-total-players-text">Jogadores Registrados: &mdash;</span>
     </div>
     <div class="status-cell" id="stat-global-clicks">
-      🖱️ Soma Global: &mdash;
+      <svg viewBox="0 0 24 24"><use href="#icon-mouse"/></svg>
+      <span id="stat-global-clicks-text">Soma Global: &mdash;</span>
     </div>
     <div class="status-cell" id="stat-countdown">
-      🔄 Auto-refresh em 30s
+      <svg viewBox="0 0 24 24"><use href="#icon-sync"/></svg>
+      <span id="stat-countdown-text">Auto-refresh em 30s</span>
     </div>
   </footer>
 
@@ -1401,8 +1806,8 @@ tbody tr:hover td {
 
 <script>
 /* =============================================================================
-   SINTETIZADOR DE ÁUDIO FRUTIGER AERO (WEB AUDIO API PURA)
-   Nostalgia autêntica sem dependências externas!
+   SINTETIZADOR DE ÁUDIO NOSTÁLGICO (WEB AUDIO API PURA)
+   Zero emojis de texto • Puro Áudio Cristalino Frutiger Aero
    ============================================================================= */
 
 let audioCtx = null;
@@ -1423,16 +1828,16 @@ function getAudioContext() {
 
 function toggleAeroAudio() {
   aeroAudioEnabled = !aeroAudioEnabled;
-  const btn = document.getElementById('btn-sound-toggle');
+  const statusEl = document.getElementById('mp3-status-txt');
   if (aeroAudioEnabled) {
-    btn.textContent = '🔊 Sons Aero: ON';
+    if (statusEl) statusEl.textContent = 'AUDIO STEREO';
     playAquaClickSound();
   } else {
-    btn.textContent = '🔈 Sons Aero: OFF';
+    if (statusEl) statusEl.textContent = 'AUDIO MUTED';
   }
 }
 
-// 1. Hover nos botões/abas: Gota d'água / vidro cristalino curto
+// 1. Hover nos botões/abas: Gota d'água cristalina
 function playCrystalHoverSound() {
   if (!aeroAudioEnabled) return;
   try {
@@ -1497,7 +1902,7 @@ function playAquaClickSound() {
   } catch (_) {}
 }
 
-// 3. Atualização do Ranking / Download: Acorde sintético nostálgico Windows Vista / MSN
+// 3. Atualização do Ranking / Download: Acorde sintético Windows Vista / MSN
 function triggerDownloadSound() {
   playWindowsChime();
 }
@@ -1559,7 +1964,7 @@ function switchRankingSubTab(subTabKey) {
 }
 
 /* =============================================================================
-   RANKING LOGIC & TELEMETRIA
+   RANKING LOGIC & TELEMETRIA (SEM EMOJIS DE TEXTO)
    ============================================================================= */
 
 let cachedData     = { top_today: [], top_total: [] };
@@ -1595,17 +2000,18 @@ function renderPodium(containerId, list, primaryKey) {
     cardEl.className = `podium-card rank-${rankNum}`;
 
     const orbType = idx === 0 ? 'orb-gold' : (idx === 1 ? 'orb-silver' : 'orb-bronze');
-    const medalSymbol = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : '🥉');
     const rankTitle = idx === 0 ? '1º Lugar' : (idx === 1 ? '2º Lugar' : '3º Lugar');
 
     const score = Number(player[primaryKey]) || 0;
     const progressPercent = Math.max(8, Math.round((score / highestScore) * 100));
 
     cardEl.innerHTML = `
-      <div class="podium-orb ${orbType}">${medalSymbol}</div>
+      <div class="podium-orb ${orbType}">
+        <svg viewBox="0 0 24 24"><use href="#icon-crown"/></svg>
+      </div>
       <div class="podium-title-rank">${rankTitle}</div>
       <div class="podium-player-name" title="${escapeHtml(player.nickname)}">${escapeHtml(player.nickname)}</div>
-      <div class="podium-click-count">🖱️ ${formatNumber(score)} cliques</div>
+      <div class="podium-click-count">${formatNumber(score)} cliques</div>
       <div class="vista-progress-track" title="${progressPercent}% em relação ao 1º lugar">
         <div class="vista-progress-fill" style="width: ${progressPercent}%;"></div>
       </div>
@@ -1654,8 +2060,11 @@ function updateStatusBarStats(data) {
   const totalCount = allList.length;
   const globalSum = allList.reduce((acc, curr) => acc + (Number(curr.clicks_totais) || 0), 0);
 
-  document.getElementById('stat-total-players').textContent = `👥 Jogadores Registrados: ${totalCount}`;
-  document.getElementById('stat-global-clicks').textContent = `🖱️ Soma Global: ${formatNumber(globalSum)} cliques`;
+  const playersText = document.getElementById('stat-total-players-text');
+  if (playersText) playersText.textContent = `Jogadores Registrados: ${totalCount}`;
+
+  const clicksText = document.getElementById('stat-global-clicks-text');
+  if (clicksText) clicksText.textContent = `Soma Global: ${formatNumber(globalSum)} cliques`;
 }
 
 async function fetchRankingData() {
@@ -1693,8 +2102,11 @@ function resetCountdown() {
 }
 
 function updateCountdownDisplay() {
-  const el = document.getElementById('stat-countdown');
-  if (el) el.textContent = `🔄 Auto-refresh em ${refreshSeconds}s`;
+  const cdText = document.getElementById('stat-countdown-text');
+  if (cdText) cdText.textContent = `Auto-refresh em ${refreshSeconds}s`;
+
+  const mp3Timer = document.getElementById('mp3-timer');
+  if (mp3Timer) mp3Timer.textContent = `00:${refreshSeconds < 10 ? '0' + refreshSeconds : refreshSeconds}`;
 }
 
 function countdownTick() {
@@ -1708,7 +2120,7 @@ function countdownTick() {
 
 // Vincula sons de hover a todos os botões, links e abas
 document.addEventListener('DOMContentLoaded', () => {
-  const hoverElements = document.querySelectorAll('button, a, .wmp-tab-btn, .aqua-pill-btn, .btn-emerald-download');
+  const hoverElements = document.querySelectorAll('button, a, .wmp-tab-btn, .aqua-pill-btn, .btn-emerald-download, .mp3-btn, .mp3-jog-dial');
   hoverElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
       playCrystalHoverSound();
