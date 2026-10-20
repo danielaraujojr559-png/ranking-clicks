@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MouseClickCounter - Portal Oficial (Frutiger Aero · CARI &amp; Web 2.0 Archive)</title>
+<title>MouseClickCounter - Frutiger Aero Archive Edition (2005–2013)</title>
+<link rel="icon" type="image/png" href="/icon-trophy.png"/>
 <style>
 /* =============================================================================
-   FRUTIGER AERO (2005–2013) — MANUAL OFICIAL DE GRAMÁTICA VISUAL & SOUNDSCAPE
-   Pillars: Skeuomorphism, Candy Gloss, Aero Glass (blur 16px), Hyper-Realistic Nature,
-   Curved Ribbons, Pure Humanist Sans-Serif Typography & Wii/Vista Ambient Soundscape.
+   FRUTIGER AERO ARCHIVE EDITION (2005–2013)
+   Engenharia Reversa baseada no código oficial de frutigeraeroarchive.org & CARI
+   Pillars: Glass Borders, Beveled Headers, Sidebar Categories, Wallpaper Crossfade,
+   Candy Gloss, Humanist Sans-Serif Typography & 5-Track Synthesizer + Audio FX.
    ============================================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800&display=swap');
@@ -20,101 +22,61 @@
 }
 
 :root {
-  /* 2. Paleta de Cores Oficial Frutiger Aero */
+  /* Paleta Frutiger Aero Oficial */
   --sky-aqua:      #00A8FF;
   --sky-azure:     #0078D7;
   --sky-cyan:      #29B6F6;
   --sky-tropical:  #80D8FF;
-
   --grass-lime:    #32CD32;
   --grass-fresh:   #76C043;
   --grass-light:   #A4D233;
   --grass-deep:    #2B9348;
-
   --white-pure:    #FFFFFF;
   --silver-metal:  #E0E6ED;
-
-  --solar-orange:  #FF9900;
-  --solar-yellow:  #FFD200;
-
-  /* Tipografias Humanistas Clássicas */
-  --font-frutiger: 'Segoe UI', 'Frutiger', 'Myriad Pro', 'Lucida Grande', 'Calibri', 'Corbel', 'Trebuchet MS', sans-serif;
+  --silver-dark:   #4e4e4e;
+  --font-segoe:    "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, Arial, Helvetica, sans-serif;
 }
 
 html, body {
   min-height: 100vh;
-  font-family: var(--font-frutiger);
+  font-family: var(--font-segoe);
   overflow-x: hidden;
   color: #1a2a3a;
+  background-color: #002b4d;
 }
 
-/* ── 1. CENÁRIO EM TELA CHEIA (WALLPAPER ASADAL 1920x1080 HD MASTER EM ALTA DEFINIÇÃO) ─ */
-body {
-  position: relative;
-  background-color: #0078D7;
-  background-image:
-    /* Suave feixe de luz solar superior (Lens Flare) */
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 25%, transparent 60%),
-    url('/frutiger-bg-hd.jpg'),
-    url('frutiger-bg-hd.jpg'),
-    url('/frutiger-bg.jpg'),
-    linear-gradient(
-      180deg,
-      #0055b3 0%,
-      var(--sky-azure)    22%,
-      var(--sky-cyan)     42%,
-      var(--sky-tropical) 56%,
-      #00a2e8             58%,
-      var(--grass-light)  65%,
-      var(--grass-fresh)  80%,
-      var(--grass-deep)   100%
-    );
+/* ── 1. SISTEMA DE WALLPAPERS DINÂMICOS COM TRANSIÇÃO CROSS-FADE ─ */
+.wallpaper-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: high-quality;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 18px 12px 54px;
+  transition: opacity 1.2s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* Camadas de colinas desativadas para exibir a imagem wallpaper Frutiger Aero em tela cheia */
-.landscape-layers {
-  display: none !important;
+.wallpaper-layer.active {
+  opacity: 1;
 }
 
-.floating-elements-layer {
-  display: none !important;
-}
-
-/* Feixes de Aurora Boreal e Curvas Translúcidas */
-.aurora-ribbons {
+/* Suave vinheta solar superior (Lens Flare) */
+.lens-flare-overlay {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
   background:
-    radial-gradient(ellipse 90% 60% at 75% 18%, rgba(0, 229, 255, 0.38) 0%, transparent 60%),
-    radial-gradient(ellipse 75% 55% at 20% 32%, rgba(128, 255, 219, 0.32) 0%, transparent 55%),
-    linear-gradient(130deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.16) 16%,
-      transparent 20%,
-      rgba(0, 229, 255, 0.22) 34%,
-      rgba(128, 255, 219, 0.20) 44%,
-      transparent 52%,
-      rgba(255, 255, 255, 0.14) 66%,
-      transparent 74%
-    );
-  mix-blend-mode: screen;
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 25%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 80% 15%, rgba(0, 229, 255, 0.20) 0%, transparent 60%);
 }
 
-/* Círculos suaves de desfoque Bokeh solar */
-.bokeh-canvas {
+/* Bolhas de água translúcidas subindo com refração */
+.bubbles-container {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -122,110 +84,6 @@ body {
   overflow: hidden;
 }
 
-.bokeh-orb {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.90) 0%, rgba(185, 240, 255, 0.45) 45%, transparent 75%);
-  filter: blur(4px);
-  opacity: 0.35;
-  animation: bokehFloat 9s ease-in-out infinite alternate;
-}
-
-.bokeh-orb:nth-child(1) { width: 140px; height: 140px; top: 10%; left: 8%;  animation-duration: 9s; }
-.bokeh-orb:nth-child(2) { width: 220px; height: 220px; top: 16%; right: 8%; animation-duration: 11s; animation-delay: 2s; }
-.bokeh-orb:nth-child(3) { width: 90px;  height: 90px;  top: 36%; left: 30%; animation-duration: 7s;  animation-delay: 1s; }
-.bokeh-orb:nth-child(4) { width: 170px; height: 170px; top: 48%; right: 24%; animation-duration: 12s; animation-delay: 3s; }
-
-@keyframes bokehFloat {
-  0%   { transform: translate(0, 0) scale(0.92); opacity: 0.30; }
-  50%  { transform: translate(16px, -12px) scale(1.08); opacity: 0.45; }
-  100% { transform: translate(-12px, 8px) scale(0.96); opacity: 0.32; }
-}
-
-/* ── ELEMENTOS 3D FLUTUANTES (GLOBO, CORAÇÃO, BORBOLETA) ────── */
-.floating-elements-layer {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 3;
-  overflow: hidden;
-}
-
-.floating-globe {
-  position: absolute;
-  top: 28px;
-  left: 20px;
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, #00b0ff 0%, #0077c2 55%, #003c8f 100%);
-  box-shadow:
-    0 10px 30px rgba(0, 80, 180, 0.50),
-    0 0 25px rgba(0, 229, 255, 0.65),
-    inset -8px -8px 18px rgba(0, 20, 60, 0.70),
-    inset 4px 4px 10px rgba(255, 255, 255, 0.85);
-  animation: globeHover 7s ease-in-out infinite alternate;
-}
-
-.floating-globe svg {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-
-@keyframes globeHover {
-  0%   { transform: translateY(0) rotate(0deg); }
-  100% { transform: translateY(12px) rotate(4deg); }
-}
-
-.floating-glass-heart {
-  position: absolute;
-  top: 130px;
-  right: 28px;
-  width: 76px;
-  height: 76px;
-  animation: heartFloat 6s ease-in-out infinite alternate;
-  filter: drop-shadow(0 10px 20px rgba(0, 60, 140, 0.45));
-}
-
-@keyframes heartFloat {
-  0%   { transform: translateY(0) scale(0.96) rotate(-5deg); }
-  100% { transform: translateY(-14px) scale(1.04) rotate(5deg); }
-}
-
-.floating-butterfly-orb {
-  position: absolute;
-  bottom: 120px;
-  left: 36px;
-  width: 78px;
-  height: 78px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95) 0%, rgba(180, 240, 255, 0.45) 35%, rgba(0, 140, 255, 0.15) 70%, rgba(0, 60, 160, 0.25) 100%);
-  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.9), 0 10px 25px rgba(0, 80, 160, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: butterflyFloat 8s ease-in-out infinite alternate;
-}
-
-.floating-butterfly-orb::after {
-  content: '';
-  position: absolute;
-  top: 14%; left: 20%;
-  width: 30%; height: 20%;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.7) 60%, transparent 100%);
-  transform: rotate(-35deg);
-}
-
-@keyframes butterflyFloat {
-  0%   { transform: translateY(0) scale(1); }
-  100% { transform: translateY(-16px) scale(1.05); }
-}
-
-/* Bolhas de orvalho translúcidas subindo com refração */
 .bubble {
   position: absolute;
   bottom: -110px;
@@ -264,38 +122,810 @@ body {
 .bubble:nth-child(8)  { width: 20px; height: 20px; left: 88%; animation-duration: 8.5s; animation-delay: 5.5s; }
 
 @keyframes floatUpAnimation {
-  0% { transform: translateY(0) translateX(0) scale(0.9); opacity: 0.8; }
-  25% { transform: translateY(-28vh) translateX(14px) scale(1.02); }
-  50% { transform: translateY(-56vh) translateX(-10px) scale(1.05); opacity: 0.7; }
-  75% { transform: translateY(-84vh) translateX(12px) scale(1.01); }
+  0%   { transform: translateY(0) translateX(0) scale(0.9); opacity: 0.8; }
+  50%  { transform: translateY(-56vh) translateX(-10px) scale(1.05); opacity: 0.7; }
   100% { transform: translateY(-115vh) translateX(0) scale(0.95); opacity: 0; }
 }
 
-/* ── 2. GADGET SKEUOMÓRFICO: MP3 PLAYER AZUL-COBALTO COM TRILHA WII/VISTA */
-.mp3-player-gadget {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 50;
-  width: 310px;
-  border-radius: 26px;
+/* ── 2. CABEÇALHO SUPERIOR OFICIAL (ESTILO FRUTIGER AERO ARCHIVE) ─ */
+#mainHeader {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  max-width: 1220px;
+  margin: 12px auto 0;
+  background-color: rgba(0, 0, 0, 0.85);
   background: linear-gradient(
-    145deg,
-    #2171c7 0%,
-    #0c4da2 45%,
-    #062a63 80%,
-    #031633 100%
+    180deg,
+    rgba(172, 172, 172, 0.92) 0%,
+    rgba(71, 71, 71, 0.92) 20%,
+    rgba(19, 19, 19, 0.92) 40%,
+    rgba(7, 7, 7, 0.95) 100%
   );
-  border: 3px solid #b8d2eb;
-  box-shadow:
-    0 12px 35px rgba(0, 20, 50, 0.65),
-    inset 0 3px 6px rgba(255, 255, 255, 0.85),
-    inset 0 -4px 8px rgba(0, 0, 0, 0.65),
-    0 0 20px rgba(0, 180, 255, 0.40);
-  padding: 14px 16px;
+  border-right: 1px solid #4e4e4e;
+  border-left: 1px solid #4e4e4e;
+  border-top: 2px solid #5a7b9c;
+  border-bottom: 1px solid #000;
+  border-radius: 18px 18px 0 0;
+  padding: 8px 18px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 14px 28px, rgba(0, 0, 0, 0.4) 0 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header-logo-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo-icon {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.7));
+}
+
+.header-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.4px;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.9), 0 1px 2px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edition-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: #57fa6f;
+  background: rgba(43, 240, 36, 0.18);
+  border: 1px solid rgba(43, 240, 36, 0.5);
+  border-radius: 10px;
+  padding: 1px 7px;
+  text-shadow: none;
+}
+
+.header-motto {
+  color: #c9c9c9;
+  font-size: 11.5px;
+  margin-top: 2px;
+}
+
+.header-quick-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.header-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(117, 117, 117, 0.2) 50%, rgba(41, 41, 41, 0.4) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  transition: all 0.2s ease;
+}
+
+.header-tool-btn:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(117, 117, 117, 0.3) 50%, rgba(70, 70, 70, 0.5) 100%);
+  border-color: #00e5ff;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+.header-tool-btn.download-highlight {
+  background: linear-gradient(180deg, #a4d233 0%, #4caf50 50%, #2e7d32 100%);
+  border-color: #76c043;
+}
+
+.header-tool-btn.download-highlight:hover {
+  box-shadow: 0 0 14px rgba(76, 175, 80, 0.9);
+}
+
+.tool-icon {
+  width: 15px;
+  height: 15px;
+}
+
+/* ── 3. ESTRUTURA PRINCIPAL DO PORTAL (SIDEBAR + JANELA AERO GLASS) ─ */
+.portal-layout {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto 50px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* ── BARRA LATERAL ESTILO FRUTIGER AERO ARCHIVE (#navigationMenu) ─ */
+#navigationMenu {
+  background: linear-gradient(to bottom, rgba(26, 26, 26, 0.88), rgba(18, 18, 18, 0.92) 95%);
+  border-right: 1px solid #4b4b4b;
+  border-left: 1px solid #4b4b4b;
+  border-bottom: 1px solid #4b4b4b;
+  border-bottom-left-radius: 18px;
+  width: 220px;
+  flex-shrink: 0;
+  padding: 10px 8px 16px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 14px 28px, rgba(0, 0, 0, 0.4) 0 10px 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  user-select: none;
+}
+
+.nav-categories {
+  background: linear-gradient(to bottom, rgba(80, 80, 80, 0.25), rgba(39, 39, 39, 0.15));
+  border: 1px solid rgba(236, 242, 249, 0.25);
+  border-radius: 6px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+  outline: rgba(28, 49, 39, 0.5) solid 1px;
+}
+
+.navbar-titles {
+  background: linear-gradient(to bottom, #ffffff 0%, rgba(129, 129, 129, 0.75) 3%, rgba(56, 56, 56, 0.75) 50%, rgba(27, 27, 27, 0.75) 50%);
+  border: 1px solid #000000;
+  border-radius: 3px;
+  color: #f7f4f4;
+  padding: 2px 4px 1px;
+  margin: 1px 1px 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.nav-item {
+  border: 1px solid #0f0f0f;
+  border-radius: 5px;
+  color: #eeeeee;
+  display: flex;
+  align-items: center;
+  margin: 1px auto;
+  width: 96%;
+  font-size: 12px;
+  font-weight: 600;
+  position: relative;
+  padding: 5px 6px;
+  cursor: pointer;
+  text-decoration: none;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(117, 117, 117, 0.15) 20%, rgba(92, 92, 92, 0.15) 60%, rgba(0, 0, 0, 0.3) 60%, rgba(41, 41, 41, 0.3) 100%);
+  transition: all 0.18s ease;
+  overflow: hidden;
+}
+
+.nav-item::before {
+  background: linear-gradient(to bottom, rgba(117, 117, 117, 0.7) 0%, rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 20px;
+  position: absolute;
+  content: "";
+  height: 11px;
+  width: 90%;
+  top: 0;
+  left: 5%;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.nav-item:hover {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 0%, rgba(117, 117, 117, 0.25) 20%, rgba(92, 92, 92, 0.25) 50%, rgba(43, 43, 43, 0.4) 50%, rgba(161, 161, 161, 0.35) 100%);
+  transform: scale(1.03);
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+}
+
+.nav-item.nav-active {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 0%, rgba(117, 117, 117, 0.25) 20%, rgba(92, 92, 92, 0.25) 40%, rgba(29, 73, 23, 0.4) 40%, rgba(43, 240, 36, 0.75) 100%) !important;
+  color: #57fa6f !important;
+  font-weight: 700;
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(43, 240, 36, 0.6);
+  border-color: #1e7e34;
+}
+
+.nav-icons {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* Moldura de Vidro Esqueumórfica (.glass-borders) */
+.glass-borders {
+  background: linear-gradient(to bottom, rgba(66, 66, 66, 0.3), rgba(39, 39, 39, 0.2));
+  border-radius: 6px;
+  border: 1px solid rgba(236, 242, 249, 0.5);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8), inset -1px -1px 0 rgba(255, 255, 255, 0.2);
+  outline: rgba(28, 49, 39, 0.5) solid 1px;
+}
+
+.nav-system-card {
+  padding: 8px 10px;
+  font-size: 11px;
+  color: #cfd8dc;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sys-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sys-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.sys-dot.online { background: #00ff66; box-shadow: 0 0 6px #00ff66; }
+.sys-dot.win    { background: #00e5ff; box-shadow: 0 0 6px #00e5ff; }
+.sys-dot.aero   { background: #ffaa00; box-shadow: 0 0 6px #ffaa00; }
+
+/* ── 4. ÁREA CENTRAL: JANELA AERO GLASS (#mainContent) ──────── */
+#mainContent.aero-window {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 0 0 18px 18px;
+  border-right: 1px solid rgba(255, 255, 255, 0.85);
+  border-left: 1px solid rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 32px rgba(0, 70, 150, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Barra de Título Windows 7 / Vista */
+.title-bar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  padding: 6px 12px 6px 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(215, 238, 255, 0.90) 0%,
+    rgba(140, 200, 255, 0.75) 50%,
+    rgba(80, 160, 245, 0.70) 50.1%,
+    rgba(50, 135, 235, 0.80) 100%
+  );
+  border-bottom: 1px solid rgba(0, 70, 140, 0.45);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset;
+  user-select: none;
+}
+
+.title-icon-orb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  margin-right: 8px;
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #7bf5ff 25%, #00b4d8 55%, #004b6e 100%);
+  box-shadow: 0 0 8px rgba(0, 210, 255, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.title-icon-orb img {
+  width: 14px;
+  height: 14px;
+}
+
+.title-text {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  text-shadow: 0 0 10px #ffffff, 0 1px 3px rgba(0, 30, 80, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.win7-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.win7-btn {
+  width: 28px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 50, 100, 0.55);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(100, 175, 255, 0.50) 50.1%, rgba(50, 130, 230, 0.70) 100%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.win7-btn.win7-close {
+  width: 44px;
+  background: linear-gradient(180deg, rgba(255, 210, 200, 0.85) 0%, rgba(255, 140, 120, 0.55) 50%, rgba(225, 55, 35, 0.75) 50.1%, rgba(165, 25, 15, 0.90) 100%);
+}
+
+/* Ribbon de Navegação Claro (Prata Metálico & Acrílico Aqua) */
+.wmp-ribbon-bar {
+  display: flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(228, 240, 252, 0.86) 49%, rgba(195, 222, 248, 0.82) 50%, rgba(218, 238, 255, 0.94) 100%);
+  border-bottom: 1px solid rgba(0, 120, 215, 0.35);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.95) inset, 0 3px 8px rgba(0, 70, 150, 0.12);
+  overflow-x: auto;
+}
+
+.wmp-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-segoe);
+  font-size: 13px;
+  font-weight: 700;
+  color: #004b87;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  margin: 2px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.wmp-tab-btn:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(215, 238, 255, 0.75) 50%, rgba(170, 218, 255, 0.70) 50.1%, rgba(200, 232, 255, 0.90) 100%);
+  border: 1px solid rgba(0, 168, 255, 0.5);
+  box-shadow: 0 2px 6px rgba(0, 120, 215, 0.20), inset 0 1px 1px #ffffff;
+}
+
+.wmp-tab-btn.active {
+  color: #ffffff;
+  background: linear-gradient(180deg, #7ad5ff 0%, #2998f5 50%, #0070df 51%, #1f82f2 100%);
+  border: 1px solid #005bb5;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 3px 8px rgba(0, 70, 150, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.wmp-tab-btn img.tab-icon {
+  width: 17px;
+  height: 17px;
+}
+
+/* Banner de Download Hero com Botão Gel Verde Glossy */
+.download-hero-banner {
+  margin: 12px 14px 8px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(215, 238, 255, 0.65) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 16px rgba(0, 60, 140, 0.15), inset 0 1px 0 #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.download-banner-info h3 {
+  font-size: 15px;
+  font-weight: 800;
+  color: #003d73;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-banner-info p {
+  font-size: 12px;
+  color: #334455;
+  margin-top: 3px;
+}
+
+.frutiger-btn-green {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 28px;
+  border-radius: 26px;
+  border: 2px solid #1e7e34;
+  cursor: pointer;
+  text-decoration: none;
+  color: #ffffff;
+  background: linear-gradient(180deg, #a6f36a 0%, #5dc627 50%, #3ca80d 51%, #45b713 100%);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 4px 12px rgba(30, 120, 10, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.frutiger-btn-green:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: inset 0 1px 2px #ffffff, 0 0 20px rgba(118, 192, 67, 0.95), 0 6px 20px rgba(20, 130, 30, 0.5);
+}
+
+.frutiger-btn-green-title {
+  font-size: 14.5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.frutiger-btn-green-title img {
+  width: 17px;
+  height: 17px;
+}
+
+.frutiger-btn-green-sub {
+  font-size: 10.5px;
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+/* Área de Conteúdo */
+.aero-content-area {
+  background: linear-gradient(180deg, #f4f9ff 0%, #eaf2fb 45%, #dce9f7 100%);
+  margin: 8px 14px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 70, 140, 0.22);
+  box-shadow: inset 1px 1px 4px rgba(0, 30, 80, 0.20), inset -1px -1px 3px rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  min-height: 480px;
+}
+
+.main-tab-panel {
+  display: none;
+  animation: fadeInPanel 0.25s ease;
+}
+
+.main-tab-panel.active {
+  display: block;
+}
+
+@keyframes fadeInPanel {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Sub-Abas do Ranking */
+.sub-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: linear-gradient(180deg, rgba(220, 240, 255, 0.75) 0%, rgba(200, 230, 255, 0.45) 100%);
+  border-bottom: 1px solid rgba(0, 75, 150, 0.20);
+  flex-wrap: wrap;
+}
+
+.frutiger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(180deg, #7ad5ff 0%, #2998f5 50%, #0070df 51%, #1f82f2 100%);
+  border-radius: 24px;
+  border: 1px solid #005bb5;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 4px 10px rgba(0, 50, 120, 0.25);
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-segoe);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 6px 16px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.frutiger-btn:hover {
+  filter: brightness(1.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 1), 0 6px 14px rgba(0, 50, 120, 0.35);
+}
+
+.frutiger-btn.active {
+  background: linear-gradient(180deg, #9fe2ff 0%, #30a5f8 50%, #0080ff 51%, #0066d6 100%);
+  box-shadow: inset 0 1px 1px #ffffff, 0 0 14px rgba(0, 168, 255, 0.95);
+}
+
+.btn-refresh {
+  margin-left: auto;
+  background: linear-gradient(180deg, #c4f774 0%, #76c043 50%, #439b16 51%, #52b120 100%) !important;
+  border-color: #2b8015 !important;
+}
+
+/* Pódio Top 3 */
+.podium-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 14px;
+  padding: 16px 14px;
+  background: linear-gradient(180deg, rgba(215, 238, 255, 0.55) 0%, rgba(185, 222, 255, 0.25) 100%);
+  border-bottom: 1px solid rgba(0, 80, 160, 0.15);
+  flex-wrap: wrap;
+}
+
+.podium-card {
+  flex: 1;
+  min-width: 170px;
+  max-width: 240px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  text-align: center;
+  padding: 10px 8px 12px;
+  box-shadow: 0 6px 20px rgba(0, 40, 100, 0.16), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  backdrop-filter: blur(8px);
+}
+
+.podium-card.rank-1 {
+  background: linear-gradient(135deg, rgba(255, 248, 180, 0.82) 0%, rgba(255, 225, 75, 0.42) 100%);
+  transform: translateY(-8px);
+  border-color: #ffd700;
+  box-shadow: 0 8px 24px rgba(255, 190, 0, 0.35);
+}
+
+.podium-card.rank-2 {
+  background: linear-gradient(135deg, rgba(240, 245, 252, 0.85) 0%, rgba(200, 215, 230, 0.45) 100%);
+  border-color: #b0c4de;
+}
+
+.podium-card.rank-3 {
+  background: linear-gradient(135deg, rgba(255, 230, 210, 0.82) 0%, rgba(220, 160, 120, 0.42) 100%);
+  border-color: #cd7f32;
+}
+
+.podium-orb {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin: 0 auto 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.podium-orb img {
+  width: 26px;
+  height: 26px;
+}
+
+.orb-gold   { background: radial-gradient(circle at 35% 30%, #fff 0%, #ffe600 35%, #e6a100 70%, #996300 100%); box-shadow: 0 0 14px rgba(255, 215, 0, 0.9); }
+.orb-silver { background: radial-gradient(circle at 35% 30%, #fff 0%, #e0e8f0 35%, #a4b4c4 70%, #506478 100%); box-shadow: 0 0 12px rgba(180, 200, 220, 0.8); }
+.orb-bronze { background: radial-gradient(circle at 35% 30%, #fff 0%, #ffaa66 35%, #cc6622 70%, #773300 100%); box-shadow: 0 0 12px rgba(205, 127, 50, 0.8); }
+
+.podium-title-rank {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #334455;
+  letter-spacing: 0.5px;
+}
+
+.podium-player-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: #003366;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 2px 0;
+}
+
+.podium-click-count {
+  font-family: 'Segoe UI', Tahoma, monospace;
+  font-size: 13px;
+  font-weight: 800;
+  color: #0078d7;
+}
+
+.vista-progress-track {
+  height: 7px;
+  background: rgba(0, 40, 100, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.vista-progress-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #a6f36a 0%, #5dc627 50%, #3ca80d 51%, #45b713 100%);
+  border-radius: 4px;
+  box-shadow: 0 0 6px #00ff66;
+}
+
+/* Tabela de Ranking */
+.ranking-table-wrap {
+  padding: 12px 16px;
+}
+
+.frutiger-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 3px;
+}
+
+.frutiger-table th {
+  background: linear-gradient(180deg, rgba(235, 245, 255, 0.95) 0%, rgba(200, 225, 250, 0.85) 100%);
+  color: #004b87;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 2px solid #0078d7;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.frutiger-table tr {
+  background: rgba(255, 255, 255, 0.75);
+  transition: all 0.12s ease;
+}
+
+.frutiger-table tr:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(215, 238, 255, 0.85) 100%);
+  box-shadow: 0 2px 8px rgba(0, 120, 215, 0.20);
+}
+
+.frutiger-table td {
+  padding: 8px 10px;
+  font-size: 12.5px;
+  border-bottom: 1px solid rgba(0, 75, 150, 0.10);
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 11px;
+  color: #003366;
+  background: #e0e8f0;
+  border: 1px solid #b0c4de;
+}
+
+.rank-badge.top-1 { background: #ffd700; border-color: #cca000; color: #4a3800; box-shadow: 0 0 8px rgba(255, 215, 0, 0.8); }
+.rank-badge.top-2 { background: #c0d0e0; border-color: #8da4be; color: #223344; }
+.rank-badge.top-3 { background: #e6a066; border-color: #b36e38; color: #3d1c00; }
+
+.player-nickname {
+  font-weight: 700;
+  color: #003d73;
+}
+
+.lcd-vitrificado {
+  display: inline-block;
+  padding: 3px 8px;
+  background: linear-gradient(180deg, #021a30 0%, #000e1c 100%);
+  border: 1px solid #005599;
+  border-radius: 4px;
+  color: #00ff66;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 255, 102, 0.3);
+}
+
+.lcd-vitrificado.secundario {
+  color: #7ce8ff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 229, 255, 0.3);
+}
+
+/* Barra de Status Inferior */
+.aero-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  background: linear-gradient(180deg, rgba(220, 235, 250, 0.85) 0%, rgba(200, 220, 240, 0.95) 100%);
+  border-top: 1px solid rgba(0, 75, 150, 0.20);
+  font-size: 11px;
+  color: #334455;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.status-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+}
+
+/* Cartões Informativos 'Como Funciona' */
+.how-it-works-grid {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.how-card {
+  padding: 14px;
+  border-radius: 10px;
+}
+
+.how-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #004b87;
+  margin-bottom: 8px;
+}
+
+.how-card-header img {
+  width: 20px;
+  height: 20px;
+}
+
+.how-card p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #334455;
+}
+
+.how-card code {
+  background: rgba(0, 100, 200, 0.12);
+  color: #004488;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* ── 5. GADGET SKEUOMÓRFICO AERO-SOUND (MP3 PLAYER AZUL COBALTO) ─ */
+.mp3-player-gadget {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 50;
+  width: 310px;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #2171c7 0%, #0c4da2 45%, #062a63 80%, #031633 100%);
+  border: 3px solid #b8d2eb;
+  box-shadow: 0 12px 35px rgba(0, 20, 50, 0.65), inset 0 3px 6px rgba(255, 255, 255, 0.85), inset 0 -4px 8px rgba(0, 0, 0, 0.65), 0 0 20px rgba(0, 180, 255, 0.40);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   user-select: none;
 }
 
@@ -313,7 +943,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 800;
   color: #a0d4ff;
   letter-spacing: 0.8px;
@@ -329,13 +959,11 @@ body {
   border-radius: 8px;
   background: #031326;
   border: 2px solid #00508c;
-  box-shadow:
-    inset 0 2px 6px rgba(0, 0, 0, 0.85),
-    0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(255, 255, 255, 0.4);
   padding: 8px 10px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .mp3-lcd-row1 {
@@ -355,13 +983,12 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: opacity 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
+  transition: opacity 0.2s ease, color 0.2s ease;
 }
 
 .mp3-lcd-track.track-changing {
   opacity: 0.3;
   color: #00ff66;
-  text-shadow: 0 0 8px #00ff66;
 }
 
 .mp3-lcd-equalizer {
@@ -387,7 +1014,6 @@ body {
 .mp3-eq-bar:nth-child(5) { height: 8px;  animation-delay: 0.4s; }
 .mp3-eq-bar:nth-child(6) { height: 13px; animation-delay: 0.15s; }
 
-/* Quando pausado, as barras descem e a animação para */
 .mp3-lcd-equalizer.paused .mp3-eq-bar {
   animation: none !important;
   height: 3px !important;
@@ -413,9 +1039,7 @@ body {
   border-radius: 50%;
   border: 1px solid #7890a8;
   background: linear-gradient(145deg, #ffffff 0%, #d8e4f0 45%, #9cb0c4 100%);
-  box-shadow:
-    0 2px 5px rgba(0, 0, 0, 0.45),
-    inset 0 1px 2px #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45), inset 0 1px 2px #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -429,11 +1053,6 @@ body {
   box-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
 }
 
-.mp3-btn:active {
-  transform: scale(0.94);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
 .mp3-btn svg {
   width: 14px;
   height: 14px;
@@ -445,15 +1064,12 @@ body {
 }
 
 .mp3-jog-dial {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ffffff 0%, #b8c8d8 50%, #607588 100%);
   border: 2px solid #00c853;
-  box-shadow:
-    0 0 10px rgba(0, 200, 83, 0.6),
-    inset 0 2px 4px #ffffff,
-    0 3px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgba(0, 200, 83, 0.6), inset 0 2px 4px #ffffff, 0 3px 6px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -470,1021 +1086,353 @@ body {
   width: 18px;
   height: 18px;
   fill: #00441b;
-  transition: transform 0.15s ease;
 }
 
 .mp3-jog-dial.playing {
   border-color: #00ff66;
-  box-shadow:
-    0 0 16px #00ff66,
-    0 0 26px rgba(0, 255, 102, 0.45),
-    inset 0 2px 4px #ffffff,
-    0 3px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 16px #00ff66, 0 0 26px rgba(0, 255, 102, 0.45), inset 0 2px 4px #ffffff;
   animation: neonRingPulse 1.4s ease-in-out infinite alternate;
 }
 
 @keyframes neonRingPulse {
-  0% {
-    box-shadow: 0 0 10px #00ff66, inset 0 2px 4px #ffffff, 0 3px 6px rgba(0, 0, 0, 0.4);
-  }
-  100% {
-    box-shadow: 0 0 22px #39ff14, 0 0 32px rgba(0, 255, 102, 0.7), inset 0 2px 6px #ffffff, 0 3px 8px rgba(0, 0, 0, 0.5);
-  }
+  0%   { box-shadow: 0 0 10px #00ff66, inset 0 2px 4px #ffffff; }
+  100% { box-shadow: 0 0 22px #39ff14, 0 0 32px rgba(0, 255, 102, 0.7), inset 0 2px 6px #ffffff; }
 }
 
 .mp3-jog-dial.paused {
   border-color: #7890a8;
-  box-shadow:
-    0 0 6px rgba(120, 144, 168, 0.5),
-    inset 0 2px 4px #ffffff,
-    0 3px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 6px rgba(120, 144, 168, 0.5), inset 0 2px 4px #ffffff;
   animation: none;
 }
 
-/* ── 3. JANELA AERO GLASS REALISTA (CONFORME GUIA DIRETO) ───── */
-.aero-window {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  max-width: 980px;
-
-  /* Exato CSS do Guia Direto */
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 32px rgba(0, 70, 150, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  overflow: hidden;
-}
-
-/* Reflexo de vidro diagonal atravessando a janela */
-.aero-window::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.05) 48%, transparent 48.1%);
-  pointer-events: none;
-  z-index: 2;
-  border-radius: 14px;
-}
-
-/* ── BARRA DE TÍTULO WINDOWS VISTA / 7 AERO ────────────────── */
-.title-bar {
-  position: relative;
-  z-index: 5;
-  display: flex;
-  align-items: center;
-  padding: 8px 12px 8px 14px;
-  background: linear-gradient(
-    180deg,
-    rgba(215, 238, 255, 0.88) 0%,
-    rgba(140, 200, 255, 0.72) 50%,
-    rgba(80, 160, 245, 0.68) 50.1%,
-    rgba(50, 135, 235, 0.78) 100%
-  );
-  border-bottom: 1px solid rgba(0, 70, 140, 0.45);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset;
-  user-select: none;
-}
-
-.title-icon-orb {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  margin-right: 10px;
-  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #7bf5ff 25%, #00b4d8 55%, #004b6e 100%);
-  box-shadow:
-    0 0 8px rgba(0, 210, 255, 0.8),
-    0 1px 3px rgba(0, 0, 0, 0.35),
-    inset 0 1px 2px rgba(255, 255, 255, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.title-icon-orb svg {
-  width: 14px;
-  height: 14px;
-  fill: #ffffff;
-}
-
-.title-text {
-  flex: 1;
-  font-size: 13px;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.2px;
-  text-shadow: 0 0 10px #ffffff, 0 0 4px #ffffff, 0 1px 3px rgba(0, 30, 80, 0.9);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.win7-controls {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.win7-btn {
-  width: 28px;
-  height: 19px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 50, 100, 0.55);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 700;
-  color: #ffffff;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.65) 0%,
-    rgba(255, 255, 255, 0.25) 50%,
-    rgba(100, 175, 255, 0.50) 50.1%,
-    rgba(50, 130, 230, 0.70) 100%
-  );
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.7) inset,
-    0 -1px 0 rgba(0, 50, 100, 0.3) inset;
-  transition: all 0.12s ease;
-}
-
-.win7-btn:hover {
-  background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.40) 50%, rgba(120,200,255,0.65) 50.1%, rgba(0,130,255,0.85) 100%);
-  box-shadow: 0 0 10px rgba(0, 200, 255, 0.85);
-}
-
-.win7-btn.win7-close {
-  width: 44px;
-  background: linear-gradient(180deg, rgba(255,210,200,0.85) 0%, rgba(255,140,120,0.55) 50%, rgba(225,55,35,0.75) 50.1%, rgba(165,25,15,0.90) 100%);
-  border-color: rgba(140, 20, 10, 0.7);
-}
-
-.win7-btn.win7-close:hover {
-  background: linear-gradient(180deg, rgba(255,235,225,1) 0%, rgba(255,160,140,0.85) 50%, rgba(255,60,40,0.98) 50.1%, rgba(200,30,15,1) 100%);
-  box-shadow: 0 0 14px rgba(255, 60, 30, 0.95);
-}
-
-/* ── BARRA DE NAVEGAÇÃO RIBBON FRUTIGER AERO (PRATA METÁLICO & AQUA) ── */
-.wmp-ribbon-bar {
-  position: relative;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  padding: 4px 12px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.92) 0%,
-    rgba(228, 240, 252, 0.86) 49%,
-    rgba(195, 222, 248, 0.82) 50%,
-    rgba(218, 238, 255, 0.94) 100%
-  );
-  border-bottom: 1px solid rgba(0, 120, 215, 0.35);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 3px 8px rgba(0, 70, 150, 0.12);
-  overflow-x: auto;
-}
-
-.wmp-tab-btn {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 8px 22px;
-  border: 1px solid transparent;
-  border-radius: 20px;
-  background: transparent;
-  cursor: pointer;
-  font-family: var(--font-frutiger);
-  font-size: 13px;
-  font-weight: 700;
-  color: #004b87;
-  letter-spacing: 0.3px;
-  position: relative;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-  margin: 3px 2px;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-.wmp-tab-btn:hover {
-  color: #002b55;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(215, 238, 255, 0.75) 50%,
-    rgba(170, 218, 255, 0.70) 50.1%,
-    rgba(200, 232, 255, 0.90) 100%
-  );
-  border: 1px solid rgba(0, 168, 255, 0.5);
-  box-shadow: 0 2px 6px rgba(0, 120, 215, 0.20), inset 0 1px 1px #ffffff;
-}
-
-.wmp-tab-btn.active {
-  color: #ffffff;
-  background: linear-gradient(
-    180deg,
-    #7ad5ff 0%,
-    #2998f5 50%,
-    #0070df 51%,
-    #1f82f2 100%
-  );
-  border: 1px solid #005bb5;
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    0 3px 8px rgba(0, 70, 150, 0.35);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-}
-
-.wmp-tab-btn svg.tab-icon {
-  width: 18px;
-  height: 18px;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
-}
-
-/* ── 4. BOTÕES GLOSSY / GEL (EXATO GRADIENTE DO GUIA DIRETO) ── */
-.frutiger-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(180deg, #7ad5ff 0%, #2998f5 50%, #0070df 51%, #1f82f2 100%);
-  border-radius: 24px;
-  border: 1px solid #005bb5;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.85), 0 4px 10px rgba(0, 50, 120, 0.25);
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  font-family: var(--font-frutiger);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 7px 22px;
-  transition: all 0.2s ease;
-}
-
-.frutiger-btn:hover {
-  filter: brightness(1.1);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 1), 0 6px 14px rgba(0, 50, 120, 0.35);
-}
-
-.frutiger-btn svg {
-  width: 14px;
-  height: 14px;
-  fill: #ffffff;
-}
-
-/* Botão Candy Gloss Verde-Limão (Gel Button Gigante para Download) */
-.frutiger-btn-green {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 13px 36px;
-  border-radius: 28px;
-  border: 2px solid #1e7e34;
-  cursor: pointer;
-  text-decoration: none;
-  color: #ffffff;
-  font-family: var(--font-frutiger);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  position: relative;
-
-  background: linear-gradient(180deg, #bbf268 0%, #76c043 50%, #439b16 51%, #52b120 100%);
-  box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.95),
-    0 6px 18px rgba(20, 120, 30, 0.40);
-  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.frutiger-btn-green:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.1);
-  box-shadow:
-    inset 0 1px 2px #ffffff,
-    0 0 22px rgba(118, 192, 67, 0.95),
-    0 8px 24px rgba(20, 130, 30, 0.50);
-}
-
-.frutiger-btn-green:active {
-  transform: translateY(1px);
-}
-
-.frutiger-btn-green-title {
-  font-size: 15.5px;
-  font-weight: 800;
-  letter-spacing: 0.3px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.frutiger-btn-green-title svg {
-  width: 18px;
-  height: 18px;
-  fill: #ffffff;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
-}
-
-.frutiger-btn-green-sub {
-  font-size: 11px;
-  font-weight: 600;
-  opacity: 0.95;
-}
-
-/* ── BANNER DE DOWNLOAD EM DESTAQUE ───────────────────────── */
-.download-hero-banner {
-  margin: 12px 14px 6px;
-  padding: 16px 22px;
-  border-radius: 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.96) 0%,
-    rgba(235, 248, 255, 0.88) 60%,
-    rgba(205, 235, 255, 0.92) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow:
-    0 6px 20px rgba(0, 40, 100, 0.16),
-    inset 0 1px 2px #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  position: relative;
-  overflow: hidden;
-}
-
-.download-hero-banner::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.12) 100%);
-  pointer-events: none;
-}
-
-.download-banner-info h3 {
-  font-size: 18.5px;
-  font-weight: 800;
-  color: #002b66;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.download-banner-info p {
-  font-size: 12.5px;
-  color: #335577;
-  margin-top: 4px;
-}
-
-/* ── 5. ÁREA DE CONTEÚDO CLARA (INSET CHANFRADA) ──────────── */
-.aero-content-area {
-  position: relative;
-  z-index: 3;
-  background: rgba(255, 255, 255, 0.92);
-  margin: 10px 14px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 70, 140, 0.22);
-  box-shadow:
-    inset 1px 1px 4px rgba(0, 30, 80, 0.20),
-    inset -1px -1px 3px rgba(255, 255, 255, 0.9);
-  overflow: hidden;
-  min-height: 480px;
-}
-
-/* Sub-Abas do Ranking */
-.sub-nav-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: linear-gradient(180deg, rgba(220, 240, 255, 0.75) 0%, rgba(200, 230, 255, 0.45) 100%);
-  border-bottom: 1px solid rgba(0, 75, 150, 0.20);
-}
-
-.sub-nav-bar .frutiger-btn.active {
-  background: linear-gradient(180deg, #9fe2ff 0%, #30a5f8 50%, #0080ff 51%, #0066d6 100%);
-  box-shadow: inset 0 1px 1px #ffffff, 0 0 14px rgba(0, 168, 255, 0.95);
-}
-
-.btn-refresh {
-  margin-left: auto;
-  background: linear-gradient(180deg, #c4f774 0%, #76c043 50%, #439b16 51%, #52b120 100%) !important;
-  border-color: #2b8015 !important;
-}
-
-.btn-refresh:hover {
-  box-shadow: inset 0 1px 1px #ffffff, 0 0 14px rgba(118, 192, 67, 0.95) !important;
-}
-
-/* ── PÓDIO TOP 3 COM ORBES E COROAS 3D ─────────────────────── */
-.podium-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 16px;
-  padding: 20px 16px 16px;
-  background: linear-gradient(180deg, rgba(215, 238, 255, 0.55) 0%, rgba(185, 222, 255, 0.25) 100%);
-  border-bottom: 1px solid rgba(0, 80, 160, 0.15);
-}
-
-.podium-card {
-  flex: 1;
-  max-width: 250px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  text-align: center;
-  padding: 12px 10px 14px;
-  position: relative;
-  box-shadow: 0 6px 20px rgba(0, 40, 100, 0.16), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
-  backdrop-filter: blur(8px);
-}
-
-.podium-card.rank-1 {
-  background: linear-gradient(135deg, rgba(255, 248, 180, 0.78) 0%, rgba(255, 225, 75, 0.38) 100%);
-  transform: translateY(-10px);
-  border-color: rgba(255, 235, 130, 0.95);
-}
-.podium-card.rank-2 {
-  background: linear-gradient(135deg, rgba(230, 240, 255, 0.78) 0%, rgba(180, 205, 235, 0.38) 100%);
-}
-.podium-card.rank-3 {
-  background: linear-gradient(135deg, rgba(250, 230, 205, 0.78) 0%, rgba(210, 165, 115, 0.38) 100%);
-}
-
-.podium-orb {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  margin: 0 auto 8px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.podium-orb svg {
-  width: 26px;
-  height: 26px;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
-}
-
-.podium-orb::after {
-  content: '';
-  position: absolute;
-  top: 14%; left: 22%;
-  width: 32%; height: 22%;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
-  transform: rotate(-35deg);
-}
-
-.orb-gold {
-  background: radial-gradient(circle at 35% 30%, #fffbe6 0%, #ffd700 35%, #d4a017 65%, #7a5500 100%);
-  box-shadow: 0 4px 18px rgba(212, 160, 23, 0.75), inset 0 2px 6px rgba(255, 255, 210, 0.9);
-}
-.orb-gold svg { fill: #ffffff; }
-
-.orb-silver {
-  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #ebebeb 30%, #b8b8b8 60%, #4a4a4a 100%);
-  box-shadow: 0 4px 18px rgba(160, 160, 160, 0.65), inset 0 2px 6px rgba(255, 255, 255, 0.95);
-}
-.orb-silver svg { fill: #ffffff; }
-
-.orb-bronze {
-  background: radial-gradient(circle at 35% 30%, #fff2e0 0%, #d48f52 30%, #a85f24 60%, #522700 100%);
-  box-shadow: 0 4px 18px rgba(168, 95, 36, 0.65), inset 0 2px 6px rgba(255, 225, 180, 0.85);
-}
-.orb-bronze svg { fill: #ffffff; }
-
-.podium-title-rank {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.rank-1 .podium-title-rank { color: #b8860b; }
-.rank-2 .podium-title-rank { color: #708090; }
-.rank-3 .podium-title-rank { color: #9c5520; }
-
-.podium-player-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: #002244;
-  margin: 3px 0 2px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.podium-click-count {
-  font-size: 12px;
-  font-weight: 600;
-  color: #334455;
-  margin-bottom: 8px;
-}
-
-/* Barras de progresso estilo tubo de vidro líquido verde brilhante */
-.vista-progress-track {
-  height: 14px;
-  border-radius: 7px;
-  background: rgba(0, 0, 0, 0.16);
-  border: 1px solid rgba(0, 0, 0, 0.28);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
-  position: relative;
-}
-
-.vista-progress-fill {
-  height: 100%;
-  border-radius: 6px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.90) 0%,
-    rgba(145, 255, 115, 0.90) 48%,
-    rgba(35, 215, 35, 0.98) 50%,
-    rgba(10, 140, 10, 1) 100%
-  );
-  box-shadow: 0 0 12px rgba(35, 235, 35, 0.85);
-  position: relative;
-  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.vista-progress-fill::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -60%;
-  width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
-  animation: vistaShineAnimation 2.2s linear infinite;
-}
-
-@keyframes vistaShineAnimation {
-  0%   { left: -60%; }
-  100% { left: 130%; }
-}
-
-/* ── TABELA COM CABEÇALHOS AZUL SAFIRA CHANFRADOS ──────────── */
-.ranking-table-scroll {
-  padding: 8px 12px 14px;
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 2px;
-  font-size: 13px;
-}
-
-thead th {
-  padding: 8px 12px;
-  text-align: left;
-  font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: #003366;
-  background: linear-gradient(180deg, rgba(215, 235, 255, 0.95) 0%, rgba(175, 210, 255, 0.85) 100%);
-  border-top: 1px solid rgba(0, 80, 160, 0.30);
-  border-bottom: 2px solid rgba(0, 80, 160, 0.40);
-}
-
-thead th:first-child { border-radius: 6px 0 0 0; }
-thead th:last-child  { border-radius: 0 6px 0 0; }
-
-tbody tr td {
-  padding: 8px 12px;
-  border-bottom: 1px solid rgba(0, 80, 160, 0.08);
-  color: #1a2a3a;
-  vertical-align: middle;
-}
-
-tbody tr:nth-child(even) td { background: rgba(235, 245, 255, 0.45); }
-
-tbody tr:hover td {
-  background: linear-gradient(
-    180deg,
-    rgba(210, 238, 255, 0.85) 0%,
-    rgba(170, 215, 255, 0.60) 50%,
-    rgba(120, 190, 255, 0.45) 50.1%,
-    rgba(70, 160, 255, 0.35) 100%
-  ) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70), inset 0 -1px 0 rgba(0, 90, 180, 0.25);
-  cursor: default;
-}
-
-.rank-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  font-weight: 700;
-  font-size: 11px;
-  color: #ffffff;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(50, 120, 220, 0.75) 50.1%, rgba(0, 70, 190, 1) 100%);
-  box-shadow: 0 1px 4px rgba(0, 40, 120, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.6);
-}
-
-.rank-badge.top-1 {
-  background: linear-gradient(135deg, #fffbe0 0%, #f5d060 50%, #c8920a 50.1%, #9a6e00 100%);
-  color: #3b2000;
-}
-.rank-badge.top-2 {
-  background: linear-gradient(135deg, #ffffff 0%, #dedede 50%, #9e9e9e 50.1%, #636363 100%);
-  color: #222222;
-}
-.rank-badge.top-3 {
-  background: linear-gradient(135deg, #fff3e0 0%, #d8a065 50%, #a25c27 50.1%, #6e3200 100%);
-  color: #ffffff;
-}
-
-.player-nickname { font-weight: 600; color: #002255; }
-
-/* VISOR LCD SKEUOMÓRFICO */
-.lcd-vitrificado {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 8px;
-  font-family: 'Courier New', Consolas, monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #003622;
-  background: linear-gradient(180deg, rgba(195, 255, 230, 0.85) 0%, rgba(170, 255, 215, 0.60) 48%, rgba(50, 195, 100, 0.65) 50%, rgba(25, 145, 65, 0.80) 100%);
-  border: 1px solid rgba(0, 130, 50, 0.45);
-  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.65), inset 0 -1px 2px rgba(0, 90, 35, 0.30), 0 1px 4px rgba(0, 0, 0, 0.15);
-}
-
-.lcd-vitrificado.secundario {
-  background: linear-gradient(180deg, rgba(215, 235, 255, 0.85) 0%, rgba(190, 225, 255, 0.60) 48%, rgba(70, 140, 235, 0.55) 50%, rgba(30, 95, 205, 0.70) 100%);
-  border-color: rgba(0, 90, 180, 0.40);
-  color: #001f55;
-}
-
-/* ── 6. SEÇÃO 'COMO O SOFTWARE FUNCIONA' (AERO CARDS) ──────── */
-.how-it-works-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 16px;
-  padding: 20px;
-}
-
-.aero-card {
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(0, 80, 160, 0.30);
-  box-shadow: 0 4px 16px rgba(0, 40, 100, 0.12), inset 0 1px 0 #ffffff;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.aero-card-header {
-  padding: 12px 18px;
-  background: linear-gradient(180deg, #3aa3e3 0%, #1778bc 50%, #0d5ea0 50.1%, #0b4e85 100%);
-  border-bottom: 1px solid rgba(0, 50, 100, 0.5);
-  color: #ffffff;
-  font-size: 14.5px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.aero-card-header svg {
-  width: 20px;
-  height: 20px;
-  fill: #ffffff;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
-}
-
-.aero-card-body {
-  padding: 16px 18px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #223344;
-}
-
-.aero-card-body code {
-  background: rgba(0, 100, 200, 0.10);
-  color: #004488;
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-weight: 700;
-}
-
-/* ── 7. SEÇÃO 'DOWNLOAD & INSTALAÇÃO' ──────────────────────── */
-.download-page-wrap {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.wizard-box {
-  border-radius: 12px;
-  border: 1px solid #7ea3c8;
-  background: #f0f6fc;
-  box-shadow: 0 4px 18px rgba(0, 30, 80, 0.15), inset 0 1px 0 #ffffff;
-  overflow: hidden;
-}
-
-.wizard-header {
-  padding: 14px 20px;
-  background: linear-gradient(180deg, #ffffff 0%, #e2eefc 100%);
-  border-bottom: 1px solid #b8d2eb;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.wizard-header h4 {
-  font-size: 15px;
-  font-weight: 700;
-  color: #003366;
-}
-
-.wizard-steps-list {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.wizard-step-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 12px 16px;
-  border-radius: 10px;
-  border: 1px solid #cfdeec;
-}
-
-.wizard-step-num {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(180deg, #38b6ff 0%, #0078d7 100%);
-  color: #ffffff;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0, 100, 200, 0.35);
-}
-
-.wizard-step-content strong {
-  color: #002b66;
-  font-size: 13.5px;
-}
-
-.wizard-step-content p {
-  color: #445566;
-  font-size: 12.5px;
-  margin-top: 2px;
-}
-
-/* ── 8. STATUS BAR METÁLICA DO WINDOWS COM ÍCONES ──────────── */
-.win-status-bar {
-  position: relative;
-  z-index: 4;
-  display: flex;
-  align-items: center;
-  padding: 7px 16px;
-  background: linear-gradient(180deg, rgba(215, 225, 240, 0.95) 0%, rgba(185, 200, 225, 0.90) 100%);
-  border-top: 1px solid rgba(0, 70, 130, 0.35);
-  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.60) inset;
-  font-size: 11.5px;
-  color: #1a2a3a;
-  flex-wrap: wrap;
-}
-
-.status-cell {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 14px;
-  border-right: 1px solid rgba(0, 60, 120, 0.20);
-  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.60);
-}
-
-.status-cell svg {
-  width: 14px;
-  height: 14px;
-  fill: #003366;
-}
-
-.status-cell:first-child { padding-left: 2px; }
-.status-cell:last-child {
-  border-right: none;
-  box-shadow: none;
-  margin-left: auto;
-}
-
-.pulsing-green-orb {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #b8ffb8 0%, #20e040 50%, #006b18 100%);
-  box-shadow: 0 0 6px #20ff44;
-  animation: orbPulsingAnim 2s ease-in-out infinite;
-  flex-shrink: 0;
-}
-
-@keyframes orbPulsingAnim {
-  0%, 100% { box-shadow: 0 0 4px #20ff44, 0 0 8px rgba(32, 255, 68, 0.5); opacity: 1; }
-  50%      { box-shadow: 0 0 9px #20ff44, 0 0 16px rgba(32, 255, 68, 0.85); opacity: 0.65; }
-}
-
-.main-tab-panel { display: none; }
-.main-tab-panel.active { display: block; }
-
-.sub-tab-panel { display: none; }
-.sub-tab-panel.active { display: block; }
-
-.empty-state-msg {
-  text-align: center;
-  padding: 36px 20px;
-  color: #556677;
-  font-size: 13px;
-  font-style: italic;
-}
-
-.loading-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 24px;
-  color: #223344;
-  font-size: 13px;
-}
-
-.vista-spinner-ring {
-  width: 24px;
-  height: 24px;
-  border: 3px solid rgba(0, 130, 240, 0.20);
-  border-top-color: rgba(0, 130, 240, 0.95);
-  border-radius: 50%;
-  animation: spinCycle 0.75s linear infinite;
-}
-
-@keyframes spinCycle { to { transform: rotate(360deg); } }
-
-@media (max-width: 750px) {
-  .mp3-player-gadget { display: none; }
-  .floating-globe, .floating-glass-heart, .floating-butterfly-orb { display: none; }
-  .podium-container { flex-direction: column; align-items: center; }
-  .podium-card { max-width: 95%; transform: none !important; }
-  .download-hero-banner { flex-direction: column; text-align: center; }
-  .frutiger-btn-green { width: 100%; }
+/* Responsividade */
+@media (max-width: 900px) {
+  .portal-layout {
+    flex-direction: column;
+    padding: 0 10px;
+  }
+  #navigationMenu {
+    width: 100%;
+    border-radius: 0;
+  }
+  .mp3-player-gadget {
+    display: none;
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- SVG DEFS COM ÍCONES E FILTROS 3D GLOSSY REAIS -->
-<svg style="display: none;">
-  <defs>
-    <g id="icon-trophy">
-      <path d="M5 3h14v2h-1.5c-.3 3.5-2.2 6.5-5.5 7.5v2.5h3v2H9v-2h3V12.5C8.7 11.5 6.8 8.5 6.5 5H5V3zm2 2c.3 2.7 1.8 5 4.5 5.8V5H7zm10 0h-4.5v5.8c2.7-.8 4.2-3.1 4.5-5.8z"/>
-    </g>
-    <g id="icon-gears">
-      <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-    </g>
-    <g id="icon-cdrom">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 14.5c-2.49 0-4.5-2.01-4.5-4.5S9.51 7.5 12 7.5s4.5 2.01 4.5 4.5-2.01 4.5-4.5 4.5zm0-6c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/>
-    </g>
-    <g id="icon-download-arrow">
-      <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
-    </g>
-    <g id="icon-mouse">
-      <path d="M13 2H11C7.69 2 5 4.69 5 8v8c0 3.31 2.69 6 6 6h2c3.31 0 6-2.69 6-6V8c0-3.31-2.69-6-6-6zm4 14c0 2.21-1.79 4-4 4h-2c-2.21 0-4-1.79-4-4V8c0-1.85 1.28-3.41 3-3.86V9h2V4.02c.32-.02.66-.02 1 0V9h2V4.14c1.72.45 3 2.01 3 3.86v8z"/>
-    </g>
-    <g id="icon-flame">
-      <path d="M12 2.5C9.5 7 6 9.5 6 14c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4.5-3.5-7-6-11.5zm0 15.5c-1.66 0-3-1.34-3-3 0-1.8 1.5-3.2 3-5.2 1.5 2 3 3.4 3 5.2 0 1.66-1.34 3-3 3z"/>
-    </g>
-    <g id="icon-sync">
-      <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
-    </g>
-    <g id="icon-lightning">
-      <path d="M7 2v11h3v9l7-12h-4l4-8H7z"/>
-    </g>
-    <g id="icon-rocket">
-      <path d="M12 2.5s-4 4-4 9.5c0 2.5 1 4.5 2 5.5v3.5l2-1 2 1V17.5c1-1 2-3 2-5.5 0-5.5-4-9.5-4-9.5zm-5 13l-3 3.5v1.5l4-1-1-4zm10 0l-1 4 4 1v-1.5l-3-3.5zM12 9.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
-    </g>
-    <g id="icon-lock">
-      <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
-    </g>
-    <g id="icon-palette">
-      <path d="M12 3C6.5 3 2 7.5 2 13c0 3.9 3.1 7 7 7 1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.4-.3-.4-.5-.9-.5-1.4 0-1.1.9-2 2-2h2.4c3.6 0 6.6-3 6.6-6.6 0-5-4.5-9.6-9-9.6zm-5.5 9c-.8 0-1.5-.7-1.5-1.5S5.7 9 6.5 9s1.5.7 1.5 1.5S7.3 12 6.5 12zm3-4C8.7 8 8 7.3 8 6.5S8.7 5 9.5 5s1.5.7 1.5 1.5S10.3 8 9.5 8zm5 0c-.8 0-1.5-.7-1.5-1.5S13.7 5 14.5 5s1.5.7 1.5 1.5S15.3 8 14.5 8zm3 4c-.8 0-1.5-.7-1.5-1.5S16.7 9 17.5 9s1.5.7 1.5 1.5-.7 1.5-1.5 1.5z"/>
-    </g>
-    <g id="icon-users">
-      <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-    </g>
-    <g id="icon-crown">
-      <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1v-1h14v1z"/>
-    </g>
-  </defs>
-</svg>
+<!-- Camadas de Fundo para Rotação Automática de Wallpaper com Cross-fade -->
+<div id="wallpaper-bg-1" class="wallpaper-layer active" style="background-image: url('/frutiger-bg-hd.jpg');"></div>
+<div id="wallpaper-bg-2" class="wallpaper-layer" style="background-image: url('/wallpaper_1.jpg');"></div>
 
-<!-- ── PAISAGEM EM CAMADAS (ONDAS TROPICAIS E COLINAS ASADAL) ── -->
-<div class="landscape-layers">
-  <svg viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,130 C380,50 640,210 1020,110 C1240,60 1380,150 1440,130 L1440,320 L0,320 Z" fill="#0088cc" opacity="0.45"/>
-    <path d="M0,170 C320,90 580,250 960,150 C1200,90 1340,190 1440,170 L1440,320 L0,320 Z" fill="url(#hillGrad1)" opacity="0.88"/>
-    <path d="M0,220 C240,160 620,300 1020,200 C1280,130 1380,230 1440,210 L1440,320 L0,320 Z" fill="url(#hillGrad2)" opacity="0.96"/>
-    <defs>
-      <linearGradient id="hillGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#a4d233" stop-opacity="0.95"/>
-        <stop offset="100%" stop-color="#4caf50" stop-opacity="1"/>
-      </linearGradient>
-      <linearGradient id="hillGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="#4caf50" stop-opacity="0.98"/>
-        <stop offset="100%" stop-color="#1b5e20" stop-opacity="1"/>
-      </linearGradient>
-    </defs>
-  </svg>
-</div>
-
-<!-- Aurora Boreal Asadal -->
-<div class="aurora-ribbons"></div>
-
-<!-- Camada de Bokeh Solar -->
-<div class="bokeh-canvas">
-  <div class="bokeh-orb"></div>
-  <div class="bokeh-orb"></div>
-  <div class="bokeh-orb"></div>
-  <div class="bokeh-orb"></div>
-</div>
-
-<!-- ── ELEMENTOS 3D FLUTUANTES NO ECRÃ ─────────────────────── -->
-<div class="floating-elements-layer">
-  <!-- Globo Terrestre Glossy 3D -->
-  <div class="floating-globe" title="Rede Global de Cliques">
-    <svg viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
-      <ellipse cx="50" cy="50" rx="30" ry="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
-      <ellipse cx="50" cy="50" rx="14" ry="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
-      <line x1="4" y1="50" x2="96" y2="50" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
-      <line x1="12" y1="28" x2="88" y2="28" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-      <line x1="12" y1="72" x2="88" y2="72" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-      <path d="M4,50 Q50,65 96,50 A48,48 0 0,0 4,50 Z" fill="rgba(255,255,255,0.25)"/>
-    </svg>
-  </div>
-
-  <!-- Coração de Vidro Líquido Cromado -->
-  <div class="floating-glass-heart" title="Liquid Glass Love">
-    <svg viewBox="0 0 80 80">
-      <defs>
-        <radialGradient id="heartGrad" cx="35%" cy="30%" r="70%">
-          <stop offset="0%" stop-color="#ffffff"/>
-          <stop offset="25%" stop-color="#a0e4ff"/>
-          <stop offset="55%" stop-color="#0091ea"/>
-          <stop offset="100%" stop-color="#002171"/>
-        </radialGradient>
-      </defs>
-      <path d="M40,70 C10,48 0,32 0,18 C0,7 8,0 20,0 C28,0 35,5 40,12 C45,5 52,0 60,0 C72,0 80,7 80,18 C80,32 70,48 40,70 Z" fill="url(#heartGrad)"/>
-      <path d="M22,6 C14,6 8,11 8,20 C8,28 16,40 32,54 C24,44 18,34 18,22 C18,12 24,6 30,6 Z" fill="rgba(255,255,255,0.7)"/>
-    </svg>
-  </div>
-
-  <!-- Orbe com Borboleta Azul (Morpho) -->
-  <div class="floating-butterfly-orb" title="Natureza Digital">
-    <svg viewBox="0 0 40 40" style="width: 38px; height: 38px;">
-      <path d="M20,18 C14,10 4,12 8,22 C10,26 18,24 20,20 Z" fill="#00e5ff" opacity="0.9"/>
-      <path d="M20,18 C26,10 36,12 32,22 C30,26 22,24 20,20 Z" fill="#00b4d8" opacity="0.9"/>
-      <path d="M20,20 C16,23 8,28 12,34 C16,38 19,28 20,22 Z" fill="#0091ea" opacity="0.85"/>
-      <path d="M20,20 C24,23 32,28 28,34 C24,38 21,28 20,22 Z" fill="#2979ff" opacity="0.85"/>
-      <line x1="20" y1="14" x2="20" y2="28" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
-  </div>
-
-  <!-- Bolhas de água translúcidas -->
+<!-- Efeito de Luz Solar e Bolhas -->
+<div class="lens-flare-overlay"></div>
+<div class="bubbles-container">
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
   <div class="bubble"></div><div class="bubble"></div>
 </div>
 
-<!-- ── GADGET MP3 PLAYER SKEUOMÓRFICO AZUL (TRILHA WII / VISTA) ─ -->
+<!-- ═════════════════════════════════════════════════════════════════
+     1. CABEÇALHO PRINCIPAL ESTILO FRUTIGER AERO ARCHIVE (#mainHeader)
+     ═════════════════════════════════════════════════════════════════ -->
+<header id="mainHeader">
+  <div class="header-logo-text">
+    <img src="/icon-trophy.png" class="header-logo-icon" alt="Troféu Frutiger Aero"/>
+    <div>
+      <div class="header-title">
+        <span>MouseClickCounter</span>
+        <span class="edition-tag">Aero Archive 2.8</span>
+      </div>
+      <div class="header-motto">Preserving 2000s Web Aesthetics • Live Global Leaderboard (Turso libSQL)</div>
+    </div>
+  </div>
+
+  <div class="header-quick-tools">
+    <button class="header-tool-btn" onclick="cycleWallpaper()" title="Alternar Papel de Parede">
+      <img src="/icon-wallpapers.png" class="tool-icon" alt="Galeria"/>
+      <span id="header-wp-text">Trocar Wallpaper (1/12)</span>
+    </button>
+    <button class="header-tool-btn" onclick="toggleBeachAmbiance()" id="btn-beach-toggle" title="Tocar Ambiência de Praia">
+      <img src="/icon-music.png" class="tool-icon" alt="Áudio"/>
+      <span id="txt-beach-toggle">Ondas Tropicais (Off)</span>
+    </button>
+    <a href="/download/MouseClickCounter.exe" class="header-tool-btn download-highlight" onclick="triggerDownloadSound()">
+      <img src="/icon-download.png" class="tool-icon" alt="Download"/>
+      <span>Baixar .EXE</span>
+    </a>
+  </div>
+</header>
+
+<!-- ═════════════════════════════════════════════════════════════════
+     2. ESTRUTURA DO PORTAL (BARRA LATERAL + JANELA AERO GLASS)
+     ═════════════════════════════════════════════════════════════════ -->
+<div class="portal-layout">
+
+  <!-- BARRA LATERAL ESTILO ARCHIVE (#navigationMenu) -->
+  <aside id="navigationMenu">
+    <!-- Categoria: Conteúdo Principal -->
+    <nav class="nav-categories">
+      <div class="navbar-titles">Conteúdo Principal</div>
+      <button class="nav-item nav-active" id="nav-btn-ranking" onclick="switchMainTab('ranking')">
+        <img src="/icon-trophy.png" class="nav-icons" alt="Ranking"/>
+        <span>Ranking Global</span>
+      </button>
+      <button class="nav-item nav-inactive" id="nav-btn-how" onclick="switchMainTab('how')">
+        <img src="/icon-resources.png" class="nav-icons" alt="Como Funciona"/>
+        <span>Como Funciona</span>
+      </button>
+      <button class="nav-item nav-inactive" id="nav-btn-download" onclick="switchMainTab('download')">
+        <img src="/icon-download.png" class="nav-icons" alt="Download"/>
+        <span>Baixar Software</span>
+      </button>
+    </nav>
+
+    <!-- Categoria: Galeria & Estética -->
+    <nav class="nav-categories">
+      <div class="navbar-titles">Galeria &amp; Estética</div>
+      <button class="nav-item nav-inactive" onclick="cycleWallpaper()">
+        <img src="/icon-wallpapers.png" class="nav-icons" alt="Wallpapers"/>
+        <span id="sidebar-wp-text">Trocar Wallpaper</span>
+      </button>
+      <button class="nav-item nav-inactive" onclick="toggleBeachAmbiance()">
+        <img src="/icon-music.png" class="nav-icons" alt="Praia"/>
+        <span id="sidebar-beach-text">Ondas Tropicais</span>
+      </button>
+      <button class="nav-item nav-inactive" onclick="playCdRomEffect()">
+        <img src="/icon-info.png" class="nav-icons" alt="CD-ROM"/>
+        <span>Leitor CD-ROM 2005</span>
+      </button>
+    </nav>
+
+    <!-- Categoria: Informações do Sistema -->
+    <nav class="nav-categories">
+      <div class="navbar-titles">Sistema &amp; Rede</div>
+      <div class="nav-system-card glass-borders">
+        <div class="sys-item">
+          <span class="sys-dot online"></span>
+          <span>Turso DB: <strong>Conectado</strong></span>
+        </div>
+        <div class="sys-item">
+          <span class="sys-dot win"></span>
+          <span>Cliente: <strong>C++ Win32</strong></span>
+        </div>
+        <div class="sys-item">
+          <span class="sys-dot aero"></span>
+          <span>Aero Glass: <strong>16px Blur</strong></span>
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- JANELA AERO GLASS PRINCIPAL (#mainContent) -->
+  <main id="mainContent" class="aero-window">
+
+    <!-- Barra de Título Windows Vista / 7 -->
+    <div class="title-bar">
+      <div class="title-icon-orb">
+        <img src="/icon-trophy.png" alt="Orb"/>
+      </div>
+      <div class="title-text">MouseClickCounter - Portal Oficial Frutiger Aero (2005–2013)</div>
+      <div class="win7-controls">
+        <div class="win7-btn" title="Minimizar">&#x2014;</div>
+        <div class="win7-btn" title="Maximizar">&#x25A1;</div>
+        <div class="win7-btn win7-close" title="Fechar">&#x2715;</div>
+      </div>
+    </div>
+
+    <!-- Ribbon de Navegação com Abas -->
+    <nav class="wmp-ribbon-bar">
+      <button class="wmp-tab-btn active" id="main-tab-ranking" onclick="switchMainTab('ranking')">
+        <img src="/icon-trophy.png" class="tab-icon" alt="Troféu"/>
+        <span>Ranking Global</span>
+      </button>
+      <button class="wmp-tab-btn" id="main-tab-how" onclick="switchMainTab('how')">
+        <img src="/icon-resources.png" class="tab-icon" alt="Engrenagem"/>
+        <span>Como Funciona o Software</span>
+      </button>
+      <button class="wmp-tab-btn" id="main-tab-download" onclick="switchMainTab('download')">
+        <img src="/icon-download.png" class="tab-icon" alt="Disco"/>
+        <span>Baixar MouseClickCounter.exe</span>
+      </button>
+    </nav>
+
+    <!-- Banner de Download Hero com Botão Gel Verde -->
+    <div class="download-hero-banner">
+      <div class="download-banner-info">
+        <h3>
+          <img src="/icon-download.png" style="width: 20px; height: 20px;" alt="Download Icon"/>
+          <span>MouseClickCounter.exe</span>
+          <span style="font-size: 12px; font-weight: 600; color: #0078d7;">(Windows 7 / 10 / 11)</span>
+        </h3>
+        <p>Contador C++ Win32 puro • Zero Input Lag • Instalação automática em %LOCALAPPDATA%</p>
+      </div>
+      <a href="/download/MouseClickCounter.exe" class="frutiger-btn-green" onclick="triggerDownloadSound()">
+        <div class="frutiger-btn-green-title">
+          <img src="/icon-download.png" alt="Seta"/>
+          <span>Baixar para Windows (.EXE)</span>
+        </div>
+        <div class="frutiger-btn-green-sub">
+          Leve (&lt; 1MB) • Zero Input Lag • Inicia com o Windows
+        </div>
+      </a>
+    </div>
+
+    <!-- Área de Conteúdo -->
+    <div class="aero-content-area">
+
+      <!-- ═════════════════════════════════════════════════════════
+           ABA 1: RANKING GLOBAL
+           ═════════════════════════════════════════════════════════ -->
+      <div class="main-tab-panel active" id="panel-main-ranking">
+        <!-- Sub-Abas em Pílula Glossy Gel (.frutiger-btn) -->
+        <div class="sub-nav-bar">
+          <button class="frutiger-btn active" id="subtab-today" onclick="switchRankingSubTab('today')">
+            <img src="/icon-trophy.png" style="width: 14px; height: 14px;" alt="Hoje"/>
+            <span>Cliques de Hoje</span>
+          </button>
+          <button class="frutiger-btn" id="subtab-total" onclick="switchRankingSubTab('total')">
+            <img src="/icon-resources.png" style="width: 14px; height: 14px;" alt="Total"/>
+            <span>Total Geral</span>
+          </button>
+          <button class="frutiger-btn btn-refresh" onclick="fetchRankingData()">
+            <img src="/icon-wallpapers.png" style="width: 14px; height: 14px;" alt="Sync"/>
+            <span>Atualizar Agora</span>
+          </button>
+        </div>
+
+        <div id="loading-spinner-box" style="display: none; align-items: center; justify-content: center; padding: 15px; color: #0078d7; font-weight: 700; font-size: 12px; gap: 8px;">
+          <span>Sincronizando com a base de dados Turso...</span>
+        </div>
+
+        <!-- Sub-Painel: Hoje -->
+        <div class="sub-tab-panel active" id="subpanel-today">
+          <div class="podium-container" id="podium-today"></div>
+          <div class="ranking-table-wrap">
+            <table class="frutiger-table" id="tbl-today">
+              <thead>
+                <tr>
+                  <th style="width: 60px; text-align: center;">Posição</th>
+                  <th>Jogador</th>
+                  <th>Cliques Hoje</th>
+                  <th>Total Acumulado</th>
+                  <th>Última Atividade</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sub-Painel: Total -->
+        <div class="sub-tab-panel" id="subpanel-total" style="display: none;">
+          <div class="podium-container" id="podium-total"></div>
+          <div class="ranking-table-wrap">
+            <table class="frutiger-table" id="tbl-total">
+              <thead>
+                <tr>
+                  <th style="width: 60px; text-align: center;">Posição</th>
+                  <th>Jogador</th>
+                  <th>Total Acumulado</th>
+                  <th>Cliques Hoje</th>
+                  <th>Última Atividade</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Barra de Status Inferior -->
+        <div class="aero-status-bar">
+          <div class="status-stat-item" id="stat-total-players-text">
+            <span>Jogadores Registrados: 0</span>
+          </div>
+          <div class="status-stat-item" id="stat-global-clicks-text">
+            <span>Soma Global: 0 cliques</span>
+          </div>
+          <div class="status-stat-item" id="stat-countdown-text">
+            <span>Auto-refresh em 30s</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════
+           ABA 2: COMO FUNCIONA O SOFTWARE
+           ═════════════════════════════════════════════════════════ -->
+      <div class="main-tab-panel" id="panel-main-how">
+        <div class="how-it-works-grid">
+          <div class="how-card glass-borders">
+            <div class="how-card-header">
+              <img src="/icon-resources.png" alt="API"/>
+              <span>1. Win32 RawInput API</span>
+            </div>
+            <p>Captura cliques diretamente do barramento do Windows através de <code>RegisterRawInputDevices</code> com a flag <code>RIDEV_INPUTSINK</code>. Zero impacto de performance e zero input lag.</p>
+          </div>
+
+          <div class="how-card glass-borders">
+            <div class="how-card-header">
+              <img src="/icon-info.png" alt="Auto-Start"/>
+              <span>2. Auto-Instalação Local</span>
+            </div>
+            <p>Ao iniciar na pasta Downloads, cria o diretório <code>%LOCALAPPDATA%\MouseClickCounter</code>, copia-se com segurança e registra o arranque automático no Registro do Windows.</p>
+          </div>
+
+          <div class="how-card glass-borders">
+            <div class="how-card-header">
+              <img src="/icon-wallpapers.png" alt="Mutex"/>
+              <span>3. Single Instance (Mutex)</span>
+            </div>
+            <p>Protegido por um <code>CreateMutexW</code> global exclusivo. Impede instâncias duplicadas e garante contagem de cliques 100% fidedigna.</p>
+          </div>
+
+          <div class="how-card glass-borders">
+            <div class="how-card-header">
+              <img src="/icon-trophy.png" alt="Turso"/>
+              <span>4. Persistência Permanente</span>
+            </div>
+            <p>Os cliques locais são salvos em <code>clicks.dat</code> a cada 10 cliques e sincronizados a cada 60s com a base de dados Turso (libSQL Serverless).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════════
+           ABA 3: BAIXAR EXECUTÁVEL
+           ═════════════════════════════════════════════════════════ -->
+      <div class="main-tab-panel" id="panel-main-download">
+        <div style="padding: 24px; text-align: center;">
+          <div class="glass-borders" style="max-width: 600px; margin: 0 auto 20px; padding: 20px;">
+            <img src="/icon-download.png" style="width: 48px; height: 48px; margin-bottom: 10px;" alt="Download Wizard"/>
+            <h2 style="font-size: 18px; color: #004b87; margin-bottom: 6px;">MouseClickCounter v2.8 (Build Nativo C++)</h2>
+            <p style="font-size: 12.5px; color: #445566; margin-bottom: 16px;">
+              Compatível com Windows 7, Windows 8, Windows 10 e Windows 11 (64-bit).<br/>
+              Sem dependências externas (.NET ou Visual C++ Redistributable dispensados).
+            </p>
+            <a href="/download/MouseClickCounter.exe" class="frutiger-btn-green" style="padding: 14px 44px; display: inline-flex;" onclick="triggerDownloadSound()">
+              <div class="frutiger-btn-green-title" style="font-size: 16px;">
+                <img src="/icon-download.png" alt="Seta"/>
+                <span>Baixar MouseClickCounter.exe (830 KB)</span>
+              </div>
+              <div class="frutiger-btn-green-sub">Download Direto Verificado • Pronto para Uso</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /aero-content-area -->
+
+  </main>
+</div><!-- /portal-layout -->
+
+<!-- ═════════════════════════════════════════════════════════════════
+     3. GADGET SKEUOMÓRFICO AERO-SOUND (MP3 PLAYER AZUL COBALTO)
+     ═════════════════════════════════════════════════════════════════ -->
 <div class="mp3-player-gadget" id="aero-mp3-player">
   <div class="mp3-header">
     <span class="brand">AERO-SOUND</span>
-    <span id="mp3-status-txt">WII CHILL STEREO</span>
+    <span id="mp3-status-txt">STEREO PAUSED</span>
   </div>
 
   <!-- Visor LCD Digital com Equalizador Animado -->
@@ -1506,7 +1454,7 @@ tbody tr:hover td {
 
   <!-- Controles Físicos do MP3 Player (100% Funcionais) -->
   <div class="mp3-controls-row">
-    <!-- Botão Mute / Unmute (🔊 / 🔇) -->
+    <!-- Botão Mute / Unmute ( / ) -->
     <button class="mp3-btn" id="btn-mp3-mute" title="Silenciar / Ativar Som" onclick="toggleAeroAudio()">
       <svg id="svg-mute-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
     </button>
@@ -1516,8 +1464,8 @@ tbody tr:hover td {
       <svg viewBox="0 0 24 24"><path d="M18 6l-8.5 6 8.5 6V6zM6 6v12h2V6H6z"/></svg>
     </button>
 
-    <!-- Jog Dial Central: Tocar / Pausar (▶ / ❚❚) -->
-    <div class="mp3-jog-dial paused" id="btn-jog-play" title="Tocar Música (▶)" onclick="toggleAmbientSoundscape()">
+    <!-- Jog Dial Central: Tocar / Pausar ( / ) -->
+    <div class="mp3-jog-dial paused" id="btn-jog-play" title="Tocar Música ()" onclick="toggleAmbientSoundscape()">
       <svg id="svg-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
     </div>
 
@@ -1528,295 +1476,108 @@ tbody tr:hover td {
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     JANELA PRINCIPAL 'AERO GLASS' (DESFOQUE 16px & BORDA ILUMINADA)
-     ═══════════════════════════════════════════════════════════════ -->
-<div class="aero-window">
-
-  <!-- Barra de Título Windows Vista/7 -->
-  <div class="title-bar">
-    <div class="title-icon-orb">
-      <svg viewBox="0 0 24 24"><use href="#icon-mouse"/></svg>
-    </div>
-    <div class="title-text">MouseClickCounter - Portal Oficial (Frutiger Aero 2005–2013)</div>
-
-    <div class="win7-controls">
-      <div class="win7-btn" title="Minimizar">&#x2014;</div>
-      <div class="win7-btn" title="Maximizar">&#x25A1;</div>
-      <div class="win7-btn win7-close" title="Fechar">&#x2715;</div>
-    </div>
-  </div>
-
-  <!-- BARRA DE NAVEGAÇÃO WMP11 RIBBON ESCURA COM ÍCONES 3D -->
-  <nav class="wmp-ribbon-bar">
-    <button class="wmp-tab-btn active" id="main-tab-ranking" onclick="switchMainTab('ranking')">
-      <svg class="tab-icon" viewBox="0 0 24 24"><use href="#icon-trophy"/></svg>
-      <span>Ranking Global</span>
-    </button>
-    <button class="wmp-tab-btn" id="main-tab-how" onclick="switchMainTab('how')">
-      <svg class="tab-icon" viewBox="0 0 24 24"><use href="#icon-gears"/></svg>
-      <span>Como Funciona o Software</span>
-    </button>
-    <button class="wmp-tab-btn" id="main-tab-download" onclick="switchMainTab('download')">
-      <svg class="tab-icon" viewBox="0 0 24 24"><use href="#icon-cdrom"/></svg>
-      <span>Baixar MouseClickCounter.exe</span>
-    </button>
-  </nav>
-
-  <!-- BANNER DE DESTAQUE COM BOTÃO GIGANTE GEL VERDE-LIMA -->
-  <div class="download-hero-banner">
-    <div class="download-banner-info">
-      <h3>
-        <svg viewBox="0 0 24 24" style="width: 22px; height: 22px; fill: #0078d7;"><use href="#icon-mouse"/></svg>
-        <span>MouseClickCounter.exe</span>
-        <span style="font-size: 13px; font-weight: 600; color: #0078d7;">(Windows 7 / 10 / 11)</span>
-      </h3>
-      <p>Contador C++ Win32 puro • Zero Input Lag • Instalação automática em %LOCALAPPDATA%</p>
-    </div>
-    <a href="/download/MouseClickCounter.exe" class="frutiger-btn-green" onclick="triggerDownloadSound()">
-      <div class="frutiger-btn-green-title">
-        <svg viewBox="0 0 24 24"><use href="#icon-download-arrow"/></svg>
-        <span>Baixar para Windows (.EXE)</span>
-      </div>
-      <div class="frutiger-btn-green-sub">
-        Leve (&lt; 1MB) • Zero Input Lag • Inicia com o Windows
-      </div>
-    </a>
-  </div>
-
-  <!-- ÁREA DE CONTEÚDO CLARA (CHANFRADA INSET) -->
-  <div class="aero-content-area">
-
-    <!-- ═════════════════════════════════════════════════════════
-         ABA 1: RANKING GLOBAL
-         ═════════════════════════════════════════════════════════ -->
-    <div class="main-tab-panel active" id="panel-main-ranking">
-
-      <!-- Sub-Abas em Pílula Glossy Gel (.frutiger-btn) -->
-      <div class="sub-nav-bar">
-        <button class="frutiger-btn active" id="subtab-today" onclick="switchRankingSubTab('today')">
-          <svg viewBox="0 0 24 24"><use href="#icon-mouse"/></svg>
-          <span>Cliques de Hoje</span>
-        </button>
-        <button class="frutiger-btn" id="subtab-total" onclick="switchRankingSubTab('total')">
-          <svg viewBox="0 0 24 24"><use href="#icon-flame"/></svg>
-          <span>Total Geral</span>
-        </button>
-        <button class="frutiger-btn btn-refresh" onclick="fetchRankingData()">
-          <svg viewBox="0 0 24 24"><use href="#icon-sync"/></svg>
-          <span>Atualizar Agora</span>
-        </button>
-      </div>
-
-      <div id="loading-spinner-box" class="loading-indicator">
-        <div class="vista-spinner-ring"></div>
-        <span>Sincronizando com a base de dados Turso...</span>
-      </div>
-
-      <!-- Sub-Painel: Hoje -->
-      <div class="sub-tab-panel active" id="subpanel-today">
-        <div class="podium-container" id="podium-today"></div>
-        <div class="ranking-table-scroll">
-          <table id="tbl-today">
-            <thead>
-              <tr>
-                <th style="width: 50px; text-align: center;">Pos</th>
-                <th>Jogador</th>
-                <th>Cliques Hoje</th>
-                <th>Total Histórico</th>
-                <th>Última Atividade</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Sub-Painel: Total -->
-      <div class="sub-tab-panel" id="subpanel-total">
-        <div class="podium-container" id="podium-total"></div>
-        <div class="ranking-table-scroll">
-          <table id="tbl-total">
-            <thead>
-              <tr>
-                <th style="width: 50px; text-align: center;">Pos</th>
-                <th>Jogador</th>
-                <th>Total Geral</th>
-                <th>Cliques Hoje</th>
-                <th>Última Atividade</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ═════════════════════════════════════════════════════════
-         ABA 2: COMO FUNCIONA O SOFTWARE (AERO CARDS DE VIDRO)
-         ═════════════════════════════════════════════════════════ -->
-    <div class="main-tab-panel" id="panel-main-how">
-      <div class="how-it-works-grid">
-
-        <!-- Card 1: Motor C++ Win32 RawInput -->
-        <div class="aero-card">
-          <div class="aero-card-header">
-            <svg viewBox="0 0 24 24"><use href="#icon-lightning"/></svg>
-            <span>Motor C++ Win32 RawInput (Zero Input Lag)</span>
-          </div>
-          <div class="aero-card-body">
-            O <strong>MouseClickCounter</strong> foi construído em <code>C++ nativo puro (Win32 API)</code> para gamers de alta performance.
-            Em vez de recorrer a hooks globais lentos (<code>WH_MOUSE_LL</code>) que bloqueiam o ponteiro do rato, o programa escuta os eventos diretamente do hardware através de <code>WM_INPUT</code>.
-            <br/><br/>
-            <strong>Desempenho:</strong> 0% de CPU, ~8 MB de memória RAM e <strong>zero milissegundos</strong> de atraso em jogos como Valorant, CS2, League of Legends e Warzone.
-          </div>
-        </div>
-
-        <!-- Card 2: Auto-Instalação em %LOCALAPPDATA% -->
-        <div class="aero-card">
-          <div class="aero-card-header">
-            <svg viewBox="0 0 24 24"><use href="#icon-rocket"/></svg>
-            <span>Auto-Instalação Inteligente em %LOCALAPPDATA%</span>
-          </div>
-          <div class="aero-card-body">
-            Ao ser aberto pela primeira vez (mesmo na pasta Downloads ou no Ambiente de Trabalho), o programa detecta onde está e copia-se silenciosamente para:
-            <br/>
-            <code>%LOCALAPPDATA%\MouseClickCounter\MouseClickCounter.exe</code>
-            <br/><br/>
-            Ele regista a chave de arranque do Windows em <code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</code> apontando sempre para este diretório protegido.
-            Podes esvaziar a pasta Downloads à vontade — o programa iniciará sempre automaticamente com o Windows!
-          </div>
-        </div>
-
-        <!-- Card 3: Privacidade Total -->
-        <div class="aero-card">
-          <div class="aero-card-header">
-            <svg viewBox="0 0 24 24"><use href="#icon-lock"/></svg>
-            <span>Privacidade Total e Segurança Absoluta</span>
-          </div>
-          <div class="aero-card-body">
-            O software possui um único propósito: <strong>contar cliques do rato</strong>.
-            <br/><br/>
-            • <strong>Zero captura de teclado:</strong> não existe qualquer função de keylogger.<br/>
-            • <strong>Zero captura de tela:</strong> o programa nunca tira capturas de ecrã nem lê posições do cursor.<br/>
-            • <strong>Comunicação encriptada:</strong> sincroniza unicamente o Nickname e a contagem via HTTPS a cada 60 segundos com o banco Turso. Se desligares a internet, os cliques continuam guardados com segurança no Registo local.
-          </div>
-        </div>
-
-        <!-- Card 4: Como Personalizar o Nickname -->
-        <div class="aero-card">
-          <div class="aero-card-header">
-            <svg viewBox="0 0 24 24"><use href="#icon-palette"/></svg>
-            <span>Como Personalizar o teu Nickname no System Tray</span>
-          </div>
-          <div class="aero-card-body">
-            Por predefinição, o programa utiliza o nome da tua conta do Windows. Para alterares para a tua alcunha de gamer:
-            <br/><br/>
-            1. Olha para o canto inferior direito do ecrã (junto ao relógio do Windows).<br/>
-            2. Clica com o <strong>botão direito</strong> no ícone do rato.<br/>
-            3. Clica na opção <strong>"Alterar Nickname"</strong>.<br/>
-            4. Uma caixa de diálogo nativa do Windows abrir-se-á: digita o teu novo Nickname e clica em Salvar!<br/>
-            5. O teu novo nome atualizar-se-á no ranking global na sincronização seguinte.
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ═════════════════════════════════════════════════════════
-         ABA 3: BAIXAR MOUSECLICKCOUNTER.EXE & INSTALAÇÃO
-         ═════════════════════════════════════════════════════════ -->
-    <div class="main-tab-panel" id="panel-main-download">
-      <div class="download-page-wrap">
-
-        <!-- Caixa de Assistente de Instalação -->
-        <div class="wizard-box">
-          <div class="wizard-header">
-            <h4>Assistente de Instalação e Configuração Rápida</h4>
-            <span style="font-size: 11.5px; color: #557799;">Versão 3.0 • Windows 7, 8, 10, 11 (64-bit)</span>
-          </div>
-
-          <div class="wizard-steps-list">
-            <div class="wizard-step-item">
-              <div class="wizard-step-num">1</div>
-              <div class="wizard-step-content">
-                <strong>Descarrega o executável</strong>
-                <p>Clica no botão verde abaixo para transferir o <code>MouseClickCounter.exe</code> (~811 KB, sem instaladores pesados).</p>
-              </div>
-            </div>
-
-            <div class="wizard-step-item">
-              <div class="wizard-step-num">2</div>
-              <div class="wizard-step-content">
-                <strong>Executa com duplo clique</strong>
-                <p>O ficheiro instala-se sozinho em <code>%LOCALAPPDATA%</code> e coloca um ícone discreto na bandeja do sistema junto ao relógio.</p>
-              </div>
-            </div>
-
-            <div class="wizard-step-item">
-              <div class="wizard-step-num">3</div>
-              <div class="wizard-step-content">
-                <strong>Joga e clica livremente</strong>
-                <p>Todos os teus cliques em jogos e aplicações são contabilizados sem interferência no sistema e sincronizados com a tabela global.</p>
-              </div>
-            </div>
-
-            <div class="wizard-step-item">
-              <div class="wizard-step-num">4</div>
-              <div class="wizard-step-content">
-                <strong>Acompanha a tua pontuação</strong>
-                <p>Passa o cursor no ícone do relógio para veres o teu total ou volta a este portal para disputares o pódio mundial!</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style="text-align: center; padding: 10px 0;">
-          <a href="/download/MouseClickCounter.exe" class="frutiger-btn-green" style="padding: 14px 48px;" onclick="triggerDownloadSound()">
-            <div class="frutiger-btn-green-title" style="font-size: 16px;">
-              <svg viewBox="0 0 24 24"><use href="#icon-download-arrow"/></svg>
-              <span>Baixar MouseClickCounter.exe (.EXE Direto)</span>
-            </div>
-            <div class="frutiger-btn-green-sub">
-              Executável portátil nativo para Windows 7, 8, 10 e Windows 11
-            </div>
-          </a>
-        </div>
-
-      </div>
-    </div>
-
-  </div><!-- /aero-content-area -->
-
-  <!-- ── STATUS BAR METÁLICA DO WINDOWS ──────────────────────── -->
-  <footer class="win-status-bar">
-    <div class="status-cell">
-      <div class="pulsing-green-orb"></div>
-      <span>Servidor Turso Online</span>
-    </div>
-    <div class="status-cell" id="stat-total-players">
-      <svg viewBox="0 0 24 24"><use href="#icon-users"/></svg>
-      <span id="stat-total-players-text">Jogadores Registrados: &mdash;</span>
-    </div>
-    <div class="status-cell" id="stat-global-clicks">
-      <svg viewBox="0 0 24 24"><use href="#icon-mouse"/></svg>
-      <span id="stat-global-clicks-text">Soma Global: &mdash;</span>
-    </div>
-    <div class="status-cell" id="stat-countdown">
-      <svg viewBox="0 0 24 24"><use href="#icon-sync"/></svg>
-      <span id="stat-countdown-text">Auto-refresh em 30s</span>
-    </div>
-  </footer>
-
-</div><!-- /aero-window -->
-
 <script>
 /* =============================================================================
-   SOUNDSCAPE GENERATOR: FRUTIGER AERO MULTI-TRACK SYNTHESIZER
-   Web Audio API Pura • 5 Faixas Distintas, Playlist Dinâmica & Controles 100% Funcionais
+   1. SISTEMA DE WALLPAPERS DINÂMICOS COM ROTAÇÃO AUTOMÁTICA
    ============================================================================= */
+const WALLPAPERS = [
+  { name: 'Asadal Summer & Fish Master HD', url: '/frutiger-bg-hd.jpg' },
+  { name: 'Asadal Stock #1 (Aqua Orbs & Sky)', url: '/wallpaper_1.jpg' },
+  { name: 'Asadal Stock #2 (Macro City & Dew)', url: '/wallpaper_2.jpg' },
+  { name: 'Asadal Stock #3 (Aqua Earth Globe)', url: '/wallpaper_3.jpg' },
+  { name: 'Asadal Stock #4 (Green Hills & Bubbles)', url: '/wallpaper_4.jpg' },
+  { name: 'Asadal Stock #5 (Tropical Islands)', url: '/wallpaper_5.jpg' },
+  { name: 'Asadal Stock #6 (Vista Aurora)', url: 'https://frutigeraeroarchive.org/images/wallpapers/asadal_stock/asadal_stock_6.jpg' },
+  { name: 'Asadal Stock #7 (Bio-Futurism)', url: 'https://frutigeraeroarchive.org/images/wallpapers/asadal_stock/asadal_stock_7.jpg' },
+  { name: 'Asadal Stock #8 (Aqua Glass Waves)', url: 'https://frutigeraeroarchive.org/images/wallpapers/asadal_stock/asadal_stock_8.jpg' },
+  { name: 'Asadal Stock #9 (Morning Dew Sunlight)', url: 'https://frutigeraeroarchive.org/images/wallpapers/asadal_stock/asadal_stock_9.jpg' },
+  { name: 'Asadal Stock #10 (Tropical Saturated Sky)', url: 'https://frutigeraeroarchive.org/images/wallpapers/asadal_stock/asadal_stock_10.jpg' },
+  { name: 'Asadal Stock #12 (Aero Starlight Dusk)', url: 'https://frutigeraeroarchive.org/images/wallpapers/asadal_stock/asadal_stock_12.jpg' }
+];
 
+let currentWpIndex = 0;
+let activeLayer = 1;
+
+function cycleWallpaper() {
+  playToggleSound();
+  currentWpIndex = (currentWpIndex + 1) % WALLPAPERS.length;
+  const wp = WALLPAPERS[currentWpIndex];
+
+  const layer1 = document.getElementById('wallpaper-bg-1');
+  const layer2 = document.getElementById('wallpaper-bg-2');
+
+  if (activeLayer === 1) {
+    layer2.style.backgroundImage = `url('${wp.url}')`;
+    layer2.classList.add('active');
+    layer1.classList.remove('active');
+    activeLayer = 2;
+  } else {
+    layer1.style.backgroundImage = `url('${wp.url}')`;
+    layer1.classList.add('active');
+    layer2.classList.remove('active');
+    activeLayer = 1;
+  }
+
+  const hText = document.getElementById('header-wp-text');
+  const sText = document.getElementById('sidebar-wp-text');
+  if (hText) hText.textContent = `Trocar Wallpaper (${currentWpIndex + 1}/${WALLPAPERS.length})`;
+  if (sText) sText.textContent = `Wallpaper: ${wp.name.substring(0, 16)}...`;
+}
+
+// Rotação automática de wallpaper a cada 10 minutos (600.000 ms)
+setInterval(cycleWallpaper, 600000);
+
+/* =============================================================================
+   2. SONS REAIS DO ARQUIVO (CD-ROM, ONDAS DE PRAIA, TOGGLE)
+   ============================================================================= */
+let beachAudio = null;
+let isBeachPlaying = false;
+const cdRomAudio = new Audio('/cd_rom.mp3');
+const toggleAudio = new Audio('/toggle.mp3');
+
+function playToggleSound() {
+  if (!aeroAudioEnabled) return;
+  try {
+    toggleAudio.currentTime = 0;
+    toggleAudio.volume = 0.35;
+    toggleAudio.play().catch(() => {});
+  } catch (_) {}
+}
+
+function playCdRomEffect() {
+  if (!aeroAudioEnabled) return;
+  try {
+    cdRomAudio.currentTime = 0;
+    cdRomAudio.volume = 0.45;
+    cdRomAudio.play().catch(() => {});
+  } catch (_) {}
+}
+
+function toggleBeachAmbiance() {
+  if (!beachAudio) {
+    beachAudio = new Audio('/tropical_beach.mp3');
+    beachAudio.loop = true;
+    beachAudio.volume = 0.35;
+  }
+
+  isBeachPlaying = !isBeachPlaying;
+  const btnText = document.getElementById('txt-beach-toggle');
+  const sideText = document.getElementById('sidebar-beach-text');
+
+  if (isBeachPlaying && aeroAudioEnabled) {
+    beachAudio.play().catch(() => {});
+    if (btnText) btnText.textContent = 'Ondas Tropicais (On)';
+    if (sideText) sideText.textContent = 'Ondas: Tocando';
+  } else {
+    beachAudio.pause();
+    if (btnText) btnText.textContent = 'Ondas Tropicais (Off)';
+    if (sideText) sideText.textContent = 'Ondas Tropicais';
+  }
+}
+
+/* =============================================================================
+   3. SOUNDSCAPE GENERATOR: 5 FAIXAS WEB AUDIO API SYNTHESIZER
+   ============================================================================= */
 let audioCtx = null;
 let masterGain = null;
 let aeroAudioEnabled = true;
@@ -1843,53 +1604,19 @@ function getAudioContext() {
   return audioCtx;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PLAYLIST DE 5 FAIXAS OFICIAIS FRUTIGER AERO (SINTETIZADAS VIA WEB AUDIO)
-// ─────────────────────────────────────────────────────────────────────────────
 const PLAYLIST = [
-  {
-    id: 'wii',
-    title: '01. WII-CHANNEL-LOUNGE.SYNTH',
-    genre: 'BOSSA LOUNGE • 44.1kHz',
-    intervalMs: 3600,
-    playChord: playWiiLoungeChord
-  },
-  {
-    id: 'aquatic',
-    title: '02. AQUATIC-UTOPIA-2007.WAV',
-    genre: 'UNDERWATER AMBIENT • 48kHz',
-    intervalMs: 4200,
-    playChord: playAquaticUtopiaChord
-  },
-  {
-    id: 'vista',
-    title: '03. VISTA-AURORA-GLASS.MP3',
-    genre: 'AERO CELESTIAL • 96kHz',
-    intervalMs: 4400,
-    playChord: playVistaAuroraChord
-  },
-  {
-    id: 'weather',
-    title: '04. WEATHER-GLOBE-NIGHT.AAC',
-    genre: 'NIGHT DOWNTEMPO • 44.1kHz',
-    intervalMs: 3400,
-    playChord: playWeatherGlobeChord
-  },
-  {
-    id: 'asadal',
-    title: '05. ASADAL-ECO-BREEZE.FLAC',
-    genre: 'WEB 2.0 UPBEAT • 24-BIT',
-    intervalMs: 2800,
-    playChord: playAsadalBreezeChord
-  }
+  { id: 'wii',     title: '01. WII-CHANNEL-LOUNGE.SYNTH', genre: 'BOSSA LOUNGE • 44.1kHz', intervalMs: 3600, playChord: playWiiLoungeChord },
+  { id: 'aquatic', title: '02. AQUATIC-UTOPIA-2007.WAV',   genre: 'UNDERWATER AMBIENT • 48kHz', intervalMs: 4200, playChord: playAquaticUtopiaChord },
+  { id: 'vista',   title: '03. VISTA-AURORA-GLASS.MP3',   genre: 'AERO CELESTIAL • 96kHz', intervalMs: 4400, playChord: playVistaAuroraChord },
+  { id: 'weather', title: '04. WEATHER-GLOBE-NIGHT.AAC',  genre: 'NIGHT DOWNTEMPO • 44.1kHz', intervalMs: 3400, playChord: playWeatherGlobeChord },
+  { id: 'asadal',  title: '05. ASADAL-ECO-BREEZE.FLAC',   genre: 'WEB 2.0 UPBEAT • 24-BIT', intervalMs: 2800, playChord: playAsadalBreezeChord }
 ];
 
-// 1. WII-CHANNEL-LOUNGE (Bossa / Lounge estilo Wii Shop & Mii Channel com Rhodes)
 const wiiProgression = [
-  [174.61, 261.63, 329.63, 392.00, 440.00], // Fmaj9
-  [196.00, 293.66, 329.63, 392.00, 493.88], // G6
-  [164.81, 246.94, 293.66, 329.63, 392.00], // Em7
-  [220.00, 329.63, 392.00, 493.88, 523.25]  // Am9
+  [174.61, 261.63, 329.63, 392.00, 440.00],
+  [196.00, 293.66, 329.63, 392.00, 493.88],
+  [164.81, 246.94, 293.66, 329.63, 392.00],
+  [220.00, 329.63, 392.00, 493.88, 523.25]
 ];
 function playWiiLoungeChord(ctx) {
   try {
@@ -1897,48 +1624,28 @@ function playWiiLoungeChord(ctx) {
     const dest = masterGain || ctx.destination;
     const chord = wiiProgression[chordStep % wiiProgression.length];
     chordStep++;
-
     chord.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       const delay = now + (idx * 0.07);
-
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, delay);
-      osc.frequency.exponentialRampToValueAtTime(freq * 1.002, delay + 2.5);
-
       gain.gain.setValueAtTime(0.001, delay);
       gain.gain.linearRampToValueAtTime(0.024, delay + 0.12);
       gain.gain.exponentialRampToValueAtTime(0.0001, delay + 3.0);
-
       osc.connect(gain);
       gain.connect(dest);
       osc.start(delay);
       osc.stop(delay + 3.1);
     });
-
-    // Sino suave glockenspiel
-    const bellFreq = chord[chord.length - 1] * 1.5;
-    const bellOsc = ctx.createOscillator();
-    const bellGain = ctx.createGain();
-    const bellTime = now + 0.6;
-    bellOsc.type = 'sine';
-    bellOsc.frequency.setValueAtTime(bellFreq, bellTime);
-    bellGain.gain.setValueAtTime(0.015, bellTime);
-    bellGain.gain.exponentialRampToValueAtTime(0.0001, bellTime + 1.2);
-    bellOsc.connect(bellGain);
-    bellGain.connect(dest);
-    bellOsc.start(bellTime);
-    bellOsc.stop(bellTime + 1.25);
   } catch (_) {}
 }
 
-// 2. AQUATIC-UTOPIA-2007 (Arpejos cristalinos subaquáticos estilo David Wise / Ecco)
 const aquaticProgression = [
-  [155.56, 233.08, 293.66, 349.23, 392.00], // Ebmaj9
-  [130.81, 196.00, 233.08, 293.66, 311.13], // Cm9
-  [174.61, 261.63, 311.13, 349.23, 392.00], // Fm9
-  [116.54, 233.08, 349.23, 415.30, 466.16]  // Bb7sus4
+  [155.56, 233.08, 293.66, 349.23, 392.00],
+  [130.81, 196.00, 233.08, 293.66, 311.13],
+  [174.61, 261.63, 311.13, 349.23, 392.00],
+  [116.54, 233.08, 349.23, 415.30, 466.16]
 ];
 function playAquaticUtopiaChord(ctx) {
   try {
@@ -1946,43 +1653,21 @@ function playAquaticUtopiaChord(ctx) {
     const dest = masterGain || ctx.destination;
     const chord = aquaticProgression[chordStep % aquaticProgression.length];
     chordStep++;
-
-    // Pad subaquático profundo
     chord.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       const delay = now + (idx * 0.05);
-
       osc.type = idx === 0 ? 'triangle' : 'sine';
       osc.frequency.setValueAtTime(freq, delay);
-
       gain.gain.setValueAtTime(0.001, delay);
       gain.gain.linearRampToValueAtTime(0.022, delay + 0.35);
       gain.gain.exponentialRampToValueAtTime(0.0001, delay + 3.8);
-
       osc.connect(gain);
       gain.connect(dest);
       osc.start(delay);
       osc.stop(delay + 3.9);
     });
-
-    // Cascata de arpejo de água (harpa cristalina)
-    const arpHours = [chord[2] * 2, chord[3] * 2, chord[4] * 2, chord[3] * 3];
-    arpHours.forEach((f, i) => {
-      const aOsc = ctx.createOscillator();
-      const aGain = ctx.createGain();
-      const aTime = now + 0.4 + (i * 0.14);
-      aOsc.type = 'sine';
-      aOsc.frequency.setValueAtTime(f, aTime);
-      aGain.gain.setValueAtTime(0.016, aTime);
-      aGain.gain.exponentialRampToValueAtTime(0.0001, aTime + 0.7);
-      aOsc.connect(aGain);
-      aGain.connect(dest);
-      aOsc.start(aTime);
-      aOsc.stop(aTime + 0.75);
-    });
-
-    // Efeito de bolha de ar subindo na água (pitch sweep)
+    // Bolha d'água ascendente
     const bOsc = ctx.createOscillator();
     const bGain = ctx.createGain();
     const bTime = now + 1.2;
@@ -1998,12 +1683,11 @@ function playAquaticUtopiaChord(ctx) {
   } catch (_) {}
 }
 
-// 3. VISTA-AURORA-GLASS (Ambient etéreo celestial estilo arranque do Windows Vista)
 const vistaProgression = [
-  [130.81, 196.00, 293.66, 392.00, 587.33], // Csus2
-  [98.00,  196.00, 261.63, 293.66, 392.00], // Gsus4
-  [87.31,  174.61, 261.63, 349.23, 392.00], // Fsus2
-  [110.00, 220.00, 293.66, 329.63, 523.25]  // Am7(add11)
+  [130.81, 196.00, 293.66, 392.00, 587.33],
+  [98.00,  196.00, 261.63, 293.66, 392.00],
+  [87.31,  174.61, 261.63, 349.23, 392.00],
+  [110.00, 220.00, 293.66, 329.63, 523.25]
 ];
 function playVistaAuroraChord(ctx) {
   try {
@@ -2011,48 +1695,28 @@ function playVistaAuroraChord(ctx) {
     const dest = masterGain || ctx.destination;
     const chord = vistaProgression[chordStep % vistaProgression.length];
     chordStep++;
-
     chord.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       const delay = now + (idx * 0.06);
-
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, delay);
-
       gain.gain.setValueAtTime(0.001, delay);
       gain.gain.linearRampToValueAtTime(0.026, delay + 0.5);
       gain.gain.exponentialRampToValueAtTime(0.0001, delay + 4.1);
-
       osc.connect(gain);
       gain.connect(dest);
       osc.start(delay);
       osc.stop(delay + 4.2);
     });
-
-    // Sinestesia de vidro líquido: campânulas cristalinas celestiais
-    [1046.50, 1318.51].forEach((hFreq, hIdx) => {
-      const hOsc = ctx.createOscillator();
-      const hGain = ctx.createGain();
-      const hTime = now + 0.7 + (hIdx * 0.22);
-      hOsc.type = 'triangle';
-      hOsc.frequency.setValueAtTime(hFreq, hTime);
-      hGain.gain.setValueAtTime(0.012, hTime);
-      hGain.gain.exponentialRampToValueAtTime(0.0001, hTime + 1.1);
-      hOsc.connect(hGain);
-      hGain.connect(dest);
-      hOsc.start(hTime);
-      hOsc.stop(hTime + 1.15);
-    });
   } catch (_) {}
 }
 
-// 4. WEATHER-GLOBE-NIGHT (Downtempo noturno suave estilo Wii Forecast Channel / PS3 XMB)
 const weatherProgression = [
-  [146.83, 220.00, 261.63, 329.63, 349.23], // Dm9
-  [98.00,  196.00, 246.94, 349.23, 440.00], // G13
-  [130.81, 196.00, 246.94, 293.66, 329.63], // Cmaj9
-  [110.00, 220.00, 277.18, 349.23, 392.00]  // A7b13
+  [146.83, 220.00, 261.63, 329.63, 349.23],
+  [98.00,  196.00, 246.94, 349.23, 440.00],
+  [130.81, 196.00, 246.94, 293.66, 329.63],
+  [110.00, 220.00, 277.18, 349.23, 392.00]
 ];
 function playWeatherGlobeChord(ctx) {
   try {
@@ -2060,8 +1724,6 @@ function playWeatherGlobeChord(ctx) {
     const dest = masterGain || ctx.destination;
     const chord = weatherProgression[chordStep % weatherProgression.length];
     chordStep++;
-
-    // Baixo suave aconchegante
     const bassOsc = ctx.createOscillator();
     const bassGain = ctx.createGain();
     bassOsc.type = 'sine';
@@ -2073,18 +1735,14 @@ function playWeatherGlobeChord(ctx) {
     bassOsc.start(now);
     bassOsc.stop(now + 3.1);
 
-    // Marimba de vidro com toque percussivo
     chord.slice(1).forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       const delay = now + 0.15 + (idx * 0.18);
-
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(freq, delay);
-
       gain.gain.setValueAtTime(0.024, delay);
       gain.gain.exponentialRampToValueAtTime(0.0001, delay + 0.85);
-
       osc.connect(gain);
       gain.connect(dest);
       osc.start(delay);
@@ -2093,12 +1751,11 @@ function playWeatherGlobeChord(ctx) {
   } catch (_) {}
 }
 
-// 5. ASADAL-ECO-BREEZE (Upbeat Web 2.0 ensolarado estilo comercial Apple/Microsoft 2008)
 const asadalProgression = [
-  [146.83, 220.00, 277.18, 369.99, 440.00], // Dmaj7
-  [138.59, 220.00, 277.18, 329.63, 440.00], // A/C#
-  [123.47, 185.00, 220.00, 293.66, 369.99], // Bm7
-  [98.00,  146.83, 220.00, 246.94, 293.66]  // Gmaj9
+  [146.83, 220.00, 277.18, 369.99, 440.00],
+  [138.59, 220.00, 277.18, 329.63, 440.00],
+  [123.47, 185.00, 220.00, 293.66, 369.99],
+  [98.00,  146.83, 220.00, 246.94, 293.66]
 ];
 function playAsadalBreezeChord(ctx) {
   try {
@@ -2106,47 +1763,22 @@ function playAsadalBreezeChord(ctx) {
     const dest = masterGain || ctx.destination;
     const chord = asadalProgression[chordStep % asadalProgression.length];
     chordStep++;
-
-    // Sintetizador ensolarado
     chord.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       const delay = now + (idx * 0.04);
-
       osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
       osc.frequency.setValueAtTime(freq, delay);
-
       gain.gain.setValueAtTime(0.001, delay);
       gain.gain.linearRampToValueAtTime(0.025, delay + 0.08);
       gain.gain.exponentialRampToValueAtTime(0.0001, delay + 2.4);
-
       osc.connect(gain);
       gain.connect(dest);
       osc.start(delay);
       osc.stop(delay + 2.5);
     });
-
-    // Frase melódica otimista em arpejo rápido
-    const riff = [chord[2] * 2, chord[3] * 2, chord[4] * 2];
-    riff.forEach((f, rIdx) => {
-      const rOsc = ctx.createOscillator();
-      const rGain = ctx.createGain();
-      const rTime = now + 0.35 + (rIdx * 0.10);
-      rOsc.type = 'sine';
-      rOsc.frequency.setValueAtTime(f, rTime);
-      rGain.gain.setValueAtTime(0.020, rTime);
-      rGain.gain.exponentialRampToValueAtTime(0.0001, rTime + 0.45);
-      rOsc.connect(rGain);
-      rGain.connect(dest);
-      rOsc.start(rTime);
-      rOsc.stop(rTime + 0.5);
-    });
   } catch (_) {}
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// CONTROLE DO PLAYER: PLAY, PAUSE, NEXT, PREV, MUTE & ATUALIZAÇÃO VISUAL
-// ─────────────────────────────────────────────────────────────────────────────
 
 function updatePlayerUI() {
   const jogBtn   = document.getElementById('btn-jog-play');
@@ -2159,7 +1791,6 @@ function updatePlayerUI() {
 
   const curTrack = PLAYLIST[currentTrackIndex];
 
-  // Atualiza título da música com efeito de transição
   if (trackEl && trackEl.textContent !== curTrack.title) {
     trackEl.classList.add('track-changing');
     setTimeout(() => {
@@ -2169,22 +1800,22 @@ function updatePlayerUI() {
   }
   if (badgeEl) badgeEl.textContent = curTrack.genre;
 
-  // 1. Botão Central Play / Pause (▶ vs ❚❚)
+  // 1. Ícone Play / Pause ( vs )
   if (jogBtn) {
     if (isAmbientPlaying) {
       jogBtn.classList.remove('paused');
       jogBtn.classList.add('playing');
-      jogBtn.title = 'Pausar Música (❚❚)';
+      jogBtn.title = 'Pausar Música ()';
       jogBtn.innerHTML = `<svg id="svg-play-icon" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>`;
     } else {
       jogBtn.classList.remove('playing');
       jogBtn.classList.add('paused');
-      jogBtn.title = 'Tocar Música (▶)';
+      jogBtn.title = 'Tocar Música ()';
       jogBtn.innerHTML = `<svg id="svg-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
     }
   }
 
-  // 2. Barras do Equalizador
+  // 2. Equalizador
   if (eqEl) {
     if (isAmbientPlaying && aeroAudioEnabled) {
       eqEl.classList.remove('paused');
@@ -2204,17 +1835,17 @@ function updatePlayerUI() {
     }
   }
 
-  // 4. Botão Mute (🔊 vs 🔇)
+  // 4. Botão Mute
   if (muteBtn) {
     if (!aeroAudioEnabled) {
       muteBtn.classList.add('muted');
-      muteBtn.title = 'Ativar Som (🔊)';
+      muteBtn.title = 'Ativar Som ()';
       if (muteSvg) {
         muteSvg.innerHTML = `<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>`;
       }
     } else {
       muteBtn.classList.remove('muted');
-      muteBtn.title = 'Silenciar Som (🔇)';
+      muteBtn.title = 'Silenciar Som ()';
       if (muteSvg) {
         muteSvg.innerHTML = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
       }
@@ -2242,7 +1873,6 @@ function startTrackPlayback() {
 
   updatePlayerUI();
 
-  // Executa acorde inicial da faixa imediatamente
   const curTrack = PLAYLIST[currentTrackIndex];
   curTrack.playChord(ctx);
 
@@ -2252,13 +1882,11 @@ function startTrackPlayback() {
     }
   }, curTrack.intervalMs);
 
-  // Contador de tempo da música (avança a cada segundo)
   trackTimerInterval = setInterval(() => {
     if (!isAmbientPlaying) return;
     trackSeconds++;
     updateTrackTimerDisplay();
 
-    // Auto-advance aos 02:00 (120 segundos)
     if (trackSeconds >= 120) {
       nextTrack();
     }
@@ -2284,7 +1912,7 @@ function toggleAmbientSoundscape() {
 }
 
 function nextTrack() {
-  playAquaClickSound();
+  playCdRomEffect();
   currentTrackIndex = (currentTrackIndex + 1) % PLAYLIST.length;
   trackSeconds = 0;
   updateTrackTimerDisplay();
@@ -2292,7 +1920,7 @@ function nextTrack() {
 }
 
 function prevTrack() {
-  playAquaClickSound();
+  playCdRomEffect();
   currentTrackIndex = (currentTrackIndex - 1 + PLAYLIST.length) % PLAYLIST.length;
   trackSeconds = 0;
   updateTrackTimerDisplay();
@@ -2304,13 +1932,17 @@ function toggleAeroAudio() {
   if (masterGain && audioCtx) {
     masterGain.gain.setValueAtTime(aeroAudioEnabled ? 1.0 : 0.0, audioCtx.currentTime);
   }
+  if (!aeroAudioEnabled && beachAudio && isBeachPlaying) {
+    beachAudio.pause();
+  } else if (aeroAudioEnabled && beachAudio && isBeachPlaying) {
+    beachAudio.play().catch(() => {});
+  }
   updatePlayerUI();
   if (aeroAudioEnabled) {
-    playAquaClickSound();
+    playToggleSound();
   }
 }
 
-// 2. Som de gota d'água cristalina no hover
 function playCrystalHoverSound() {
   if (!aeroAudioEnabled) return;
   try {
@@ -2319,152 +1951,93 @@ function playCrystalHoverSound() {
     const dest = masterGain || ctx.destination;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-
-    osc.type = 'sine';
     const now = ctx.currentTime;
+    osc.type = 'sine';
     osc.frequency.setValueAtTime(1400, now);
     osc.frequency.exponentialRampToValueAtTime(1850, now + 0.035);
     osc.frequency.exponentialRampToValueAtTime(1200, now + 0.11);
-
     gain.gain.setValueAtTime(0.001, now);
     gain.gain.linearRampToValueAtTime(0.045, now + 0.018);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
-
     osc.connect(gain);
     gain.connect(dest);
-
     osc.start(now);
     osc.stop(now + 0.14);
   } catch (_) {}
 }
 
-// 3. Som de clique pop aquático duplo
-function playAquaClickSound() {
-  if (!aeroAudioEnabled) return;
-  try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    const dest = masterGain || ctx.destination;
-    const now = ctx.currentTime;
-
-    const osc1 = ctx.createOscillator();
-    const gain1 = ctx.createGain();
-    osc1.type = 'sine';
-    osc1.frequency.setValueAtTime(950, now);
-    osc1.frequency.exponentialRampToValueAtTime(1400, now + 0.05);
-
-    gain1.gain.setValueAtTime(0.08, now);
-    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-    osc1.connect(gain1);
-    gain1.connect(dest);
-    osc1.start(now);
-    osc1.stop(now + 0.09);
-
-    const osc2 = ctx.createOscillator();
-    const gain2 = ctx.createGain();
-    osc2.type = 'triangle';
-    osc2.frequency.setValueAtTime(1800, now + 0.03);
-    osc2.frequency.exponentialRampToValueAtTime(2250, now + 0.09);
-
-    gain2.gain.setValueAtTime(0.04, now + 0.03);
-    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
-    osc2.connect(gain2);
-    gain2.connect(dest);
-    osc2.start(now + 0.03);
-    osc2.stop(now + 0.14);
-  } catch (_) {}
-}
-
-// 4. Som de Sucesso / Download / Chime Windows Vista
 function triggerDownloadSound() {
-  playWindowsChime();
-}
-
-function playWindowsChime() {
-  if (!aeroAudioEnabled) return;
-  try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    const dest = masterGain || ctx.destination;
-    const now = ctx.currentTime;
-
-    const notes = [523.25, 659.25, 783.99, 1046.50];
-
-    notes.forEach((freq, idx) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      const startTime = now + idx * 0.045;
-
-      osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
-      osc.frequency.setValueAtTime(freq, startTime);
-      osc.frequency.linearRampToValueAtTime(freq * 1.01, startTime + 0.4);
-
-      gain.gain.setValueAtTime(0.001, startTime);
-      gain.gain.linearRampToValueAtTime(0.07, startTime + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.65);
-
-      osc.connect(gain);
-      gain.connect(dest);
-
-      osc.start(startTime);
-      osc.stop(startTime + 0.7);
-    });
-  } catch (_) {}
+  playCdRomEffect();
 }
 
 /* =============================================================================
-   NAVEGAÇÃO DE ABAS
+   4. NAVEGAÇÃO DE ABAS & SINCRONIZAÇÃO DA BARRA LATERAL
    ============================================================================= */
-
 function switchMainTab(tabKey) {
-  playAquaClickSound();
+  playToggleSound();
 
+  // Ribbon superior
   document.querySelectorAll('.wmp-tab-btn').forEach(btn => btn.classList.remove('active'));
-  document.querySelectorAll('.main-tab-panel').forEach(panel => panel.classList.remove('active'));
+  const ribbonBtn = document.getElementById('main-tab-' + tabKey);
+  if (ribbonBtn) ribbonBtn.classList.add('active');
 
-  document.getElementById('main-tab-' + tabKey).classList.add('active');
-  document.getElementById('panel-main-' + tabKey).classList.add('active');
+  // Sidebar navigation
+  document.querySelectorAll('#navigationMenu .nav-item').forEach(btn => {
+    if (btn.id.startsWith('nav-btn-')) {
+      btn.classList.remove('nav-active');
+      btn.classList.add('nav-inactive');
+    }
+  });
+  const sideBtn = document.getElementById('nav-btn-' + tabKey);
+  if (sideBtn) {
+    sideBtn.classList.remove('nav-inactive');
+    sideBtn.classList.add('nav-active');
+  }
+
+  // Painéis
+  document.querySelectorAll('.main-tab-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('panel-main-' + tabKey);
+  if (panel) panel.classList.add('active');
 }
 
-function switchRankingSubTab(subTabKey) {
-  playAquaClickSound();
-
+function switchRankingSubTab(subKey) {
+  playToggleSound();
   document.querySelectorAll('.sub-nav-bar .frutiger-btn:not(.btn-refresh)').forEach(btn => btn.classList.remove('active'));
-  document.querySelectorAll('.sub-tab-panel').forEach(panel => panel.classList.remove('active'));
+  const btn = document.getElementById('subtab-' + subKey);
+  if (btn) btn.classList.add('active');
 
-  document.getElementById('subtab-' + subTabKey).classList.add('active');
-  document.getElementById('subpanel-' + subTabKey).classList.add('active');
+  const pToday = document.getElementById('subpanel-today');
+  const pTotal = document.getElementById('subpanel-total');
+  if (subKey === 'today') {
+    if (pToday) pToday.style.display = 'block';
+    if (pTotal) pTotal.style.display = 'none';
+  } else {
+    if (pToday) pToday.style.display = 'none';
+    if (pTotal) pTotal.style.display = 'block';
+  }
 }
 
 /* =============================================================================
-   RANKING LOGIC & TELEMETRIA (SEM EMOJIS DE TEXTO)
+   5. TELEMETRIA E DADOS DO RANKING (TURSO LIBSQL API)
    ============================================================================= */
-
-let cachedData     = { top_today: [], top_total: [] };
 let refreshSeconds = 30;
 
-function escapeHtml(text) {
-  return String(text)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+function formatNumber(num) {
+  return Number(num || 0).toLocaleString('pt-BR');
 }
 
-function formatNumber(val) {
-  return Number(val || 0).toLocaleString('pt-BR');
+function escapeHtml(str) {
+  return String(str || '').replace(/[&<>"']/g, s => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[s]));
 }
 
 function renderPodium(containerId, list, primaryKey) {
   const container = document.getElementById(containerId);
+  if (!container) return;
   container.innerHTML = '';
 
-  if (!list || list.length === 0) {
-    container.innerHTML = '<div class="empty-state-msg">Nenhum jogador pontuou ainda nesta classificação.</div>';
-    return;
-  }
+  const topThree = (list || []).slice(0, 3);
+  if (topThree.length === 0) return;
 
-  const topThree = list.slice(0, 3);
   const highestScore = Number(topThree[0][primaryKey]) || 1;
 
   topThree.forEach((player, idx) => {
@@ -2472,45 +2045,44 @@ function renderPodium(containerId, list, primaryKey) {
     const cardEl = document.createElement('div');
     cardEl.className = `podium-card rank-${rankNum}`;
 
-    const orbType = idx === 0 ? 'orb-gold' : (idx === 1 ? 'orb-silver' : 'orb-bronze');
+    const orbClass = idx === 0 ? 'orb-gold' : (idx === 1 ? 'orb-silver' : 'orb-bronze');
     const rankTitle = idx === 0 ? '1º Lugar' : (idx === 1 ? '2º Lugar' : '3º Lugar');
-
     const score = Number(player[primaryKey]) || 0;
     const progressPercent = Math.max(8, Math.round((score / highestScore) * 100));
 
     cardEl.innerHTML = `
-      <div class="podium-orb ${orbType}">
-        <svg viewBox="0 0 24 24"><use href="#icon-crown"/></svg>
+      <div class="podium-orb ${orbClass}">
+        <img src="/icon-trophy.png" alt="Coroa"/>
       </div>
       <div class="podium-title-rank">${rankTitle}</div>
       <div class="podium-player-name" title="${escapeHtml(player.nickname)}">${escapeHtml(player.nickname)}</div>
       <div class="podium-click-count">${formatNumber(score)} cliques</div>
-      <div class="vista-progress-track" title="${progressPercent}% em relação ao 1º lugar">
+      <div class="vista-progress-track">
         <div class="vista-progress-fill" style="width: ${progressPercent}%;"></div>
       </div>
     `;
-
     container.appendChild(cardEl);
   });
 }
 
 function renderTable(tableId, list, primaryKey, secondaryKey) {
   const tbody = document.querySelector(`#${tableId} tbody`);
+  if (!tbody) return;
   tbody.innerHTML = '';
 
   if (!list || list.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="empty-state-msg">Nenhum dado registrado.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 15px; color:#666;">Nenhum jogador registrado ainda.</td></tr>';
     return;
   }
 
   list.forEach((player, idx) => {
     const tr = document.createElement('tr');
     const rank = idx + 1;
-    const topBadgeClass = rank === 1 ? 'top-1' : (rank === 2 ? 'top-2' : (rank === 3 ? 'top-3' : ''));
+    const badgeClass = rank === 1 ? 'top-1' : (rank === 2 ? 'top-2' : (rank === 3 ? 'top-3' : ''));
 
     tr.innerHTML = `
       <td style="text-align: center;">
-        <span class="rank-badge ${topBadgeClass}">${rank}</span>
+        <span class="rank-badge ${badgeClass}">${rank}</span>
       </td>
       <td class="player-nickname">${escapeHtml(player.nickname)}</td>
       <td>
@@ -2519,11 +2091,10 @@ function renderTable(tableId, list, primaryKey, secondaryKey) {
       <td>
         <span class="lcd-vitrificado secundario">${formatNumber(player[secondaryKey])}</span>
       </td>
-      <td style="font-size: 11.5px; color: #445566; white-space: nowrap;">
+      <td style="font-size: 11px; color: #556677; white-space: nowrap;">
         ${escapeHtml(player.updated_at || 'Recente')}
       </td>
     `;
-
     tbody.appendChild(tr);
   });
 }
@@ -2533,15 +2104,16 @@ function updateStatusBarStats(data) {
   const totalCount = allList.length;
   const globalSum = allList.reduce((acc, curr) => acc + (Number(curr.clicks_totais) || 0), 0);
 
-  const playersText = document.getElementById('stat-total-players-text');
-  if (playersText) playersText.textContent = `Jogadores Registrados: ${totalCount}`;
+  const pEl = document.getElementById('stat-total-players-text');
+  if (pEl) pEl.textContent = `Jogadores Registrados: ${totalCount}`;
 
-  const clicksText = document.getElementById('stat-global-clicks-text');
-  if (clicksText) clicksText.textContent = `Soma Global: ${formatNumber(globalSum)} cliques`;
+  const cEl = document.getElementById('stat-global-clicks-text');
+  if (cEl) cEl.textContent = `Soma Global: ${formatNumber(globalSum)} cliques`;
 }
 
 async function fetchRankingData() {
-  resetCountdown();
+  refreshSeconds = 30;
+  updateCountdownDisplay();
   const spinner = document.getElementById('loading-spinner-box');
   if (spinner) spinner.style.display = 'flex';
 
@@ -2549,7 +2121,6 @@ async function fetchRankingData() {
     const res = await fetch('/api/ranking');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    cachedData = data;
 
     renderPodium('podium-today', data.top_today, 'clicks_hoje');
     renderTable('tbl-today', data.top_today, 'clicks_hoje', 'clicks_totais');
@@ -2560,18 +2131,9 @@ async function fetchRankingData() {
     updateStatusBarStats(data);
   } catch (err) {
     console.error('Falha ao carregar ranking:', err);
-    const tbl = document.querySelector('#tbl-today tbody');
-    if (tbl) {
-      tbl.innerHTML = `<tr><td colspan="5" class="empty-state-msg" style="color: #c00;">Erro ao conectar com a API: ${err.message}</td></tr>`;
-    }
   } finally {
     if (spinner) spinner.style.display = 'none';
   }
-}
-
-function resetCountdown() {
-  refreshSeconds = 30;
-  updateCountdownDisplay();
 }
 
 function updateCountdownDisplay() {
@@ -2588,9 +2150,9 @@ function countdownTick() {
   }
 }
 
-// Vincula sons de hover a todos os botões e links
+// Vincula som de hover em botões e links
 document.addEventListener('DOMContentLoaded', () => {
-  const hoverElements = document.querySelectorAll('button, a, .wmp-tab-btn, .frutiger-btn, .frutiger-btn-green, .mp3-btn, .mp3-jog-dial');
+  const hoverElements = document.querySelectorAll('button, a, .wmp-tab-btn, .frutiger-btn, .frutiger-btn-green, .mp3-btn, .mp3-jog-dial, .nav-item');
   hoverElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
       playCrystalHoverSound();

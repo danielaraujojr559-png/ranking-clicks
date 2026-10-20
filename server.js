@@ -191,14 +191,15 @@ async function handler(req, res) {
       '.gif': 'image/gif', '.png': 'image/png', '.jpg': 'image/jpeg',
       '.webp': 'image/webp',
       '.svg': 'image/svg+xml', '.css': 'text/css', '.js': 'application/javascript',
-      '.ico': 'image/x-icon'
+      '.ico': 'image/x-icon',
+      '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg'
     };
     const ext  = path.extname(publicFilePath).toLowerCase();
     const stat = fs.statSync(publicFilePath);
     res.writeHead(200, {
       'Content-Type':   mimeTypes[ext] || 'application/octet-stream',
       'Content-Length': stat.size,
-      'Cache-Control':  ['.webp', '.png', '.gif', '.jpg', '.jpeg'].includes(ext) ? 'public, max-age=86400, immutable' : 'public, max-age=3600'
+      'Cache-Control':  ['.webp', '.png', '.gif', '.jpg', '.jpeg', '.mp3', '.ogg'].includes(ext) ? 'public, max-age=86400, immutable' : 'public, max-age=3600'
     });
     if (req.method === 'HEAD') return res.end();
     return res.end(fs.readFileSync(publicFilePath));
