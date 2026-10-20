@@ -277,7 +277,7 @@ body {
   bottom: 20px;
   right: 20px;
   z-index: 50;
-  width: 295px;
+  width: 310px;
   border-radius: 26px;
   background: linear-gradient(
     145deg,
@@ -355,6 +355,13 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: opacity 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.mp3-lcd-track.track-changing {
+  opacity: 0.3;
+  color: #00ff66;
+  text-shadow: 0 0 8px #00ff66;
 }
 
 .mp3-lcd-equalizer {
@@ -380,6 +387,14 @@ body {
 .mp3-eq-bar:nth-child(5) { height: 8px;  animation-delay: 0.4s; }
 .mp3-eq-bar:nth-child(6) { height: 13px; animation-delay: 0.15s; }
 
+/* Quando pausado, as barras descem e a animação para */
+.mp3-lcd-equalizer.paused .mp3-eq-bar {
+  animation: none !important;
+  height: 3px !important;
+  opacity: 0.40;
+  box-shadow: none !important;
+}
+
 @keyframes eqBounceAnim {
   0%   { height: 3px; }
   100% { height: 14px; }
@@ -389,7 +404,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
 }
 
 .mp3-btn {
@@ -406,6 +421,7 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: all 0.12s ease;
+  flex-shrink: 0;
 }
 
 .mp3-btn:hover {
@@ -424,21 +440,26 @@ body {
   fill: #003366;
 }
 
+.mp3-btn.muted svg {
+  fill: #cc2200;
+}
+
 .mp3-jog-dial {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: radial-gradient(circle at 35% 35%, #ffffff 0%, #b8c8d8 50%, #607588 100%);
-  border: 2px solid #00ff66;
+  border: 2px solid #00c853;
   box-shadow:
-    0 0 12px #00ff66,
+    0 0 10px rgba(0, 200, 83, 0.6),
     inset 0 2px 4px #ffffff,
     0 3px 6px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
 }
 
 .mp3-jog-dial:hover {
@@ -449,6 +470,35 @@ body {
   width: 18px;
   height: 18px;
   fill: #00441b;
+  transition: transform 0.15s ease;
+}
+
+.mp3-jog-dial.playing {
+  border-color: #00ff66;
+  box-shadow:
+    0 0 16px #00ff66,
+    0 0 26px rgba(0, 255, 102, 0.45),
+    inset 0 2px 4px #ffffff,
+    0 3px 6px rgba(0, 0, 0, 0.4);
+  animation: neonRingPulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes neonRingPulse {
+  0% {
+    box-shadow: 0 0 10px #00ff66, inset 0 2px 4px #ffffff, 0 3px 6px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 22px #39ff14, 0 0 32px rgba(0, 255, 102, 0.7), inset 0 2px 6px #ffffff, 0 3px 8px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.mp3-jog-dial.paused {
+  border-color: #7890a8;
+  box-shadow:
+    0 0 6px rgba(120, 144, 168, 0.5),
+    inset 0 2px 4px #ffffff,
+    0 3px 6px rgba(0, 0, 0, 0.4);
+  animation: none;
 }
 
 /* ── 3. JANELA AERO GLASS REALISTA (CONFORME GUIA DIRETO) ───── */
@@ -1440,11 +1490,11 @@ tbody tr:hover td {
   <!-- Visor LCD Digital com Equalizador Animado -->
   <div class="mp3-lcd-screen">
     <div class="mp3-lcd-row1">
-      <span id="mp3-timer">00:30</span>
-      <span style="font-size: 9px; color: #00ff66;">44.1kHz • BASS</span>
+      <span id="mp3-timer">00:00</span>
+      <span id="mp3-genre-badge" style="font-size: 8.5px; color: #00ff66; text-transform: uppercase;">BOSSA LOUNGE • 44.1kHz</span>
     </div>
-    <div class="mp3-lcd-track" id="mp3-track-title">VELVET-LOUNGE-WII.SYNTH</div>
-    <div class="mp3-lcd-equalizer">
+    <div class="mp3-lcd-track" id="mp3-track-title">01. WII-CHANNEL-LOUNGE.SYNTH</div>
+    <div class="mp3-lcd-equalizer paused">
       <div class="mp3-eq-bar"></div>
       <div class="mp3-eq-bar"></div>
       <div class="mp3-eq-bar"></div>
@@ -1454,20 +1504,25 @@ tbody tr:hover td {
     </div>
   </div>
 
-  <!-- Controles Físicos do MP3 Player -->
+  <!-- Controles Físicos do MP3 Player (100% Funcionais) -->
   <div class="mp3-controls-row">
-    <!-- Botão Mute / Unmute -->
-    <button class="mp3-btn" id="btn-mp3-mute" title="Ativar/Desativar Som" onclick="toggleAeroAudio()">
-      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+    <!-- Botão Mute / Unmute (🔊 / 🔇) -->
+    <button class="mp3-btn" id="btn-mp3-mute" title="Silenciar / Ativar Som" onclick="toggleAeroAudio()">
+      <svg id="svg-mute-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
     </button>
 
-    <!-- Jog Dial Central: Toca Trilha Ambiente Wii/Vista / Chime -->
-    <div class="mp3-jog-dial" id="btn-jog-play" title="Tocar Trilha Soundscape Wii/Vista" onclick="toggleAmbientSoundscape()">
-      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+    <!-- Botão Faixa Anterior (⏮) -->
+    <button class="mp3-btn" id="btn-mp3-prev" title="Faixa Anterior (⏮)" onclick="prevTrack()">
+      <svg viewBox="0 0 24 24"><path d="M18 6l-8.5 6 8.5 6V6zM6 6v12h2V6H6z"/></svg>
+    </button>
+
+    <!-- Jog Dial Central: Tocar / Pausar (▶ / ❚❚) -->
+    <div class="mp3-jog-dial paused" id="btn-jog-play" title="Tocar Música (▶)" onclick="toggleAmbientSoundscape()">
+      <svg id="svg-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
     </div>
 
-    <!-- Botão Next: Efeito Gota de Cristal -->
-    <button class="mp3-btn" id="btn-mp3-next" title="Efeito Gota Cristalina" onclick="playAquaClickSound()">
+    <!-- Botão Próxima Faixa (⏭) -->
+    <button class="mp3-btn" id="btn-mp3-next" title="Próxima Faixa (⏭)" onclick="nextTrack()">
       <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
     </button>
   </div>
@@ -1758,14 +1813,18 @@ tbody tr:hover td {
 
 <script>
 /* =============================================================================
-   SOUNDSCAPE GENERATOR: WII CHANNELS / VISTA AMBIENT SYNTHESIZER
-   Web Audio API Pura • Timbres de Rhodes, Gota d'Água e Acordes Relaxantes
+   SOUNDSCAPE GENERATOR: FRUTIGER AERO MULTI-TRACK SYNTHESIZER
+   Web Audio API Pura • 5 Faixas Distintas, Playlist Dinâmica & Controles 100% Funcionais
    ============================================================================= */
 
 let audioCtx = null;
+let masterGain = null;
 let aeroAudioEnabled = true;
 let isAmbientPlaying = false;
 let ambientInterval = null;
+let trackTimerInterval = null;
+let trackSeconds = 0;
+let currentTrackIndex = 0;
 let chordStep = 0;
 
 function getAudioContext() {
@@ -1773,6 +1832,9 @@ function getAudioContext() {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (AudioContextClass) {
       audioCtx = new AudioContextClass();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(aeroAudioEnabled ? 1.0 : 0.0, audioCtx.currentTime);
+      masterGain.connect(audioCtx.destination);
     }
   }
   if (audioCtx && audioCtx.state === 'suspended') {
@@ -1781,95 +1843,471 @@ function getAudioContext() {
   return audioCtx;
 }
 
-function toggleAeroAudio() {
-  aeroAudioEnabled = !aeroAudioEnabled;
-  const statusEl = document.getElementById('mp3-status-txt');
-  if (aeroAudioEnabled) {
-    if (statusEl) statusEl.textContent = isAmbientPlaying ? 'WII AMBIENT PLAY' : 'WII CHILL STEREO';
-    playAquaClickSound();
-  } else {
-    if (statusEl) statusEl.textContent = 'AUDIO MUTED';
-    if (isAmbientPlaying) stopAmbientSoundscape();
+// ─────────────────────────────────────────────────────────────────────────────
+// PLAYLIST DE 5 FAIXAS OFICIAIS FRUTIGER AERO (SINTETIZADAS VIA WEB AUDIO)
+// ─────────────────────────────────────────────────────────────────────────────
+const PLAYLIST = [
+  {
+    id: 'wii',
+    title: '01. WII-CHANNEL-LOUNGE.SYNTH',
+    genre: 'BOSSA LOUNGE • 44.1kHz',
+    intervalMs: 3600,
+    playChord: playWiiLoungeChord
+  },
+  {
+    id: 'aquatic',
+    title: '02. AQUATIC-UTOPIA-2007.WAV',
+    genre: 'UNDERWATER AMBIENT • 48kHz',
+    intervalMs: 4200,
+    playChord: playAquaticUtopiaChord
+  },
+  {
+    id: 'vista',
+    title: '03. VISTA-AURORA-GLASS.MP3',
+    genre: 'AERO CELESTIAL • 96kHz',
+    intervalMs: 4400,
+    playChord: playVistaAuroraChord
+  },
+  {
+    id: 'weather',
+    title: '04. WEATHER-GLOBE-NIGHT.AAC',
+    genre: 'NIGHT DOWNTEMPO • 44.1kHz',
+    intervalMs: 3400,
+    playChord: playWeatherGlobeChord
+  },
+  {
+    id: 'asadal',
+    title: '05. ASADAL-ECO-BREEZE.FLAC',
+    genre: 'WEB 2.0 UPBEAT • 24-BIT',
+    intervalMs: 2800,
+    playChord: playAsadalBreezeChord
   }
-}
-
-// 1. Trilha Sonora Relaxante Ambiente Estilo Nintendo Wii / Velvet Lounge
-function toggleAmbientSoundscape() {
-  if (!aeroAudioEnabled) {
-    toggleAeroAudio();
-  }
-  if (isAmbientPlaying) {
-    stopAmbientSoundscape();
-  } else {
-    startAmbientSoundscape();
-  }
-}
-
-function startAmbientSoundscape() {
-  const ctx = getAudioContext();
-  if (!ctx) return;
-  isAmbientPlaying = true;
-  const statusEl = document.getElementById('mp3-status-txt');
-  const trackEl  = document.getElementById('mp3-track-title');
-  if (statusEl) statusEl.textContent = 'WII AMBIENT PLAY';
-  if (trackEl)  trackEl.textContent  = 'WII-CHANNEL-LOUNGE.SYNTH';
-
-  playNextAmbientChord();
-  ambientInterval = setInterval(playNextAmbientChord, 3800);
-}
-
-function stopAmbientSoundscape() {
-  isAmbientPlaying = false;
-  if (ambientInterval) clearInterval(ambientInterval);
-  const statusEl = document.getElementById('mp3-status-txt');
-  const trackEl  = document.getElementById('mp3-track-title');
-  if (statusEl) statusEl.textContent = 'WII CHILL PAUSED';
-  if (trackEl)  trackEl.textContent  = 'PAUSED';
-}
-
-// Progressão de acordes Frutiger Aero / Wii Shop: Fmaj9 -> G6 -> Em7 -> Am9
-const ambientChordProgression = [
-  [349.23, 440.00, 523.25, 659.25], // Fmaj9
-  [392.00, 493.88, 587.33, 659.25], // G6
-  [329.63, 392.00, 493.88, 587.33], // Em7
-  [440.00, 523.25, 659.25, 783.99]  // Am9
 ];
 
-function playNextAmbientChord() {
-  if (!isAmbientPlaying || !aeroAudioEnabled) return;
+// 1. WII-CHANNEL-LOUNGE (Bossa / Lounge estilo Wii Shop & Mii Channel com Rhodes)
+const wiiProgression = [
+  [174.61, 261.63, 329.63, 392.00, 440.00], // Fmaj9
+  [196.00, 293.66, 329.63, 392.00, 493.88], // G6
+  [164.81, 246.94, 293.66, 329.63, 392.00], // Em7
+  [220.00, 329.63, 392.00, 493.88, 523.25]  // Am9
+];
+function playWiiLoungeChord(ctx) {
   try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
     const now = ctx.currentTime;
-    const chord = ambientChordProgression[chordStep % ambientChordProgression.length];
+    const dest = masterGain || ctx.destination;
+    const chord = wiiProgression[chordStep % wiiProgression.length];
     chordStep++;
 
     chord.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      const delayTime = now + (idx * 0.08);
+      const delay = now + (idx * 0.07);
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, delayTime);
-      osc.frequency.exponentialRampToValueAtTime(freq * 1.002, delayTime + 2.5);
+      osc.frequency.setValueAtTime(freq, delay);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.002, delay + 2.5);
 
-      gain.gain.setValueAtTime(0.001, delayTime);
-      gain.gain.linearRampToValueAtTime(0.025, delayTime + 0.15);
-      gain.gain.exponentialRampToValueAtTime(0.0001, delayTime + 3.2);
+      gain.gain.setValueAtTime(0.001, delay);
+      gain.gain.linearRampToValueAtTime(0.024, delay + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.0001, delay + 3.0);
 
       osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(delayTime);
-      osc.stop(delayTime + 3.3);
+      gain.connect(dest);
+      osc.start(delay);
+      osc.stop(delay + 3.1);
     });
 
-    // Toque suave de gota d'água percussiva no acorde
-    setTimeout(() => {
-      if (isAmbientPlaying) playCrystalHoverSound();
-    }, 1200);
-
+    // Sino suave glockenspiel
+    const bellFreq = chord[chord.length - 1] * 1.5;
+    const bellOsc = ctx.createOscillator();
+    const bellGain = ctx.createGain();
+    const bellTime = now + 0.6;
+    bellOsc.type = 'sine';
+    bellOsc.frequency.setValueAtTime(bellFreq, bellTime);
+    bellGain.gain.setValueAtTime(0.015, bellTime);
+    bellGain.gain.exponentialRampToValueAtTime(0.0001, bellTime + 1.2);
+    bellOsc.connect(bellGain);
+    bellGain.connect(dest);
+    bellOsc.start(bellTime);
+    bellOsc.stop(bellTime + 1.25);
   } catch (_) {}
+}
+
+// 2. AQUATIC-UTOPIA-2007 (Arpejos cristalinos subaquáticos estilo David Wise / Ecco)
+const aquaticProgression = [
+  [155.56, 233.08, 293.66, 349.23, 392.00], // Ebmaj9
+  [130.81, 196.00, 233.08, 293.66, 311.13], // Cm9
+  [174.61, 261.63, 311.13, 349.23, 392.00], // Fm9
+  [116.54, 233.08, 349.23, 415.30, 466.16]  // Bb7sus4
+];
+function playAquaticUtopiaChord(ctx) {
+  try {
+    const now = ctx.currentTime;
+    const dest = masterGain || ctx.destination;
+    const chord = aquaticProgression[chordStep % aquaticProgression.length];
+    chordStep++;
+
+    // Pad subaquático profundo
+    chord.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const delay = now + (idx * 0.05);
+
+      osc.type = idx === 0 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, delay);
+
+      gain.gain.setValueAtTime(0.001, delay);
+      gain.gain.linearRampToValueAtTime(0.022, delay + 0.35);
+      gain.gain.exponentialRampToValueAtTime(0.0001, delay + 3.8);
+
+      osc.connect(gain);
+      gain.connect(dest);
+      osc.start(delay);
+      osc.stop(delay + 3.9);
+    });
+
+    // Cascata de arpejo de água (harpa cristalina)
+    const arpHours = [chord[2] * 2, chord[3] * 2, chord[4] * 2, chord[3] * 3];
+    arpHours.forEach((f, i) => {
+      const aOsc = ctx.createOscillator();
+      const aGain = ctx.createGain();
+      const aTime = now + 0.4 + (i * 0.14);
+      aOsc.type = 'sine';
+      aOsc.frequency.setValueAtTime(f, aTime);
+      aGain.gain.setValueAtTime(0.016, aTime);
+      aGain.gain.exponentialRampToValueAtTime(0.0001, aTime + 0.7);
+      aOsc.connect(aGain);
+      aGain.connect(dest);
+      aOsc.start(aTime);
+      aOsc.stop(aTime + 0.75);
+    });
+
+    // Efeito de bolha de ar subindo na água (pitch sweep)
+    const bOsc = ctx.createOscillator();
+    const bGain = ctx.createGain();
+    const bTime = now + 1.2;
+    bOsc.type = 'sine';
+    bOsc.frequency.setValueAtTime(450, bTime);
+    bOsc.frequency.exponentialRampToValueAtTime(1150, bTime + 0.12);
+    bGain.gain.setValueAtTime(0.025, bTime);
+    bGain.gain.exponentialRampToValueAtTime(0.0001, bTime + 0.14);
+    bOsc.connect(bGain);
+    bGain.connect(dest);
+    bOsc.start(bTime);
+    bOsc.stop(bTime + 0.15);
+  } catch (_) {}
+}
+
+// 3. VISTA-AURORA-GLASS (Ambient etéreo celestial estilo arranque do Windows Vista)
+const vistaProgression = [
+  [130.81, 196.00, 293.66, 392.00, 587.33], // Csus2
+  [98.00,  196.00, 261.63, 293.66, 392.00], // Gsus4
+  [87.31,  174.61, 261.63, 349.23, 392.00], // Fsus2
+  [110.00, 220.00, 293.66, 329.63, 523.25]  // Am7(add11)
+];
+function playVistaAuroraChord(ctx) {
+  try {
+    const now = ctx.currentTime;
+    const dest = masterGain || ctx.destination;
+    const chord = vistaProgression[chordStep % vistaProgression.length];
+    chordStep++;
+
+    chord.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const delay = now + (idx * 0.06);
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, delay);
+
+      gain.gain.setValueAtTime(0.001, delay);
+      gain.gain.linearRampToValueAtTime(0.026, delay + 0.5);
+      gain.gain.exponentialRampToValueAtTime(0.0001, delay + 4.1);
+
+      osc.connect(gain);
+      gain.connect(dest);
+      osc.start(delay);
+      osc.stop(delay + 4.2);
+    });
+
+    // Sinestesia de vidro líquido: campânulas cristalinas celestiais
+    [1046.50, 1318.51].forEach((hFreq, hIdx) => {
+      const hOsc = ctx.createOscillator();
+      const hGain = ctx.createGain();
+      const hTime = now + 0.7 + (hIdx * 0.22);
+      hOsc.type = 'triangle';
+      hOsc.frequency.setValueAtTime(hFreq, hTime);
+      hGain.gain.setValueAtTime(0.012, hTime);
+      hGain.gain.exponentialRampToValueAtTime(0.0001, hTime + 1.1);
+      hOsc.connect(hGain);
+      hGain.connect(dest);
+      hOsc.start(hTime);
+      hOsc.stop(hTime + 1.15);
+    });
+  } catch (_) {}
+}
+
+// 4. WEATHER-GLOBE-NIGHT (Downtempo noturno suave estilo Wii Forecast Channel / PS3 XMB)
+const weatherProgression = [
+  [146.83, 220.00, 261.63, 329.63, 349.23], // Dm9
+  [98.00,  196.00, 246.94, 349.23, 440.00], // G13
+  [130.81, 196.00, 246.94, 293.66, 329.63], // Cmaj9
+  [110.00, 220.00, 277.18, 349.23, 392.00]  // A7b13
+];
+function playWeatherGlobeChord(ctx) {
+  try {
+    const now = ctx.currentTime;
+    const dest = masterGain || ctx.destination;
+    const chord = weatherProgression[chordStep % weatherProgression.length];
+    chordStep++;
+
+    // Baixo suave aconchegante
+    const bassOsc = ctx.createOscillator();
+    const bassGain = ctx.createGain();
+    bassOsc.type = 'sine';
+    bassOsc.frequency.setValueAtTime(chord[0], now);
+    bassGain.gain.setValueAtTime(0.038, now);
+    bassGain.gain.exponentialRampToValueAtTime(0.001, now + 3.0);
+    bassOsc.connect(bassGain);
+    bassGain.connect(dest);
+    bassOsc.start(now);
+    bassOsc.stop(now + 3.1);
+
+    // Marimba de vidro com toque percussivo
+    chord.slice(1).forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const delay = now + 0.15 + (idx * 0.18);
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, delay);
+
+      gain.gain.setValueAtTime(0.024, delay);
+      gain.gain.exponentialRampToValueAtTime(0.0001, delay + 0.85);
+
+      osc.connect(gain);
+      gain.connect(dest);
+      osc.start(delay);
+      osc.stop(delay + 0.9);
+    });
+  } catch (_) {}
+}
+
+// 5. ASADAL-ECO-BREEZE (Upbeat Web 2.0 ensolarado estilo comercial Apple/Microsoft 2008)
+const asadalProgression = [
+  [146.83, 220.00, 277.18, 369.99, 440.00], // Dmaj7
+  [138.59, 220.00, 277.18, 329.63, 440.00], // A/C#
+  [123.47, 185.00, 220.00, 293.66, 369.99], // Bm7
+  [98.00,  146.83, 220.00, 246.94, 293.66]  // Gmaj9
+];
+function playAsadalBreezeChord(ctx) {
+  try {
+    const now = ctx.currentTime;
+    const dest = masterGain || ctx.destination;
+    const chord = asadalProgression[chordStep % asadalProgression.length];
+    chordStep++;
+
+    // Sintetizador ensolarado
+    chord.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const delay = now + (idx * 0.04);
+
+      osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(freq, delay);
+
+      gain.gain.setValueAtTime(0.001, delay);
+      gain.gain.linearRampToValueAtTime(0.025, delay + 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.0001, delay + 2.4);
+
+      osc.connect(gain);
+      gain.connect(dest);
+      osc.start(delay);
+      osc.stop(delay + 2.5);
+    });
+
+    // Frase melódica otimista em arpejo rápido
+    const riff = [chord[2] * 2, chord[3] * 2, chord[4] * 2];
+    riff.forEach((f, rIdx) => {
+      const rOsc = ctx.createOscillator();
+      const rGain = ctx.createGain();
+      const rTime = now + 0.35 + (rIdx * 0.10);
+      rOsc.type = 'sine';
+      rOsc.frequency.setValueAtTime(f, rTime);
+      rGain.gain.setValueAtTime(0.020, rTime);
+      rGain.gain.exponentialRampToValueAtTime(0.0001, rTime + 0.45);
+      rOsc.connect(rGain);
+      rGain.connect(dest);
+      rOsc.start(rTime);
+      rOsc.stop(rTime + 0.5);
+    });
+  } catch (_) {}
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONTROLE DO PLAYER: PLAY, PAUSE, NEXT, PREV, MUTE & ATUALIZAÇÃO VISUAL
+// ─────────────────────────────────────────────────────────────────────────────
+
+function updatePlayerUI() {
+  const jogBtn   = document.getElementById('btn-jog-play');
+  const eqEl     = document.querySelector('.mp3-lcd-equalizer');
+  const statusEl = document.getElementById('mp3-status-txt');
+  const trackEl  = document.getElementById('mp3-track-title');
+  const badgeEl  = document.getElementById('mp3-genre-badge');
+  const muteBtn  = document.getElementById('btn-mp3-mute');
+  const muteSvg  = document.getElementById('svg-mute-icon');
+
+  const curTrack = PLAYLIST[currentTrackIndex];
+
+  // Atualiza título da música com efeito de transição
+  if (trackEl && trackEl.textContent !== curTrack.title) {
+    trackEl.classList.add('track-changing');
+    setTimeout(() => {
+      trackEl.textContent = curTrack.title;
+      trackEl.classList.remove('track-changing');
+    }, 140);
+  }
+  if (badgeEl) badgeEl.textContent = curTrack.genre;
+
+  // 1. Botão Central Play / Pause (▶ vs ❚❚)
+  if (jogBtn) {
+    if (isAmbientPlaying) {
+      jogBtn.classList.remove('paused');
+      jogBtn.classList.add('playing');
+      jogBtn.title = 'Pausar Música (❚❚)';
+      jogBtn.innerHTML = `<svg id="svg-play-icon" viewBox="0 0 24 24"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>`;
+    } else {
+      jogBtn.classList.remove('playing');
+      jogBtn.classList.add('paused');
+      jogBtn.title = 'Tocar Música (▶)';
+      jogBtn.innerHTML = `<svg id="svg-play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+    }
+  }
+
+  // 2. Barras do Equalizador
+  if (eqEl) {
+    if (isAmbientPlaying && aeroAudioEnabled) {
+      eqEl.classList.remove('paused');
+    } else {
+      eqEl.classList.add('paused');
+    }
+  }
+
+  // 3. Status LCD
+  if (statusEl) {
+    if (!aeroAudioEnabled) {
+      statusEl.textContent = 'AUDIO MUTED';
+    } else if (isAmbientPlaying) {
+      statusEl.textContent = 'STEREO PLAYING';
+    } else {
+      statusEl.textContent = 'STEREO PAUSED';
+    }
+  }
+
+  // 4. Botão Mute (🔊 vs 🔇)
+  if (muteBtn) {
+    if (!aeroAudioEnabled) {
+      muteBtn.classList.add('muted');
+      muteBtn.title = 'Ativar Som (🔊)';
+      if (muteSvg) {
+        muteSvg.innerHTML = `<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>`;
+      }
+    } else {
+      muteBtn.classList.remove('muted');
+      muteBtn.title = 'Silenciar Som (🔇)';
+      if (muteSvg) {
+        muteSvg.innerHTML = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
+      }
+    }
+  }
+}
+
+function updateTrackTimerDisplay() {
+  const timerEl = document.getElementById('mp3-timer');
+  if (timerEl) {
+    const mins = Math.floor(trackSeconds / 60);
+    const secs = trackSeconds % 60;
+    timerEl.textContent = `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+  }
+}
+
+function startTrackPlayback() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  isAmbientPlaying = true;
+  chordStep = 0;
+
+  if (ambientInterval) clearInterval(ambientInterval);
+  if (trackTimerInterval) clearInterval(trackTimerInterval);
+
+  updatePlayerUI();
+
+  // Executa acorde inicial da faixa imediatamente
+  const curTrack = PLAYLIST[currentTrackIndex];
+  curTrack.playChord(ctx);
+
+  ambientInterval = setInterval(() => {
+    if (isAmbientPlaying && aeroAudioEnabled) {
+      curTrack.playChord(ctx);
+    }
+  }, curTrack.intervalMs);
+
+  // Contador de tempo da música (avança a cada segundo)
+  trackTimerInterval = setInterval(() => {
+    if (!isAmbientPlaying) return;
+    trackSeconds++;
+    updateTrackTimerDisplay();
+
+    // Auto-advance aos 02:00 (120 segundos)
+    if (trackSeconds >= 120) {
+      nextTrack();
+    }
+  }, 1000);
+}
+
+function pauseTrackPlayback() {
+  isAmbientPlaying = false;
+  if (ambientInterval) clearInterval(ambientInterval);
+  if (trackTimerInterval) clearInterval(trackTimerInterval);
+  updatePlayerUI();
+}
+
+function toggleAmbientSoundscape() {
+  if (!aeroAudioEnabled) {
+    toggleAeroAudio();
+  }
+  if (isAmbientPlaying) {
+    pauseTrackPlayback();
+  } else {
+    startTrackPlayback();
+  }
+}
+
+function nextTrack() {
+  playAquaClickSound();
+  currentTrackIndex = (currentTrackIndex + 1) % PLAYLIST.length;
+  trackSeconds = 0;
+  updateTrackTimerDisplay();
+  startTrackPlayback();
+}
+
+function prevTrack() {
+  playAquaClickSound();
+  currentTrackIndex = (currentTrackIndex - 1 + PLAYLIST.length) % PLAYLIST.length;
+  trackSeconds = 0;
+  updateTrackTimerDisplay();
+  startTrackPlayback();
+}
+
+function toggleAeroAudio() {
+  aeroAudioEnabled = !aeroAudioEnabled;
+  if (masterGain && audioCtx) {
+    masterGain.gain.setValueAtTime(aeroAudioEnabled ? 1.0 : 0.0, audioCtx.currentTime);
+  }
+  updatePlayerUI();
+  if (aeroAudioEnabled) {
+    playAquaClickSound();
+  }
 }
 
 // 2. Som de gota d'água cristalina no hover
@@ -1878,6 +2316,7 @@ function playCrystalHoverSound() {
   try {
     const ctx = getAudioContext();
     if (!ctx) return;
+    const dest = masterGain || ctx.destination;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
@@ -1892,7 +2331,7 @@ function playCrystalHoverSound() {
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+    gain.connect(dest);
 
     osc.start(now);
     osc.stop(now + 0.14);
@@ -1905,6 +2344,7 @@ function playAquaClickSound() {
   try {
     const ctx = getAudioContext();
     if (!ctx) return;
+    const dest = masterGain || ctx.destination;
     const now = ctx.currentTime;
 
     const osc1 = ctx.createOscillator();
@@ -1916,7 +2356,7 @@ function playAquaClickSound() {
     gain1.gain.setValueAtTime(0.08, now);
     gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
     osc1.connect(gain1);
-    gain1.connect(ctx.destination);
+    gain1.connect(dest);
     osc1.start(now);
     osc1.stop(now + 0.09);
 
@@ -1929,7 +2369,7 @@ function playAquaClickSound() {
     gain2.gain.setValueAtTime(0.04, now + 0.03);
     gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
     osc2.connect(gain2);
-    gain2.connect(ctx.destination);
+    gain2.connect(dest);
     osc2.start(now + 0.03);
     osc2.stop(now + 0.14);
   } catch (_) {}
@@ -1945,6 +2385,7 @@ function playWindowsChime() {
   try {
     const ctx = getAudioContext();
     if (!ctx) return;
+    const dest = masterGain || ctx.destination;
     const now = ctx.currentTime;
 
     const notes = [523.25, 659.25, 783.99, 1046.50];
@@ -1963,7 +2404,7 @@ function playWindowsChime() {
       gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.65);
 
       osc.connect(gain);
-      gain.connect(ctx.destination);
+      gain.connect(dest);
 
       osc.start(startTime);
       osc.stop(startTime + 0.7);
@@ -2136,9 +2577,6 @@ function resetCountdown() {
 function updateCountdownDisplay() {
   const cdText = document.getElementById('stat-countdown-text');
   if (cdText) cdText.textContent = `Auto-refresh em ${refreshSeconds}s`;
-
-  const mp3Timer = document.getElementById('mp3-timer');
-  if (mp3Timer) mp3Timer.textContent = `00:${refreshSeconds < 10 ? '0' + refreshSeconds : refreshSeconds}`;
 }
 
 function countdownTick() {
