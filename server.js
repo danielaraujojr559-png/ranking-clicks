@@ -189,6 +189,7 @@ async function handler(req, res) {
       fs.existsSync(publicFilePath) && fs.statSync(publicFilePath).isFile()) {
     const mimeTypes = {
       '.gif': 'image/gif', '.png': 'image/png', '.jpg': 'image/jpeg',
+      '.webp': 'image/webp',
       '.svg': 'image/svg+xml', '.css': 'text/css', '.js': 'application/javascript',
       '.ico': 'image/x-icon'
     };
@@ -196,10 +197,38 @@ async function handler(req, res) {
     const stat = fs.statSync(publicFilePath);
     res.writeHead(200, {
       'Content-Type':   mimeTypes[ext] || 'application/octet-stream',
-      'Content-Length': stat.size
+      'Content-Length': stat.size,
+      'Cache-Control':  ext === '.webp' || ext === '.png' || ext === '.gif' ? 'public, max-age=86400, immutable' : 'public, max-age=3600'
     });
     if (req.method === 'HEAD') return res.end();
     return res.end(fs.readFileSync(publicFilePath));
+  }
+
+  // -------------------------------------------------------------------------
+  // GET /frutiger-bg.webp, /background.webp → Wallpaper Frutiger Aero Oficial
+  // -------------------------------------------------------------------------
+  if ((req.method === 'GET' || req.method === 'HEAD') &&
+      (url.pathname === '/frutiger-bg.webp' || url.pathname === '/background.webp' || url.pathname === '/public/frutiger-bg.webp')) {
+    const bgCandidates = [
+      path.join(__dirname, 'public', 'frutiger-bg.webp'),
+      path.join(__dirname, 'frutiger-bg.webp'),
+      path.join(process.cwd(), 'public', 'frutiger-bg.webp'),
+      path.join(process.cwd(), 'frutiger-bg.webp'),
+    ];
+    let bgPath = null;
+    for (const p of bgCandidates) {
+      if (fs.existsSync(p)) { bgPath = p; break; }
+    }
+    if (bgPath) {
+      const stat = fs.statSync(bgPath);
+      res.writeHead(200, {
+        'Content-Type':  'image/webp',
+        'Content-Length': stat.size,
+        'Cache-Control': 'public, max-age=86400, immutable'
+      });
+      if (req.method === 'HEAD') return res.end();
+      return res.end(fs.readFileSync(bgPath));
+    }
   }
 
   // -------------------------------------------------------------------------

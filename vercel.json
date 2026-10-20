@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "server.js": {
-      "includeFiles": "{ranking.html,public/**,MouseClickCounter.exe}"
+      "includeFiles": "{ranking.html,public/**,MouseClickCounter.exe,frutiger-bg.webp}"
     }
   },
   "rewrites": [
