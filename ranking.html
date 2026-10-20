@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MouseClickCounter - Ranking Global (Windows Aero Edition)</title>
+<title>MouseClickCounter - Portal Oficial (Frutiger Aero 2008 & Windows 7 Edition)</title>
 <style>
 /* =============================================================================
-   FRUTIGER AERO (2006–2011) / WINDOWS 7 AERO GLASS RANKING EXPERIENCE
-   Pure Authentic Aesthetics: Vista Aurora, Aqua Gel Buttons, Glossy Orbs,
-   Glass Reflections, Vista Green Progress Bars & Windows Status Bar.
+   FRUTIGER AERO (2006–2011) / WINDOWS MEDIA PLAYER 11 / WINDOWS 7 AERO GLASS
+   Pure Authentic Nostalgia: Vista Aurora, Aqua Gel Buttons, Windows Media Bar,
+   Crystal Audio Synthesizer, InstallShield Wizard & 3D Glass Orbs.
    ============================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -34,15 +34,15 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ── 1. CENÁRIO DE FUNDO (ECO-FUTURISMO BRILHANTE) ────────── */
+/* ── 1. CENÁRIO ECO-FUTURISTA LUMINOSO (FRUTIGER AERO) ─────── */
 body {
   position: relative;
   background: linear-gradient(
     180deg,
     #0078d7 0%,
-    #38b6ff 38%,
-    #b5f2ff 62%,
-    #7ed957 68%,
+    #38b6ff 36%,
+    #b5f2ff 58%,
+    #7ed957 66%,
     #28a745 100%
   );
   background-attachment: fixed;
@@ -50,16 +50,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 24px 16px 48px;
+  padding: 20px 14px 44px;
 }
 
-/* Colinas relvadas iluminadas no fundo */
+/* Colinas relvadas iluminadas */
 .vista-hills {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 38vh;
+  height: 36vh;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
@@ -71,7 +71,7 @@ body {
   preserve-aspect-ratio: none;
 }
 
-/* Efeito 'Aurora do Windows Vista' (feixes diagonais luminosos e translúcidos) */
+/* Aurora do Windows Vista (feixes de luz radiantes) */
 .vista-aurora {
   position: fixed;
   inset: 0;
@@ -93,7 +93,7 @@ body {
   mix-blend-mode: screen;
 }
 
-/* ── BOLHAS DE SABÃO / ÁGUA FLUTUANTES EM CSS ────────────── */
+/* Bolhas de sabão / água flutuantes */
 .bubbles-container {
   position: fixed;
   inset: 0;
@@ -120,7 +120,6 @@ body {
   animation: floatUpAnimation linear infinite;
 }
 
-/* Brilho branco no canto superior esquerdo (reflexo especular da bolha) */
 .bubble::after {
   content: '';
   position: absolute;
@@ -131,18 +130,6 @@ body {
   border-radius: 50%;
   background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%);
   transform: rotate(-35deg);
-}
-
-/* Reflexo suave no canto inferior oposto */
-.bubble::before {
-  content: '';
-  position: absolute;
-  bottom: 15%;
-  right: 18%;
-  width: 22%;
-  height: 16%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.55) 0%, transparent 100%);
 }
 
 .bubble:nth-child(1)  { width: 34px; height: 34px; left: 4%;  animation-duration: 13s; animation-delay: 0s; }
@@ -159,35 +146,21 @@ body {
 .bubble:nth-child(12) { width: 22px; height: 22px; left: 77%; animation-duration: 10.5s; animation-delay: 6.2s; }
 
 @keyframes floatUpAnimation {
-  0% {
-    transform: translateY(0) translateX(0) scale(0.9);
-    opacity: 0.8;
-  }
-  25% {
-    transform: translateY(-28vh) translateX(14px) scale(1.02);
-  }
-  50% {
-    transform: translateY(-56vh) translateX(-10px) scale(1.05);
-    opacity: 0.7;
-  }
-  75% {
-    transform: translateY(-84vh) translateX(12px) scale(1.01);
-  }
-  100% {
-    transform: translateY(-115vh) translateX(0) scale(0.95);
-    opacity: 0;
-  }
+  0% { transform: translateY(0) translateX(0) scale(0.9); opacity: 0.8; }
+  25% { transform: translateY(-28vh) translateX(14px) scale(1.02); }
+  50% { transform: translateY(-56vh) translateX(-10px) scale(1.05); opacity: 0.7; }
+  75% { transform: translateY(-84vh) translateX(12px) scale(1.01); }
+  100% { transform: translateY(-115vh) translateX(0) scale(0.95); opacity: 0; }
 }
 
-/* ── 2. CONTENTOR PRINCIPAL: JANELA AERO GLASS DO WINDOWS 7 ─ */
+/* ── 2. JANELA PRINCIPAL: WINDOWS 7 AERO GLASS ─────────────── */
 .aero-window {
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 890px;
+  max-width: 960px;
   border-radius: 8px;
 
-  /* Dupla borda Aero com vidro fosco */
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   background: rgba(220, 240, 255, 0.45);
@@ -196,25 +169,25 @@ body {
   outline-offset: 1px;
 
   box-shadow:
-    0 10px 40px rgba(0, 40, 100, 0.38),
+    0 12px 48px rgba(0, 40, 100, 0.40),
     0 2px 4px rgba(0, 30, 80, 0.20),
     0 1px 0 rgba(255, 255, 255, 0.70) inset,
     0 -1px 0 rgba(0, 60, 120, 0.25) inset;
   overflow: hidden;
 }
 
-/* Reflexo de vidro diagonal autêntico do Windows Aero */
+/* Reflexo diagonal de vidro */
 .aero-window::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.05) 45%, transparent 45.1%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.05) 48%, transparent 48.1%);
   pointer-events: none;
   z-index: 2;
   border-radius: 8px;
 }
 
-/* ── BARRA DE TÍTULO WINDOWS 7 AERO ───────────────────────── */
+/* ── BARRA DE TÍTULO WINDOWS 7 ────────────────────────────── */
 .title-bar {
   position: relative;
   z-index: 5;
@@ -233,7 +206,6 @@ body {
   user-select: none;
 }
 
-/* Ícone de rato brilhante + orbe verde-azul */
 .title-icon-orb {
   width: 24px;
   height: 24px;
@@ -263,12 +235,66 @@ body {
   text-overflow: ellipsis;
 }
 
-/* 3 botões clássicos da janela do Windows 7 (_, □, X) */
+/* Mini Player Aero Widget no Topo */
+.aero-mini-player {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 30, 60, 0.45);
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.40);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-right: 10px;
+}
+
+.equalizer-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.eq-bar {
+  width: 3px;
+  background: #39ff14;
+  border-radius: 1px;
+  box-shadow: 0 0 4px #39ff14;
+  animation: eqBounce 0.8s ease-in-out infinite alternate;
+}
+
+.eq-bar:nth-child(1) { height: 6px;  animation-delay: 0.1s; }
+.eq-bar:nth-child(2) { height: 11px; animation-delay: 0.3s; }
+.eq-bar:nth-child(3) { height: 8px;  animation-delay: 0.5s; }
+.eq-bar:nth-child(4) { height: 12px; animation-delay: 0.2s; }
+
+@keyframes eqBounce {
+  0%   { height: 3px; }
+  100% { height: 12px; }
+}
+
+.btn-sound-toggle {
+  background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.2) 50%, rgba(0,180,255,0.6) 50.1%, rgba(0,100,220,0.8) 100%);
+  border: 1px solid rgba(0,60,120,0.6);
+  border-radius: 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #ffffff;
+  padding: 2px 8px;
+  cursor: pointer;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  transition: all 0.15s ease;
+}
+
+.btn-sound-toggle:hover {
+  box-shadow: 0 0 8px rgba(0, 210, 255, 0.9);
+  filter: brightness(1.15);
+}
+
 .win7-controls {
   display: flex;
   align-items: center;
   gap: 2px;
-  margin-left: 10px;
 }
 
 .win7-btn {
@@ -298,71 +324,230 @@ body {
 }
 
 .win7-btn:hover {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.85) 0%,
-    rgba(255, 255, 255, 0.40) 50%,
-    rgba(120, 200, 255, 0.65) 50.1%,
-    rgba(0, 130, 255, 0.85) 100%
-  );
-  box-shadow:
-    0 0 10px rgba(0, 200, 255, 0.85),
-    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.40) 50%, rgba(120,200,255,0.65) 50.1%, rgba(0,130,255,0.85) 100%);
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.85);
 }
 
-/* Botão X vermelho largo com efeito glossy marcante */
 .win7-btn.win7-close {
   width: 44px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 210, 200, 0.85) 0%,
-    rgba(255, 140, 120, 0.55) 50%,
-    rgba(225, 55, 35, 0.75) 50.1%,
-    rgba(165, 25, 15, 0.90) 100%
-  );
+  background: linear-gradient(180deg, rgba(255,210,200,0.85) 0%, rgba(255,140,120,0.55) 50%, rgba(225,55,35,0.75) 50.1%, rgba(165,25,15,0.90) 100%);
   border-color: rgba(140, 20, 10, 0.7);
 }
 
 .win7-btn.win7-close:hover {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 235, 225, 1) 0%,
-    rgba(255, 160, 140, 0.85) 50%,
-    rgba(255, 60, 40, 0.98) 50.1%,
-    rgba(200, 30, 15, 1) 100%
-  );
-  box-shadow:
-    0 0 14px rgba(255, 60, 30, 0.95),
-    0 1px 0 rgba(255, 220, 210, 0.8) inset;
+  background: linear-gradient(180deg, rgba(255,235,225,1) 0%, rgba(255,160,140,0.85) 50%, rgba(255,60,40,0.98) 50.1%, rgba(200,30,15,1) 100%);
+  box-shadow: 0 0 14px rgba(255, 60, 30, 0.95);
 }
 
-/* ── 3. BOTÕES E ABAS 'GLOSSY GEL / AQUA' (CORTE 50/50) ────── */
-.nav-tab-bar {
+/* ── BARRA DE NAVEGAÇÃO MEDIA PLAYER 11 (RIBBON ESCURA VITRIFICADA) ─ */
+.wmp-ribbon-bar {
   position: relative;
   z-index: 4;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 18px 10px;
-  background: rgba(195, 228, 255, 0.35);
-  border-bottom: 1px solid rgba(0, 75, 150, 0.25);
-  flex-wrap: wrap;
+  padding: 0 12px;
+  background: linear-gradient(
+    180deg,
+    #253a4e 0%,
+    #182836 49%,
+    #09131c 50%,
+    #050b10 100%
+  );
+  border-bottom: 1px solid rgba(0, 180, 255, 0.45);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.25) inset,
+    0 4px 10px rgba(0, 0, 0, 0.35);
+  overflow-x: auto;
 }
 
-/* Efeito Gel Pill / Glossy com corte a 50% */
-.aqua-btn {
-  padding: 7px 24px;
-  border-radius: 20px;
-  border: 1px solid rgba(0, 65, 130, 0.65);
+.wmp-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border: none;
+  background: transparent;
   cursor: pointer;
   font-family: var(--font-stack);
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.2px;
+  color: #b0cce8;
+  letter-spacing: 0.3px;
+  position: relative;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.wmp-tab-btn:hover {
+  color: #ffffff;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.20) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(0, 180, 255, 0.15) 50.1%,
+    rgba(0, 140, 255, 0.25) 100%
+  );
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
+}
+
+.wmp-tab-btn.active {
+  color: #ffffff;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.10) 50%,
+    rgba(0, 180, 255, 0.40) 50.1%,
+    rgba(0, 130, 255, 0.60) 100%
+  );
+  text-shadow: 0 0 12px #00d2ff, 0 0 20px #00d2ff;
+  border-bottom: 2px solid #00d2ff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ── 3. BANNER DE DOWNLOAD ESTILO PORTAL 2009 ──────────────── */
+.download-hero-banner {
+  margin: 12px 14px 6px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(230, 245, 255, 0.85) 60%,
+    rgba(200, 230, 255, 0.90) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 6px 20px rgba(0, 40, 100, 0.18),
+    inset 0 1px 2px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.download-hero-banner::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 100%);
+  pointer-events: none;
+}
+
+.download-banner-info h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #002b66;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-banner-info p {
+  font-size: 12.5px;
+  color: #335577;
+  margin-top: 4px;
+}
+
+/* BOTÃO VERDE ESMERALDA GLOSSY 3D ('GEL BUTTON' ENORME) */
+.btn-emerald-download {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 32px;
+  border-radius: 28px;
+  border: 2px solid #0a6620;
+  cursor: pointer;
+  text-decoration: none;
+  color: #ffffff;
+  font-family: var(--font-stack);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
+  position: relative;
+
+  /* Corte seco a 50% */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(255, 255, 255, 0.20) 50%,
+    rgba(16, 185, 50, 0.90) 50.1%,
+    rgba(10, 130, 32, 1) 100%
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 -1px 0 rgba(0, 60, 20, 0.4) inset,
+    0 6px 18px rgba(10, 140, 40, 0.45);
+  transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.btn-emerald-download:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 20px rgba(40, 255, 80, 0.9),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 8px 24px rgba(10, 150, 40, 0.55);
+  filter: brightness(1.1);
+}
+
+.btn-emerald-download:active {
+  transform: translateY(1px);
+}
+
+.btn-emerald-download-title {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-emerald-download-sub {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.92;
+}
+
+/* ── 4. CONTEÚDO PRINCIPAL (ÁREA CLARA INSET) ──────────────── */
+.aero-content-area {
+  position: relative;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.90);
+  margin: 10px 14px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 70, 140, 0.25);
+  box-shadow:
+    inset 1px 1px 4px rgba(0, 30, 80, 0.22),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  min-height: 480px;
+}
+
+/* Sub-Abas do Ranking (Hoje / Total) */
+.sub-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(180deg, rgba(220, 240, 255, 0.75) 0%, rgba(200, 230, 255, 0.45) 100%);
+  border-bottom: 1px solid rgba(0, 75, 150, 0.20);
+}
+
+.aqua-pill-btn {
+  padding: 6px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 65, 130, 0.65);
+  cursor: pointer;
+  font-family: var(--font-stack);
+  font-size: 12.5px;
+  font-weight: 700;
   color: #003060;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 
-  /* Corte seco exato a 50% da altura */
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.75) 0%,
@@ -372,80 +557,42 @@ body {
   );
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.75) inset,
-    0 -1px 0 rgba(0, 50, 120, 0.3) inset,
-    0 2px 6px rgba(0, 40, 100, 0.15);
+    0 2px 5px rgba(0, 40, 100, 0.15);
   transition: all 0.15s ease;
 }
 
-.aqua-btn:hover {
-  box-shadow: 0 0 12px rgba(0, 210, 255, 0.9), 0 1px 0 rgba(255, 255, 255, 0.85) inset;
+.aqua-pill-btn:hover {
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.9);
   filter: brightness(1.12);
 }
 
-.aqua-btn.active {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.90) 0%,
-    rgba(255, 255, 255, 0.45) 50%,
-    rgba(0, 210, 255, 0.80) 50.1%,
-    rgba(0, 140, 255, 0.95) 100%
-  );
+.aqua-pill-btn.active {
+  background: linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.45) 50%, rgba(0,210,255,0.80) 50.1%, rgba(0,140,255,0.95) 100%);
   color: #001f4d;
-  box-shadow:
-    0 0 14px rgba(0, 210, 255, 0.95),
-    0 2px 0 rgba(255, 255, 255, 0.9) inset;
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.95), 0 2px 0 rgba(255, 255, 255, 0.9) inset;
 }
 
-/* Botão de Atualizar Agora (Gel Pill Verde Lima radiante) */
-.aqua-btn.btn-refresh {
+.aqua-pill-btn.btn-refresh {
   margin-left: auto;
   color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
   border-color: rgba(10, 120, 30, 0.7);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.75) 0%,
-    rgba(255, 255, 255, 0.20) 50%,
-    rgba(60, 215, 80, 0.75) 50.1%,
-    rgba(20, 145, 45, 0.90) 100%
-  );
+  background: linear-gradient(180deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.20) 50%, rgba(60,215,80,0.75) 50.1%, rgba(20,145,45,0.90) 100%);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 
-.aqua-btn.btn-refresh:hover {
-  box-shadow: 0 0 12px rgba(40, 230, 90, 0.95), 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+.aqua-pill-btn.btn-refresh:hover {
+  box-shadow: 0 0 12px rgba(40, 230, 90, 0.95);
   filter: brightness(1.1);
 }
 
-.aqua-btn:active {
-  transform: scale(0.97);
-}
-
-/* ── 4. CONTEÚDO PRINCIPAL (ÁREA CLARA CHANFRADA INSET) ───── */
-.aero-content-area {
-  position: relative;
-  z-index: 3;
-  background: rgba(255, 255, 255, 0.88);
-  margin: 8px 10px 10px;
-  border-radius: 4px;
-  border: 1px solid rgba(0, 70, 140, 0.20);
-  box-shadow:
-    inset 1px 1px 3px rgba(0, 30, 80, 0.25),
-    inset -1px -1px 3px rgba(255, 255, 255, 0.8);
-  overflow: hidden;
-}
-
-/* ── DESTAQUE DO PÓDIO (TOP 1, 2 E 3 COM ORBES 3D) ────────── */
+/* ── PÓDIO TOP 3 COM ORBES 3D ──────────────────────────────── */
 .podium-container {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   gap: 16px;
   padding: 20px 16px 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(215, 238, 255, 0.55) 0%,
-    rgba(185, 222, 255, 0.25) 100%
-  );
+  background: linear-gradient(180deg, rgba(215, 238, 255, 0.55) 0%, rgba(185, 222, 255, 0.25) 100%);
   border-bottom: 1px solid rgba(0, 80, 160, 0.15);
 }
 
@@ -457,27 +604,22 @@ body {
   text-align: center;
   padding: 12px 10px 14px;
   position: relative;
-  box-shadow:
-    0 6px 20px rgba(0, 40, 100, 0.16),
-    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  box-shadow: 0 6px 20px rgba(0, 40, 100, 0.16), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
   backdrop-filter: blur(8px);
 }
 
 .podium-card.rank-1 {
-  background: linear-gradient(135deg, rgba(255, 248, 180, 0.70) 0%, rgba(255, 225, 75, 0.35) 100%);
+  background: linear-gradient(135deg, rgba(255, 248, 180, 0.75) 0%, rgba(255, 225, 75, 0.35) 100%);
   transform: translateY(-10px);
   border-color: rgba(255, 235, 130, 0.95);
 }
-
 .podium-card.rank-2 {
-  background: linear-gradient(135deg, rgba(230, 240, 255, 0.70) 0%, rgba(180, 205, 235, 0.35) 100%);
+  background: linear-gradient(135deg, rgba(230, 240, 255, 0.75) 0%, rgba(180, 205, 235, 0.35) 100%);
 }
-
 .podium-card.rank-3 {
-  background: linear-gradient(135deg, rgba(250, 230, 205, 0.70) 0%, rgba(210, 165, 115, 0.35) 100%);
+  background: linear-gradient(135deg, rgba(250, 230, 205, 0.75) 0%, rgba(210, 165, 115, 0.35) 100%);
 }
 
-/* Orbes 3D Brilhantes */
 .podium-orb {
   width: 58px;
   height: 58px;
@@ -502,28 +644,19 @@ body {
   transform: rotate(-35deg);
 }
 
-/* Dourado Glossy (Top 1) */
 .orb-gold {
   background: radial-gradient(circle at 35% 30%, #fffbe6 0%, #ffd700 35%, #d4a017 65%, #7a5500 100%);
-  box-shadow:
-    0 4px 18px rgba(212, 160, 23, 0.75),
-    inset 0 2px 6px rgba(255, 255, 210, 0.9);
+  box-shadow: 0 4px 18px rgba(212, 160, 23, 0.75), inset 0 2px 6px rgba(255, 255, 210, 0.9);
 }
 
-/* Prateado Cromado (Top 2) */
 .orb-silver {
   background: radial-gradient(circle at 35% 30%, #ffffff 0%, #ebebeb 30%, #b8b8b8 60%, #4a4a4a 100%);
-  box-shadow:
-    0 4px 18px rgba(160, 160, 160, 0.65),
-    inset 0 2px 6px rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 18px rgba(160, 160, 160, 0.65), inset 0 2px 6px rgba(255, 255, 255, 0.95);
 }
 
-/* Bronze Vitrificado (Top 3) */
 .orb-bronze {
   background: radial-gradient(circle at 35% 30%, #fff2e0 0%, #d48f52 30%, #a85f24 60%, #522700 100%);
-  box-shadow:
-    0 4px 18px rgba(168, 95, 36, 0.65),
-    inset 0 2px 6px rgba(255, 225, 180, 0.85);
+  box-shadow: 0 4px 18px rgba(168, 95, 36, 0.65), inset 0 2px 6px rgba(255, 225, 180, 0.85);
 }
 
 .podium-title-rank {
@@ -553,13 +686,13 @@ body {
   margin-bottom: 8px;
 }
 
-/* ── BARRAS DE PROGRESSO ESTILO WINDOWS VISTA ──────────────── */
+/* Barras de progresso Windows Vista com feixe de luz */
 .vista-progress-track {
   height: 14px;
   border-radius: 7px;
-  background: rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(0, 0, 0, 0.20);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.28);
+  background: rgba(0, 0, 0, 0.14);
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.30);
   overflow: hidden;
   position: relative;
 }
@@ -579,7 +712,6 @@ body {
   transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Shimmer luminoso correndo continuamente pela barra de carregamento */
 .vista-progress-fill::after {
   content: '';
   position: absolute;
@@ -596,7 +728,7 @@ body {
   100% { left: 130%; }
 }
 
-/* ── TABELA DE CLASSIFICAÇÃO (WINDOWS EXPLORER / MSN) ──────── */
+/* ── TABELA DE CLASSIFICAÇÃO ───────────────────────────────── */
 .ranking-table-scroll {
   padding: 8px 12px 14px;
   overflow-x: auto;
@@ -617,11 +749,7 @@ thead th {
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: #003366;
-  background: linear-gradient(
-    180deg,
-    rgba(215, 235, 255, 0.95) 0%,
-    rgba(175, 210, 255, 0.85) 100%
-  );
+  background: linear-gradient(180deg, rgba(215, 235, 255, 0.95) 0%, rgba(175, 210, 255, 0.85) 100%);
   border-top: 1px solid rgba(0, 80, 160, 0.30);
   border-bottom: 2px solid rgba(0, 80, 160, 0.40);
 }
@@ -636,11 +764,8 @@ tbody tr td {
   vertical-align: middle;
 }
 
-tbody tr:nth-child(even) td {
-  background: rgba(235, 245, 255, 0.45);
-}
+tbody tr:nth-child(even) td { background: rgba(235, 245, 255, 0.45); }
 
-/* Efeito glossy azul-celeste suave ao passar o rato (estilo Windows Explorer 7) */
 tbody tr:hover td {
   background: linear-gradient(
     180deg,
@@ -649,13 +774,10 @@ tbody tr:hover td {
     rgba(120, 190, 255, 0.45) 50.1%,
     rgba(70, 160, 255, 0.35) 100%
   ) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.70),
-    inset 0 -1px 0 rgba(0, 90, 180, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70), inset 0 -1px 0 rgba(0, 90, 180, 0.25);
   cursor: default;
 }
 
-/* Insígnia da posição */
 .rank-badge {
   display: inline-flex;
   align-items: center;
@@ -683,12 +805,8 @@ tbody tr:hover td {
   color: #ffffff;
 }
 
-.player-nickname {
-  font-weight: 600;
-  color: #002255;
-}
+.player-nickname { font-weight: 600; color: #002255; }
 
-/* Contador estilo LCD / Vitrificado com fonte nítida */
 .lcd-vitrificado {
   display: inline-block;
   padding: 4px 12px;
@@ -698,44 +816,146 @@ tbody tr:hover td {
   font-weight: 700;
   letter-spacing: 1px;
   color: #003622;
-  background: linear-gradient(
-    180deg,
-    rgba(195, 255, 230, 0.85) 0%,
-    rgba(170, 255, 215, 0.60) 48%,
-    rgba(50, 195, 100, 0.65) 50%,
-    rgba(25, 145, 65, 0.80) 100%
-  );
+  background: linear-gradient(180deg, rgba(195, 255, 230, 0.85) 0%, rgba(170, 255, 215, 0.60) 48%, rgba(50, 195, 100, 0.65) 50%, rgba(25, 145, 65, 0.80) 100%);
   border: 1px solid rgba(0, 130, 50, 0.45);
-  box-shadow:
-    inset 0 1px 3px rgba(255, 255, 255, 0.65),
-    inset 0 -1px 2px rgba(0, 90, 35, 0.30),
-    0 1px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.65), inset 0 -1px 2px rgba(0, 90, 35, 0.30), 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 .lcd-vitrificado.secundario {
-  background: linear-gradient(
-    180deg,
-    rgba(215, 235, 255, 0.85) 0%,
-    rgba(190, 225, 255, 0.60) 48%,
-    rgba(70, 140, 235, 0.55) 50%,
-    rgba(30, 95, 205, 0.70) 100%
-  );
+  background: linear-gradient(180deg, rgba(215, 235, 255, 0.85) 0%, rgba(190, 225, 255, 0.60) 48%, rgba(70, 140, 235, 0.55) 50%, rgba(30, 95, 205, 0.70) 100%);
   border-color: rgba(0, 90, 180, 0.40);
   color: #001f55;
 }
 
-/* ── 5. STATUS BAR CLÁSSICA DO WINDOWS ─────────────────────── */
+/* ── 5. SEÇÃO 'COMO O SOFTWARE FUNCIONA' ───────────────────── */
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 16px;
+  padding: 20px;
+}
+
+.aero-card {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(0, 80, 160, 0.30);
+  box-shadow: 0 4px 16px rgba(0, 40, 100, 0.12), inset 0 1px 0 #ffffff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.aero-card-header {
+  padding: 12px 16px;
+  background: linear-gradient(180deg, #3aa3e3 0%, #1778bc 50%, #0d5ea0 50.1%, #0b4e85 100%);
+  border-bottom: 1px solid rgba(0, 50, 100, 0.5);
+  color: #ffffff;
+  font-size: 14.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.aero-card-body {
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #223344;
+}
+
+.aero-card-body code {
+  background: rgba(0, 100, 200, 0.10);
+  color: #004488;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* ── 6. SEÇÃO 'DOWNLOAD & INSTALAÇÃO' ──────────────────────── */
+.download-page-wrap {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Caixa estilo 'InstallShield Wizard' do Windows Vista */
+.wizard-box {
+  border-radius: 8px;
+  border: 1px solid #7ea3c8;
+  background: #f0f6fc;
+  box-shadow: 0 4px 18px rgba(0, 30, 80, 0.15), inset 0 1px 0 #ffffff;
+  overflow: hidden;
+}
+
+.wizard-header {
+  padding: 14px 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #e2eefc 100%);
+  border-bottom: 1px solid #b8d2eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wizard-header h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #003366;
+}
+
+.wizard-steps-list {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.wizard-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px 14px;
+  border-radius: 6px;
+  border: 1px solid #cfdeec;
+}
+
+.wizard-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #38b6ff 0%, #0078d7 100%);
+  color: #ffffff;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 100, 200, 0.35);
+}
+
+.wizard-step-content strong {
+  color: #002b66;
+  font-size: 13.5px;
+}
+
+.wizard-step-content p {
+  color: #445566;
+  font-size: 12.5px;
+  margin-top: 2px;
+}
+
+/* ── 7. STATUS BAR DO WINDOWS ──────────────────────────────── */
 .win-status-bar {
   position: relative;
   z-index: 4;
   display: flex;
   align-items: center;
-  padding: 5px 12px;
-  background: linear-gradient(
-    180deg,
-    rgba(215, 225, 240, 0.90) 0%,
-    rgba(185, 200, 225, 0.85) 100%
-  );
+  padding: 6px 14px;
+  background: linear-gradient(180deg, rgba(215, 225, 240, 0.95) 0%, rgba(185, 200, 225, 0.90) 100%);
   border-top: 1px solid rgba(0, 70, 130, 0.35);
   box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.60) inset;
   font-size: 11.5px;
@@ -759,7 +979,6 @@ tbody tr:hover td {
   margin-left: auto;
 }
 
-/* Orbe verde a piscar autêntico */
 .pulsing-green-orb {
   width: 9px;
   height: 9px;
@@ -771,19 +990,15 @@ tbody tr:hover td {
 }
 
 @keyframes orbPulsingAnim {
-  0%, 100% {
-    box-shadow: 0 0 4px #20ff44, 0 0 8px rgba(32, 255, 68, 0.5);
-    opacity: 1;
-  }
-  50% {
-    box-shadow: 0 0 9px #20ff44, 0 0 16px rgba(32, 255, 68, 0.85);
-    opacity: 0.65;
-  }
+  0%, 100% { box-shadow: 0 0 4px #20ff44, 0 0 8px rgba(32, 255, 68, 0.5); opacity: 1; }
+  50%      { box-shadow: 0 0 9px #20ff44, 0 0 16px rgba(32, 255, 68, 0.85); opacity: 0.65; }
 }
 
-/* Painéis de Abas */
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+.main-tab-panel { display: none; }
+.main-tab-panel.active { display: block; }
+
+.sub-tab-panel { display: none; }
+.sub-tab-panel.active { display: block; }
 
 .empty-state-msg {
   text-align: center;
@@ -798,29 +1013,29 @@ tbody tr:hover td {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 28px 20px;
+  padding: 24px;
   color: #223344;
   font-size: 13px;
 }
 
 .vista-spinner-ring {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border: 3px solid rgba(0, 130, 240, 0.20);
   border-top-color: rgba(0, 130, 240, 0.95);
   border-radius: 50%;
   animation: spinCycle 0.75s linear infinite;
 }
 
-@keyframes spinCycle {
-  to { transform: rotate(360deg); }
-}
+@keyframes spinCycle { to { transform: rotate(360deg); } }
 
 @media (max-width: 650px) {
   .podium-container { flex-direction: column; align-items: center; }
   .podium-card { max-width: 95%; transform: none !important; }
   .title-text { font-size: 11.5px; }
   .status-cell { padding: 0 8px; }
+  .download-hero-banner { flex-direction: column; text-align: center; }
+  .btn-emerald-download { width: 100%; }
 }
 </style>
 </head>
@@ -844,10 +1059,10 @@ tbody tr:hover td {
   </svg>
 </div>
 
-<!-- Aurora do Windows Vista (Feixes de Luz Diagonais) -->
+<!-- Feixes de Luz Aurora do Windows Vista -->
 <div class="vista-aurora"></div>
 
-<!-- Bolhas de sabão / água flutuantes com reflexo especular no canto superior esquerdo -->
+<!-- Bolhas de sabão / água flutuantes com reflexo especular -->
 <div class="bubbles-container">
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
   <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
@@ -856,14 +1071,28 @@ tbody tr:hover td {
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     JANELA NATIVA 'WINDOWS 7 AERO GLASS'
+     JANELA PRINCIPAL 'WINDOWS 7 AERO GLASS'
      ═══════════════════════════════════════════════════════════════ -->
 <div class="aero-window">
 
   <!-- Barra de Título do Windows 7 -->
   <div class="title-bar">
     <div class="title-icon-orb">🖱️</div>
-    <div class="title-text">MouseClickCounter - Ranking Global (Windows Aero Edition)</div>
+    <div class="title-text">MouseClickCounter - Portal Oficial (Windows Aero Edition)</div>
+
+    <!-- Mini Player Aero Widget no topo com equalizador e som -->
+    <div class="aero-mini-player">
+      <div class="equalizer-bars" title="Equalizador Aero">
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+      <button class="btn-sound-toggle" id="btn-sound-toggle" onclick="toggleAeroAudio()">
+        🔊 Sons: ON
+      </button>
+    </div>
+
     <div class="win7-controls">
       <div class="win7-btn" title="Minimizar">&#x2014;</div>
       <div class="win7-btn" title="Maximizar">&#x25A1;</div>
@@ -871,70 +1100,236 @@ tbody tr:hover td {
     </div>
   </div>
 
-  <!-- Barra de Abas e Botões Glossy Gel / Aqua -->
-  <div class="nav-tab-bar">
-    <button class="aqua-btn active" id="tab-today" onclick="switchAeroTab('today')">
-      🖱️ Cliques de Hoje
+  <!-- BARRA DE NAVEGAÇÃO SUPERIOR ESTILO WINDOWS MEDIA PLAYER 11 -->
+  <nav class="wmp-ribbon-bar">
+    <button class="wmp-tab-btn active" id="main-tab-ranking" onclick="switchMainTab('ranking')">
+      🏆 Ranking Global
     </button>
-    <button class="aqua-btn" id="tab-total" onclick="switchAeroTab('total')">
-      🔥 Total Geral
+    <button class="wmp-tab-btn" id="main-tab-how" onclick="switchMainTab('how')">
+      ⚙️ Como o Software Funciona
     </button>
-    <button class="aqua-btn btn-refresh" onclick="fetchRankingData()">
-      ⟳ Atualizar Agora
+    <button class="wmp-tab-btn" id="main-tab-download" onclick="switchMainTab('download')">
+      💿 Download &amp; Instalação
     </button>
+  </nav>
+
+  <!-- BANNER DE DOWNLOAD EM DESTAQUE (PORTAL DE SOFTWARE 2009) -->
+  <div class="download-hero-banner">
+    <div class="download-banner-info">
+      <h3>🖱️ MouseClickCounter.exe <span>(Windows 7 / 10 / 11)</span></h3>
+      <p>Contador de cliques invisível em C++ nativo • Zero Input Lag • Ranking Global em tempo real</p>
+    </div>
+    <a href="/download" class="btn-emerald-download" onclick="triggerDownloadSound()">
+      <div class="btn-emerald-download-title">
+        <span>⬇</span> Baixar MouseClickCounter.exe
+      </div>
+      <div class="btn-emerald-download-sub">
+        Leve (&lt; 1MB) • Zero Input Lag • Inicia com o Windows
+      </div>
+    </a>
   </div>
 
-  <!-- Conteúdo Interior da Janela (Área Clara Chanfrada Inset) -->
+  <!-- CONTEÚDO PRINCIPAL (ÁREA CLARA INSET) -->
   <div class="aero-content-area">
 
-    <!-- Indicador de Carregamento -->
-    <div id="loading-spinner-box" class="loading-indicator">
-      <div class="vista-spinner-ring"></div>
-      <span>Carregando dados da rede Turso...</span>
+    <!-- ═════════════════════════════════════════════════════════
+         ABA 1: RANKING GLOBAL
+         ═════════════════════════════════════════════════════════ -->
+    <div class="main-tab-panel active" id="panel-main-ranking">
+
+      <!-- Sub-Abas do Ranking -->
+      <div class="sub-nav-bar">
+        <button class="aqua-pill-btn active" id="subtab-today" onclick="switchRankingSubTab('today')">
+          🖱️ Cliques de Hoje
+        </button>
+        <button class="aqua-pill-btn" id="subtab-total" onclick="switchRankingSubTab('total')">
+          🔥 Total Geral
+        </button>
+        <button class="aqua-pill-btn btn-refresh" onclick="fetchRankingData()">
+          ⟳ Atualizar Agora
+        </button>
+      </div>
+
+      <div id="loading-spinner-box" class="loading-indicator">
+        <div class="vista-spinner-ring"></div>
+        <span>Sincronizando com a base de dados Turso...</span>
+      </div>
+
+      <!-- Sub-Painel: Hoje -->
+      <div class="sub-tab-panel active" id="subpanel-today">
+        <div class="podium-container" id="podium-today"></div>
+        <div class="ranking-table-scroll">
+          <table id="tbl-today">
+            <thead>
+              <tr>
+                <th style="width: 50px; text-align: center;">Pos</th>
+                <th>Jogador</th>
+                <th>Cliques Hoje</th>
+                <th>Total Histórico</th>
+                <th>Última Atividade</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Sub-Painel: Total -->
+      <div class="sub-tab-panel" id="subpanel-total">
+        <div class="podium-container" id="podium-total"></div>
+        <div class="ranking-table-scroll">
+          <table id="tbl-total">
+            <thead>
+              <tr>
+                <th style="width: 50px; text-align: center;">Pos</th>
+                <th>Jogador</th>
+                <th>Total Histórico</th>
+                <th>Cliques Hoje</th>
+                <th>Última Atividade</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
 
-    <!-- ── ABA: CLIQUES DE HOJE ── -->
-    <div class="tab-content active" id="content-today">
-      <div class="podium-container" id="podium-today"></div>
-      <div class="ranking-table-scroll">
-        <table id="tbl-today">
-          <thead>
-            <tr>
-              <th style="width: 50px; text-align: center;">Pos</th>
-              <th>Jogador</th>
-              <th>Cliques Hoje</th>
-              <th>Total Histórico</th>
-              <th>Última Atividade</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+    <!-- ═════════════════════════════════════════════════════════
+         ABA 2: COMO O SOFTWARE FUNCIONA
+         ═════════════════════════════════════════════════════════ -->
+    <div class="main-tab-panel" id="panel-main-how">
+      <div class="how-it-works-grid">
+
+        <!-- Card 1: Zero Input Lag -->
+        <div class="aero-card">
+          <div class="aero-card-header">
+            <span>⚡</span> Zero Input Lag (API RawInput C++)
+          </div>
+          <div class="aero-card-body">
+            O <strong>MouseClickCounter</strong> foi construído em <code>C++ nativo (Win32 API)</code> para gamers de elite.
+            Ao contrário de softwares amadores em Electron ou Python que usam hooks globais (<code>WH_MOUSE_LL</code>) e causam atrasos perceptíveis no rato, o nosso motor utiliza <code>WM_INPUT</code> registado diretamente na raiz do hardware.
+            <br/><br/>
+            <strong>Resultado:</strong> 0% de uso de CPU, ~8 MB de RAM e <strong>zero milissegundos</strong> de interferência no FPS ou na mira em jogos como Valorant, CS2, League of Legends e Warzone.
+          </div>
+        </div>
+
+        <!-- Card 2: Auto-Start Inteligente -->
+        <div class="aero-card">
+          <div class="aero-card-header">
+            <span>🚀</span> Auto-Start Inteligente em %LOCALAPPDATA%
+          </div>
+          <div class="aero-card-body">
+            Ao ser executado pela primeira vez (mesmo na pasta Downloads ou Desktop), o executável detecta o local e copia-se silenciosamente para:
+            <br/>
+            <code>%LOCALAPPDATA%\MouseClickCounter\MouseClickCounter.exe</code>
+            <br/><br/>
+            Ele regista a chave de arranque do Windows em <code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</code> apontando sempre para este caminho seguro.
+            Podes limpar a pasta Downloads à vontade — o programa iniciará sempre automaticamente com o PC!
+          </div>
+        </div>
+
+        <!-- Card 3: 100% Seguro e Privado -->
+        <div class="aero-card">
+          <div class="aero-card-header">
+            <span>🔒</span> 100% Seguro, Privado e Confiável
+          </div>
+          <div class="aero-card-body">
+            O software possui um único propósito: <strong>contar cliques do rato</strong>.
+            <br/><br/>
+            • <strong>Não lê o teclado</strong> (sem keylogger).<br/>
+            • <strong>Não lê coordenadas de tela</strong> nem tira prints.<br/>
+            • <strong>Não envia dados pessoais</strong> além do teu Nickname escolhido.<br/>
+            • Comunica via HTTPS seguro a cada 60 segundos com o nosso banco Turso (libSQL distribuído). Se ficares sem internet, todos os teus cliques diários e totais ficam salvos com segurança no Registo do Windows.
+          </div>
+        </div>
+
+        <!-- Card 4: Como Mudar o Nickname -->
+        <div class="aero-card">
+          <div class="aero-card-header">
+            <span>🎨</span> Como Alterar o teu Nickname no Ranking
+          </div>
+          <div class="aero-card-body">
+            Por padrão, o jogo assume o nome do teu utilizador do Windows. Para personalizares:
+            <br/><br/>
+            1. Olha para o canto inferior direito do teu ecrã (perto do relógio do Windows).<br/>
+            2. Clica com o <strong>botão direito</strong> no ícone do rato 🖱️.<br/>
+            3. Seleciona a opção <strong>"✏️ Alterar Nickname"</strong>.<br/>
+            4. Uma caixa de diálogo nativa do Windows abrir-se-á: digita o teu novo Nick e clica em Salvar!<br/>
+            5. O teu ranking global atualizar-se-á instantaneamente com o novo nome.
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- ── ABA: TOTAL GERAL ── -->
-    <div class="tab-content" id="content-total">
-      <div class="podium-container" id="podium-total"></div>
-      <div class="ranking-table-scroll">
-        <table id="tbl-total">
-          <thead>
-            <tr>
-              <th style="width: 50px; text-align: center;">Pos</th>
-              <th>Jogador</th>
-              <th>Total Geral</th>
-              <th>Cliques Hoje</th>
-              <th>Última Atividade</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+    <!-- ═════════════════════════════════════════════════════════
+         ABA 3: DOWNLOAD & INSTALAÇÃO
+         ═════════════════════════════════════════════════════════ -->
+    <div class="main-tab-panel" id="panel-main-download">
+      <div class="download-page-wrap">
+
+        <!-- InstallShield Wizard Box -->
+        <div class="wizard-box">
+          <div class="wizard-header">
+            <h4>Assistente de Instalação e Configuração Rápida</h4>
+            <span style="font-size: 11.5px; color: #557799;">Versão 3.0 • Windows 7, 8, 10, 11 (64-bit)</span>
+          </div>
+
+          <div class="wizard-steps-list">
+            <div class="wizard-step-item">
+              <div class="wizard-step-num">1</div>
+              <div class="wizard-step-content">
+                <strong>Baixa o ficheiro executável</strong>
+                <p>Clica no botão verde acima ou no link direto para transferir o <code>MouseClickCounter.exe</code> (tamanho minúsculo de apenas ~811 KB).</p>
+              </div>
+            </div>
+
+            <div class="wizard-step-item">
+              <div class="wizard-step-num">2</div>
+              <div class="wizard-step-content">
+                <strong>Executa o programa</strong>
+                <p>Dá um duplo clique no ficheiro. Ele auto-instala-se instantaneamente em <code>%LOCALAPPDATA%</code> e esconde-se na bandeja do sistema (junto ao relógio).</p>
+              </div>
+            </div>
+
+            <div class="wizard-step-item">
+              <div class="wizard-step-num">3</div>
+              <div class="wizard-step-content">
+                <strong>Joga e Clica normalmente!</strong>
+                <p>Nenhuma janela chata fica aberta. Cada clique em jogos, navegação e trabalho é contabilizado com fidelidade e sobe para este ranking a cada minuto.</p>
+              </div>
+            </div>
+
+            <div class="wizard-step-item">
+              <div class="wizard-step-num">4</div>
+              <div class="wizard-step-content">
+                <strong>Acompanha a tua pontuação</strong>
+                <p>Passa o cursor no ícone do relógio para veres o teu contador de hoje e o total, ou abre este site para veres o teu lugar no pódio global!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner adicional no rodapé da aba -->
+        <div style="text-align: center; padding: 10px 0;">
+          <a href="/download" class="btn-emerald-download" style="padding: 14px 42px;" onclick="triggerDownloadSound()">
+            <div class="btn-emerald-download-title" style="font-size: 16px;">
+              <span>⬇</span> Descarregar MouseClickCounter.exe Agora
+            </div>
+            <div class="btn-emerald-download-sub">
+              Compatível com Windows 7, 8, 10 e Windows 11
+            </div>
+          </a>
+        </div>
+
       </div>
     </div>
 
   </div><!-- /aero-content-area -->
 
-  <!-- ── 5. STATUS BAR CLÁSSICA DO WINDOWS ────────────────────── -->
-  <div class="win-status-bar">
+  <!-- ── 8. STATUS BAR CLÁSSICA DO WINDOWS ────────────────────── -->
+  <footer class="win-status-bar">
     <div class="status-cell">
       <div class="pulsing-green-orb"></div>
       <span>Servidor Turso Online</span>
@@ -948,28 +1343,175 @@ tbody tr:hover td {
     <div class="status-cell" id="stat-countdown">
       🔄 Auto-refresh em 30s
     </div>
-  </div>
+  </footer>
 
 </div><!-- /aero-window -->
 
 <script>
 /* =============================================================================
-   LÓGICA JAVASCRIPT DO RANKING FRUTIGER AERO
+   MÓDULO DE ÁUDIO SINTETIZADO FRUTIGER AERO (WEB AUDIO API PURA)
+   Nostalgia autêntica de 2008: sons cristalinos sem depender de arquivos externos!
    ============================================================================= */
 
-let activeTabName   = 'today';
-let cachedData      = { top_today: [], top_total: [] };
-let refreshSeconds  = 30;
-let refreshTimer    = null;
+let audioCtx = null;
+let aeroAudioEnabled = true;
 
-function switchAeroTab(tabName) {
-  activeTabName = tabName;
-  document.querySelectorAll('.aqua-btn:not(.btn-refresh)').forEach(btn => btn.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(panel => panel.classList.remove('active'));
-
-  document.getElementById('tab-' + tabName).classList.add('active');
-  document.getElementById('content-' + tabName).classList.add('active');
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
 }
+
+function toggleAeroAudio() {
+  aeroAudioEnabled = !aeroAudioEnabled;
+  const btn = document.getElementById('btn-sound-toggle');
+  if (aeroAudioEnabled) {
+    btn.textContent = '🔊 Sons: ON';
+    playAquaClickSound();
+  } else {
+    btn.textContent = '🔈 Sons: OFF';
+  }
+}
+
+// 1. Som ao passar o cursor (Hover): Gota cristalina suave (sine wave aguda descendente)
+function playCrystalHoverSound() {
+  if (!aeroAudioEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    const now = ctx.currentTime;
+    osc.frequency.setValueAtTime(1400, now);
+    osc.frequency.exponentialRampToValueAtTime(1800, now + 0.04);
+    osc.frequency.exponentialRampToValueAtTime(1200, now + 0.12);
+
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.045, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.15);
+  } catch (_) {}
+}
+
+// 2. Som ao clicar (Click): Aqua Gel duplo pulso cristalino
+function playAquaClickSound() {
+  if (!aeroAudioEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+
+    // Pulso 1
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(950, now);
+    osc1.frequency.exponentialRampToValueAtTime(1350, now + 0.05);
+
+    gain1.gain.setValueAtTime(0.08, now);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.09);
+
+    // Pulso 2
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = 'triangle';
+    osc2.frequency.setValueAtTime(1800, now + 0.03);
+    osc2.frequency.exponentialRampToValueAtTime(2200, now + 0.09);
+
+    gain2.gain.setValueAtTime(0.04, now + 0.03);
+    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.13);
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+    osc2.start(now + 0.03);
+    osc2.stop(now + 0.14);
+  } catch (_) {}
+}
+
+// 3. Som de Abertura / Sucesso / Download: Acorde Sintético Etéreo (Windows Vista / MSN chime)
+function triggerDownloadSound() {
+  playWindowsChime();
+}
+
+function playWindowsChime() {
+  if (!aeroAudioEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+
+    // Acorde cintilante: Dó maior brilhante (C5, E5, G5, C6)
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const startTime = now + idx * 0.045;
+
+      osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(freq, startTime);
+      osc.frequency.linearRampToValueAtTime(freq * 1.01, startTime + 0.4);
+
+      gain.gain.setValueAtTime(0.001, startTime);
+      gain.gain.linearRampToValueAtTime(0.07, startTime + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.65);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(startTime);
+      osc.stop(startTime + 0.7);
+    });
+  } catch (_) {}
+}
+
+/* =============================================================================
+   NAVEGAÇÃO DE ABAS
+   ============================================================================= */
+
+function switchMainTab(tabKey) {
+  playAquaClickSound();
+
+  document.querySelectorAll('.wmp-tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.main-tab-panel').forEach(panel => panel.classList.remove('active'));
+
+  document.getElementById('main-tab-' + tabKey).classList.add('active');
+  document.getElementById('panel-main-' + tabKey).classList.add('active');
+}
+
+function switchRankingSubTab(subTabKey) {
+  playAquaClickSound();
+
+  document.querySelectorAll('.aqua-pill-btn:not(.btn-refresh)').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.sub-tab-panel').forEach(panel => panel.classList.remove('active'));
+
+  document.getElementById('subtab-' + subTabKey).classList.add('active');
+  document.getElementById('subpanel-' + subTabKey).classList.add('active');
+}
+
+/* =============================================================================
+   RANKING LOGIC & TELEMETRY
+   ============================================================================= */
+
+let cachedData     = { top_today: [], top_total: [] };
+let refreshSeconds = 30;
 
 function escapeHtml(text) {
   return String(text)
@@ -1067,7 +1609,7 @@ function updateStatusBarStats(data) {
 async function fetchRankingData() {
   resetCountdown();
   const spinner = document.getElementById('loading-spinner-box');
-  spinner.style.display = 'flex';
+  if (spinner) spinner.style.display = 'flex';
 
   try {
     const res = await fetch('/api/ranking');
@@ -1082,12 +1624,15 @@ async function fetchRankingData() {
     renderTable('tbl-total', data.top_total, 'clicks_totais', 'clicks_hoje');
 
     updateStatusBarStats(data);
+    playWindowsChime(); // som cristalino de atualização
   } catch (err) {
     console.error('Falha ao carregar ranking:', err);
-    document.querySelector('#tbl-today tbody').innerHTML =
-      `<tr><td colspan="5" class="empty-state-msg" style="color: #c00;">Erro ao conectar com a API: ${err.message}</td></tr>`;
+    const tbl = document.querySelector('#tbl-today tbody');
+    if (tbl) {
+      tbl.innerHTML = `<tr><td colspan="5" class="empty-state-msg" style="color: #c00;">Erro ao conectar com a API: ${err.message}</td></tr>`;
+    }
   } finally {
-    spinner.style.display = 'none';
+    if (spinner) spinner.style.display = 'none';
   }
 }
 
@@ -1097,7 +1642,8 @@ function resetCountdown() {
 }
 
 function updateCountdownDisplay() {
-  document.getElementById('stat-countdown').textContent = `🔄 Auto-refresh em ${refreshSeconds}s`;
+  const el = document.getElementById('stat-countdown');
+  if (el) el.textContent = `🔄 Auto-refresh em ${refreshSeconds}s`;
 }
 
 function countdownTick() {
@@ -1108,6 +1654,16 @@ function countdownTick() {
     updateCountdownDisplay();
   }
 }
+
+// Liga sons a todos os botões e abas no hover
+document.addEventListener('DOMContentLoaded', () => {
+  const hoverElements = document.querySelectorAll('button, a, .wmp-tab-btn, .aqua-pill-btn, .btn-emerald-download');
+  hoverElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      playCrystalHoverSound();
+    });
+  });
+});
 
 // Inicialização imediata
 fetchRankingData();

@@ -147,6 +147,38 @@ async function handler(req, res) {
   }
 
   // -------------------------------------------------------------------------
+  // GET /download ou /MouseClickCounter.exe → Download do executável C++
+  // -------------------------------------------------------------------------
+  if ((req.method === 'GET' || req.method === 'HEAD') &&
+      (url.pathname === '/download' || url.pathname === '/MouseClickCounter.exe' || url.pathname === '/public/MouseClickCounter.exe')) {
+    const exeCandidates = [
+      path.join(__dirname, 'public', 'MouseClickCounter.exe'),
+      path.join(__dirname, 'MouseClickCounter.exe'),
+      path.join(process.cwd(), 'public', 'MouseClickCounter.exe'),
+      path.join(process.cwd(), 'MouseClickCounter.exe'),
+    ];
+    let exePath = null;
+    for (const p of exeCandidates) {
+      if (fs.existsSync(p)) { exePath = p; break; }
+    }
+    if (exePath) {
+      const stat = fs.statSync(exePath);
+      res.writeHead(200, {
+        'Content-Type': 'application/vnd.microsoft.portable-executable',
+        'Content-Disposition': 'attachment; filename="MouseClickCounter.exe"',
+        'Content-Length': stat.size,
+        'Cache-Control': 'public, max-age=3600'
+      });
+      if (req.method === 'HEAD') return res.end();
+      return res.end(fs.readFileSync(exePath));
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Executavel nao encontrado.');
+      return;
+    }
+  }
+
+  // -------------------------------------------------------------------------
   // Servir ficheiros estáticos da pasta 'public' (GIFs, etc.)
   // -------------------------------------------------------------------------
   const publicDir      = path.join(__dirname, 'public');
