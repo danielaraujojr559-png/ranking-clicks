@@ -9,8 +9,8 @@
 /* =============================================================================
    THE FRUTIGER AERO ARCHIVE EDITION (2005–2013)
    Engenharia Reversa baseada no código e layout oficial de frutigeraeroarchive.org
-   Pilares: Glass Borders, Beveled Headers, Sidebar Exclusiva, Wallpapers Dinâmicos,
-   Áudios MP3 Reais, Candy Gloss e Tipografia Humanista Segoe UI / Frutiger.
+   Pilares: Glass Borders, Beveled Headers, Sidebar em Tonalidade Clara e Legível,
+   Áudios Longos (4 a 8 min) com Som do Mar Contínuo, Efeitos Sonoros de Clique.
    ============================================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800&display=swap');
@@ -67,8 +67,8 @@ html, body {
   pointer-events: none;
   z-index: 1;
   background:
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 25%, transparent 60%),
-    radial-gradient(ellipse 70% 40% at 80% 15%, rgba(0, 229, 255, 0.20) 0%, transparent 60%);
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.08) 25%, transparent 65%),
+    radial-gradient(ellipse 70% 40% at 80% 15%, rgba(0, 229, 255, 0.22) 0%, transparent 60%);
 }
 
 /* Bolhas de água translúcidas subindo com refração */
@@ -205,70 +205,73 @@ html, body {
   padding: 0 10px;
 }
 
-/* ── BARRA LATERAL EXCLUSIVA ESTILO ARCHIVE (#navigationMenu) ─ */
+/* ── BARRA LATERAL EM TONALIDADE CLARA, LUMINOSA E COM MÁXIMA LEGIBILIDADE ─ */
 #navigationMenu {
-  background: linear-gradient(to bottom, rgba(26, 26, 26, 0.88), rgba(18, 18, 18, 0.94) 95%);
-  border-right: 1px solid #4b4b4b;
-  border-left: 1px solid #4b4b4b;
-  border-bottom: 1px solid #4b4b4b;
-  border-top: 1px solid #5a7b9c;
-  border-radius: 10px;
-  width: 240px;
+  background: linear-gradient(180deg, rgba(245, 250, 255, 0.90) 0%, rgba(220, 238, 255, 0.85) 45%, rgba(195, 225, 250, 0.88) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-top: 2px solid #73b9e6;
+  border-radius: 12px;
+  width: 248px;
   flex-shrink: 0;
-  padding: 10px 8px 14px;
-  box-shadow: rgba(0, 0, 0, 0.5) 0 14px 28px, rgba(0, 0, 0, 0.5) 0 10px 10px;
+  padding: 12px 10px 16px;
+  box-shadow: 0 12px 32px rgba(0, 45, 100, 0.25), inset 0 1px 0 #ffffff;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   user-select: none;
 }
 
 .nav-categories {
-  background: linear-gradient(to bottom, rgba(80, 80, 80, 0.25), rgba(39, 39, 39, 0.15));
-  border: 1px solid rgba(236, 242, 249, 0.25);
-  border-radius: 6px;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(230, 243, 255, 0.60) 100%);
+  border: 1px solid rgba(160, 205, 245, 0.70);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 50, 120, 0.08), inset 0 1px 1px #ffffff;
   display: flex;
   flex-direction: column;
-  padding: 3px;
-  outline: rgba(28, 49, 39, 0.5) solid 1px;
+  padding: 4px;
+  outline: 1px solid rgba(190, 225, 255, 0.5);
 }
 
 .navbar-titles {
-  background: linear-gradient(to bottom, #ffffff 0%, rgba(129, 129, 129, 0.75) 3%, rgba(56, 56, 56, 0.75) 50%, rgba(27, 27, 27, 0.75) 50%);
-  border: 1px solid #000000;
-  border-radius: 3px;
-  color: #f7f4f4;
-  padding: 3px 5px 2px;
-  margin: 1px 1px 5px;
+  background: linear-gradient(180deg, #ffffff 0%, #e1effd 48%, #c4def7 50%, #d8ecfe 100%);
+  border: 1px solid #78aed9;
+  border-radius: 5px;
+  color: #003a70;
+  padding: 4px 6px 3px;
+  margin: 1px 1px 6px;
   font-size: 11.5px;
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 2px rgba(0, 40, 90, 0.08);
 }
 
 .nav-item {
-  border: 1px solid #0f0f0f;
-  border-radius: 5px;
-  color: #eeeeee;
+  border: 1px solid #99c7ea;
+  border-radius: 6px;
+  color: #003366;
   display: flex;
   align-items: center;
   margin: 2px auto;
   width: 98%;
-  font-size: 12.5px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   position: relative;
-  padding: 6px 8px;
+  padding: 7px 10px;
   cursor: pointer;
   text-decoration: none;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(117, 117, 117, 0.15) 20%, rgba(92, 92, 92, 0.15) 60%, rgba(0, 0, 0, 0.3) 60%, rgba(41, 41, 41, 0.3) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 255, 0.85) 45%, rgba(215, 235, 255, 0.80) 50%, rgba(228, 242, 255, 0.90) 100%);
+  box-shadow: inset 0 1px 1px #ffffff, 0 1px 3px rgba(0, 50, 110, 0.12);
   transition: all 0.18s ease;
   overflow: hidden;
 }
 
 .nav-item::before {
-  background: linear-gradient(to bottom, rgba(117, 117, 117, 0.7) 0%, rgba(255, 255, 255, 0.1) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.1) 100%);
   border-radius: 20px;
   position: absolute;
   content: "";
@@ -276,47 +279,50 @@ html, body {
   width: 90%;
   top: 0;
   left: 5%;
-  opacity: 0.35;
+  opacity: 0.6;
   pointer-events: none;
 }
 
 .nav-item:hover {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 0%, rgba(117, 117, 117, 0.25) 20%, rgba(92, 92, 92, 0.25) 50%, rgba(43, 43, 43, 0.4) 50%, rgba(161, 161, 161, 0.35) 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #e0f2ff 45%, #bfe2ff 50%, #d2ecff 100%);
+  border-color: #38b6ff;
+  color: #002244;
+  box-shadow: 0 0 10px rgba(0, 168, 255, 0.45), inset 0 1px 2px #ffffff;
   transform: scale(1.02);
-  color: #ffffff;
-  box-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
 }
 
 .nav-item.nav-active {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.35) 0%, rgba(117, 117, 117, 0.25) 20%, rgba(92, 92, 92, 0.25) 40%, rgba(29, 73, 23, 0.4) 40%, rgba(43, 240, 36, 0.75) 100%) !important;
-  color: #57fa6f !important;
-  font-weight: 700;
+  background: linear-gradient(180deg, #a6f36a 0%, #5dc627 48%, #3ca80d 50%, #45b713 100%) !important;
+  color: #ffffff !important;
+  font-weight: 800;
+  border-color: #1e7e34 !important;
+  text-shadow: 0 1px 2px rgba(0, 40, 0, 0.7);
+  box-shadow: 0 0 12px rgba(93, 198, 39, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
   transform: scale(1.02);
-  box-shadow: 0 0 10px rgba(43, 240, 36, 0.6);
-  border-color: #1e7e34;
 }
 
 .nav-icons {
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
+  width: 19px;
+  height: 19px;
+  margin-right: 9px;
   flex-shrink: 0;
   z-index: 1;
 }
 
 /* Moldura de Vidro Esqueumórfica (.glass-borders) */
 .glass-borders {
-  background: linear-gradient(to bottom, rgba(66, 66, 66, 0.3), rgba(39, 39, 39, 0.2));
-  border-radius: 6px;
-  border: 1px solid rgba(236, 242, 249, 0.5);
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8), inset -1px -1px 0 rgba(255, 255, 255, 0.2);
-  outline: rgba(28, 49, 39, 0.5) solid 1px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65), rgba(225, 240, 255, 0.50));
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 2px 2px 5px rgba(0, 40, 100, 0.15), inset 0 1px 1px #ffffff;
+  outline: rgba(120, 180, 235, 0.4) solid 1px;
 }
 
 .nav-system-card {
   padding: 8px 10px;
-  font-size: 11px;
-  color: #cfd8dc;
+  font-size: 11.5px;
+  color: #003366;
+  font-weight: 600;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -329,34 +335,35 @@ html, body {
 }
 
 .sys-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
 }
-.sys-dot.online { background: #00ff66; box-shadow: 0 0 6px #00ff66; }
-.sys-dot.win    { background: #00e5ff; box-shadow: 0 0 6px #00e5ff; }
+.sys-dot.online { background: #00cc44; box-shadow: 0 0 6px #00cc44; }
+.sys-dot.win    { background: #0099ff; box-shadow: 0 0 6px #0099ff; }
 .sys-dot.aero   { background: #ffaa00; box-shadow: 0 0 6px #ffaa00; }
 
-/* ── PLAYER INTEGRADO DOCKED NA SIDEBAR (SEM FLUTUAR) ─ */
+/* ── PLAYER INTEGRADO DOCKED NA SIDEBAR (CLARO, ELEGANTE E COM VISOR LCD) ─ */
 .sidebar-docked-player {
-  background: linear-gradient(180deg, #102d4f 0%, #061930 100%);
-  border: 1px solid #1a558b;
+  background: linear-gradient(180deg, #ffffff 0%, #e2f0fb 50%, #cce4f7 100%);
+  border: 1px solid #85bce6;
   border-radius: 8px;
-  padding: 8px;
+  padding: 9px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 3px 6px rgba(0, 0, 0, 0.5);
+  gap: 7px;
+  box-shadow: inset 0 1px 2px #ffffff, 0 3px 8px rgba(0, 45, 100, 0.15);
 }
 
 .docked-player-lcd {
-  background: #020d1a;
-  border: 1px solid #00508c;
-  border-radius: 5px;
-  padding: 5px 7px;
+  background: #021a30;
+  border: 1px solid #005a9e;
+  border-radius: 6px;
+  padding: 6px 8px;
   display: flex;
   flex-direction: column;
   gap: 2px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8), 0 1px 0 #ffffff;
 }
 
 .docked-lcd-top {
@@ -364,94 +371,129 @@ html, body {
   justify-content: space-between;
   align-items: center;
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
-  color: #00ff66;
+  color: #00f0ff;
+  text-shadow: 0 0 6px #00f0ff;
 }
 
 .docked-lcd-title {
-  font-size: 10px;
+  font-size: 10.5px;
   color: #7ce8ff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.docked-lcd-sub {
+  font-size: 9px;
+  color: #80ffdb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: 600;
+  font-family: 'Courier New', monospace;
 }
 
 .docked-controls {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 2px;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 3px;
 }
 
 .docked-btn {
-  background: linear-gradient(180deg, #ffffff 0%, #cbd6e2 45%, #8fa3b7 100%);
-  border: 1px solid #577088;
-  border-radius: 4px;
+  background: linear-gradient(180deg, #ffffff 0%, #d8e5f2 45%, #a6bdd4 100%);
+  border: 1px solid #6b8fae;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 3px 6px;
+  padding: 4px 8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18), inset 0 1px 1px #ffffff;
   transition: all 0.12s ease;
+  font-size: 11px;
+  font-weight: 700;
+  color: #003366;
 }
 
 .docked-btn:hover {
   filter: brightness(1.15);
-  box-shadow: 0 0 6px #00e5ff;
+  box-shadow: 0 0 8px #00a8ff;
 }
 
-.docked-btn img {
+.docked-btn svg {
   width: 14px;
   height: 14px;
+  fill: #003366;
 }
 
 .docked-play-btn {
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   padding: 0;
-  border-color: #00c853;
-  box-shadow: 0 0 8px rgba(0, 200, 83, 0.6);
+  border: 2px solid #00c853;
+  box-shadow: 0 0 8px rgba(0, 200, 83, 0.6), inset 0 1px 2px #ffffff;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #b8e6c8 50%, #4caf50 100%);
+}
+
+.docked-play-btn:hover {
+  box-shadow: 0 0 14px #00ff66;
 }
 
 .docked-play-btn.playing {
-  box-shadow: 0 0 12px #00ff66;
+  box-shadow: 0 0 14px #00ff66, inset 0 1px 2px #ffffff;
+  border-color: #00ff66;
+  animation: neonRingPulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes neonRingPulse {
+  0%   { box-shadow: 0 0 8px #00ff66, inset 0 1px 2px #ffffff; }
+  100% { box-shadow: 0 0 20px #39ff14, inset 0 1px 4px #ffffff; }
+}
+
+.docked-play-btn svg {
+  width: 15px;
+  height: 15px;
+  fill: #00441b;
 }
 
 .docked-progress {
   width: 100%;
-  height: 4px;
+  height: 5px;
   -webkit-appearance: none;
   appearance: none;
   background: #002244;
-  border-radius: 2px;
+  border-radius: 3px;
   outline: none;
   cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 .docked-progress::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #00ff66;
-  box-shadow: 0 0 6px #00ff66;
+  box-shadow: 0 0 6px #00ff66, inset 0 1px 1px #ffffff;
   cursor: pointer;
 }
 
 /* ── 4. ÁREA CENTRAL: JANELA AERO GLASS (#mainContent) ──────── */
 #mainContent.aero-window {
   flex: 1;
-  background: rgba(255, 255, 255, 0.60);
+  background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.90);
   box-shadow: 0 10px 35px rgba(0, 70, 150, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.95);
   overflow: hidden;
   min-width: 0;
@@ -509,27 +551,27 @@ html, body {
 .win7-controls {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
 }
 
 .win7-btn {
   width: 26px;
-  height: 18px;
+  height: 19px;
   border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.20);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.90);
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.40);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .win7-btn:hover {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.50);
   color: #ffffff;
 }
 
@@ -542,9 +584,9 @@ html, body {
 /* ── BANNER PANORÂMICO DE INTRODUÇÃO (FRUTIGER AERO ARCHIVE) ─ */
 .intro-banner-wrap {
   margin: 12px 14px 10px;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 6px rgba(0, 40, 100, 0.2);
 }
 
 .intro-banner-img {
@@ -556,12 +598,13 @@ html, body {
 }
 
 .intro-banner-text {
-  background: linear-gradient(180deg, rgba(235, 245, 255, 0.95) 0%, rgba(210, 230, 250, 0.90) 100%);
+  background: linear-gradient(180deg, rgba(240, 248, 255, 0.95) 0%, rgba(215, 235, 255, 0.92) 100%);
   padding: 8px 12px;
   border-top: 1px solid #7ea8cc;
   font-size: 12px;
-  color: #1a3a5a;
+  color: #003366;
   line-height: 1.4;
+  font-weight: 600;
 }
 
 /* Área de Conteúdo Interior */
@@ -589,14 +632,14 @@ html, body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Sub-Abas do Ranking Alinhadas à Esquerda */
+/* Sub-Abas do Ranking em Tonalidade Clara e Brilhante */
 .sub-nav-bar {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  background: linear-gradient(180deg, rgba(220, 240, 255, 0.85) 0%, rgba(195, 225, 255, 0.65) 100%);
-  border-bottom: 1px solid rgba(0, 75, 150, 0.25);
+  background: linear-gradient(180deg, rgba(235, 246, 255, 0.90) 0%, rgba(210, 235, 255, 0.75) 100%);
+  border-bottom: 1px solid rgba(0, 75, 150, 0.20);
   flex-wrap: wrap;
 }
 
@@ -604,35 +647,41 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(180deg, #7ad5ff 0%, #2998f5 50%, #0070df 51%, #1f82f2 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #e4f1fd 48%, #c5e0fa 50%, #d8ecfe 100%);
   border-radius: 20px;
-  border: 1px solid #005bb5;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.85), 0 3px 6px rgba(0, 50, 120, 0.22);
-  color: #ffffff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  border: 1px solid #82b9e6;
+  box-shadow: inset 0 1px 1px #ffffff, 0 2px 4px rgba(0, 50, 120, 0.15);
+  color: #003a70;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
   font-family: var(--font-segoe);
   cursor: pointer;
   transition: all 0.18s ease;
-  padding: 5px 14px;
+  padding: 6px 16px;
   font-size: 12.5px;
   font-weight: 700;
 }
 
 .frutiger-btn:hover {
-  filter: brightness(1.1);
-  box-shadow: inset 0 1px 1px #ffffff, 0 4px 10px rgba(0, 50, 120, 0.35);
+  background: linear-gradient(180deg, #ffffff 0%, #ebf5fe 48%, #d2e7fc 50%, #e4f2ff 100%);
+  border-color: #38b6ff;
+  color: #002244;
+  box-shadow: 0 0 10px rgba(0, 168, 255, 0.4), inset 0 1px 2px #ffffff;
 }
 
 .frutiger-btn.active {
-  background: linear-gradient(180deg, #9fe2ff 0%, #30a5f8 50%, #0080ff 51%, #0066d6 100%);
-  box-shadow: inset 0 1px 1px #ffffff, 0 0 12px rgba(0, 168, 255, 0.95);
-  border-color: #004b99;
+  background: linear-gradient(180deg, #9fe2ff 0%, #30a5f8 48%, #0080ff 50%, #0066d6 100%) !important;
+  box-shadow: inset 0 1px 1px #ffffff, 0 0 12px rgba(0, 168, 255, 0.8) !important;
+  border-color: #0050aa !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
 .btn-refresh {
   margin-left: auto;
-  background: linear-gradient(180deg, #c4f774 0%, #76c043 50%, #439b16 51%, #52b120 100%) !important;
+  background: linear-gradient(180deg, #e4fb96 0%, #85d452 48%, #54a824 50%, #63ba2f 100%) !important;
   border-color: #2b8015 !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 50, 0, 0.6) !important;
 }
 
 /* ── TABELA DE RANKING (100% LARGURA, ESTILO VISTA EXPLORER / WMP11) ─ */
@@ -661,11 +710,11 @@ html, body {
 }
 
 .frutiger-table tr:nth-child(odd) {
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.90);
 }
 
 .frutiger-table tr:nth-child(even) {
-  background: rgba(232, 244, 255, 0.72);
+  background: rgba(234, 246, 255, 0.78);
 }
 
 .frutiger-table tr:hover {
@@ -782,7 +831,7 @@ html, body {
   background: linear-gradient(180deg, rgba(220, 235, 250, 0.90) 0%, rgba(200, 220, 240, 0.98) 100%);
   border-top: 1px solid rgba(0, 75, 150, 0.20);
   font-size: 11px;
-  color: #334455;
+  color: #003366;
   flex-wrap: wrap;
   gap: 8px;
 }
@@ -791,10 +840,10 @@ html, body {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-/* ── ABA 'BAIXAR SOFTWARE' (PORTAL 2009 3D GEL BUTTON) ─ */
+/* ── ABA 'BAIXAR SOFTWARE' (PORTAL 2009 COM BOTÃO GEL VERDE) ─ */
 .download-page-wrap {
   padding: 24px;
   text-align: center;
@@ -804,7 +853,7 @@ html, body {
   max-width: 650px;
   margin: 0 auto;
   padding: 24px 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(225, 242, 255, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(225, 242, 255, 0.78) 100%);
   border-radius: 12px;
 }
 
@@ -883,7 +932,8 @@ html, body {
 .how-card p {
   font-size: 12px;
   line-height: 1.5;
-  color: #334455;
+  color: #223a50;
+  font-weight: 600;
 }
 
 .how-card code {
@@ -894,7 +944,7 @@ html, body {
   font-weight: 700;
 }
 
-/* ── ABA 'MUSIC PLAYER' (DEDICADA ESTILO ARCHIVE /MUSIC) ─ */
+/* ── ABA 'MUSIC PLAYER' (DEDICADA ÀS 5 FAIXAS LONGAS DE OCEANO E RELAXAMENTO) ─ */
 .music-page-wrap {
   padding: 14px;
 }
@@ -902,7 +952,7 @@ html, body {
 .music-playlist-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   margin-top: 12px;
 }
 
@@ -910,51 +960,56 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(0, 80, 160, 0.15);
-  border-radius: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 80, 160, 0.20);
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 3px rgba(0, 50, 100, 0.08);
 }
 
 .music-track-item:hover {
   background: linear-gradient(180deg, #ffffff 0%, #e2f2ff 100%);
   border-color: #0078d7;
   transform: translateX(4px);
+  box-shadow: 0 0 10px rgba(0, 120, 215, 0.25);
 }
 
 .music-track-item.track-active {
   background: linear-gradient(180deg, #e0f4ff 0%, #c4e6ff 100%);
   border-color: #0078d7;
   font-weight: 700;
+  box-shadow: 0 0 12px rgba(0, 168, 255, 0.35);
 }
 
 .track-info-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .track-number {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   color: #0078d7;
-  width: 20px;
+  width: 22px;
 }
 
 .track-title {
-  font-size: 13px;
+  font-size: 13.5px;
   color: #003366;
+  font-weight: 700;
 }
 
 .track-badge {
-  font-size: 10px;
-  padding: 2px 6px;
-  background: #002b4d;
+  font-size: 10.5px;
+  padding: 3px 8px;
+  background: #021a30;
   color: #00ff66;
   border-radius: 4px;
   font-family: 'Courier New', monospace;
+  font-weight: 700;
 }
 
 /* Responsividade */
@@ -1004,7 +1059,7 @@ html, body {
      ═════════════════════════════════════════════════════════════════ -->
 <div class="portal-layout">
 
-  <!-- BARRA LATERAL EXCLUSIVA (#navigationMenu) -->
+  <!-- BARRA LATERAL EXCLUSIVA EM TONALIDADE CLARA (#navigationMenu) -->
   <aside id="navigationMenu">
 
     <!-- Categoria: Conteúdo Principal -->
@@ -1047,29 +1102,40 @@ html, body {
       </div>
     </nav>
 
-    <!-- Categoria: Player de Áudio Docked (Integrado na Sidebar) -->
+    <!-- Categoria: Player de Áudio Docked AERO-SOUND (Integrado na Sidebar) -->
     <nav class="nav-categories">
-      <div class="navbar-titles">Aero Sound Player</div>
+      <div class="navbar-titles">AERO-SOUND PLAYER</div>
       <div class="sidebar-docked-player">
         <div class="docked-player-lcd">
           <div class="docked-lcd-top">
-            <span id="docked-timer">00:00</span>
-            <span id="docked-status" style="color: #00ff66;">PAUSED</span>
+            <span id="docked-timer">00:00 / 05:50</span>
+            <span id="docked-status" style="color: #7ce8ff;">PAUSED</span>
           </div>
-          <div class="docked-lcd-title" id="docked-title">Tropical Beach Ambiance</div>
+          <div class="docked-lcd-title" id="docked-title">01. Coral Reef Breeze</div>
+          <div class="docked-lcd-sub" id="docked-sub">OCEAN WAVES + RHODES • 65 BPM</div>
         </div>
 
-        <input type="range" class="docked-progress" id="docked-progress-bar" value="0" max="100" step="0.1" onchange="seekAudio(this.value)"/>
+        <input type="range" class="docked-progress" id="docked-progress-bar" value="0" max="100" step="0.1" oninput="seekAudio(this.value)"/>
 
         <div class="docked-controls">
+          <!-- Botão Mute / Unmute -->
+          <button class="docked-btn" id="docked-btn-mute" onclick="toggleMute()" title="Silenciar / Ativar Som">
+            <svg id="svg-mute-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          </button>
+
+          <!-- Faixa Anterior (⏮) -->
           <button class="docked-btn" onclick="prevTrack()" title="Anterior (⏮)">
-            <img src="/music_player_back.png" alt="Prev"/>
+            <svg viewBox="0 0 24 24"><path d="M18 6l-8.5 6 8.5 6V6zM6 6v12h2V6H6z"/></svg>
           </button>
-          <button class="docked-btn docked-play-btn" id="docked-btn-play" onclick="togglePlayPause()" title="Play / Pause">
-            <img src="/music_player_play.png" id="docked-img-play" alt="Play"/>
+
+          <!-- Play / Pause Central -->
+          <button class="docked-btn docked-play-btn" id="docked-btn-play" onclick="togglePlayPause()" title="Tocar / Pausar">
+            <svg id="docked-svg-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
+
+          <!-- Próxima Faixa (⏭) -->
           <button class="docked-btn" onclick="nextTrack()" title="Próxima (⏭)">
-            <img src="/music_player_forward.png" alt="Next"/>
+            <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
           </button>
         </div>
       </div>
@@ -1109,7 +1175,7 @@ html, body {
       <!-- Área de Conteúdo Interior da Janela -->
       <div class="aero-content-area">
 
-        <!-- Seletores de Cliques Alinhados à Esquerda -->
+        <!-- Seletores de Cliques Alinhados à Esquerda em Tonalidade Clara -->
         <div class="sub-nav-bar">
           <button class="frutiger-btn active" id="subtab-today" onclick="switchRankingSubTab('today')">
             <img src="/icon-trophy.png" style="width: 14px; height: 14px;" alt="Hoje"/>
@@ -1189,11 +1255,11 @@ html, body {
         <div class="download-card-box glass-borders">
           <img src="/icon-download.png" style="width: 52px; height: 52px; margin-bottom: 8px;" alt="Download Wizard"/>
           <h2 style="font-size: 19px; color: #004b87; margin-bottom: 6px;">MouseClickCounter v2.8 (Build Nativo C++)</h2>
-          <p style="font-size: 13px; color: #334455; line-height: 1.5; max-width: 520px; margin: 0 auto;">
+          <p style="font-size: 13px; color: #223a50; line-height: 1.5; max-width: 520px; margin: 0 auto; font-weight: 600;">
             Compatível nativamente com Windows 7, Windows 8, Windows 10 e Windows 11 (64-bit).<br/>
             Construído em C++ puro com Win32 RawInput API. Sem dependências externas (.NET / VC++ Redistributable dispensados).
           </p>
-          <a href="/download/MouseClickCounter.exe" class="frutiger-btn-green" onclick="playToggleSound()">
+          <a href="/download/MouseClickCounter.exe" class="frutiger-btn-green" onclick="playClickSound()">
             <div class="frutiger-btn-green-title">
               <img src="/icon-download.png" alt="Seta"/>
               <span>Baixar MouseClickCounter.exe (830 KB)</span>
@@ -1244,7 +1310,7 @@ html, body {
     </div><!-- /panel-main-how -->
 
     <!-- ═════════════════════════════════════════════════════════
-         PAINEL 4: MUSIC PLAYER (FRUTIGER AERO ARCHIVE /MUSIC)
+         PAINEL 4: MUSIC PLAYER (LONG-FORM RELAXING OCEAN AMBIENT)
          ═════════════════════════════════════════════════════════ -->
     <div class="main-tab-panel" id="panel-main-music">
       <div class="music-page-wrap">
@@ -1252,7 +1318,7 @@ html, body {
         <div class="intro-banner-wrap glass-borders" style="margin: 0 0 14px;">
           <img src="/music_header.png" class="intro-banner-img" alt="Music Header"/>
           <div class="intro-banner-text">
-            <strong>Frutiger Aero Music &amp; Audio Archive:</strong> Sons originais e ambiências autênticas da era 2005–2011 extraídos diretamente do arquivo oficial.
+            <strong>Frutiger Aero Ocean &amp; Ambient Sanctuary:</strong> 5 estações musicais longas (4 a 8 minutos) combinadas com gerador de ondas do mar em tempo real, acordes quentes de piano Rhodes e ambiência aquática contínua.
           </div>
         </div>
 
@@ -1266,7 +1332,7 @@ html, body {
   </main>
 </div><!-- /portal-layout -->
 
-<!-- Tag <audio> Real para Reprodução de .MP3 Reais -->
+<!-- Tag <audio> Real para Reprodução das Faixas Longas -->
 <audio id="fa-audio-player" preload="metadata"></audio>
 
 <script>
@@ -1327,173 +1393,410 @@ function autoRotateWallpaper() {
   }
 }
 
-// Inicializa pelo relógio e programa a rotação a cada 3 minutos (180.000 ms)
 pickInitialWallpaper();
 setInterval(autoRotateWallpaper, 180000);
 
 /* =============================================================================
-   2. PLAYER DE ÁUDIO REAL COM ARQUIVOS .MP3 DE frutigeraeroarchive.org
+   2. EFEITOS SONOROS DE CLIQUE E FEEDBACK TÁTIL (VOLTE COM OS CLIQUES)
+   ============================================================================= */
+const clickSound = new Audio('/toggle.mp3');
+
+function playClickSound() {
+  try {
+    clickSound.currentTime = 0;
+    clickSound.volume = 0.40;
+    clickSound.play().catch(() => {});
+  } catch (_) {}
+}
+
+/* =============================================================================
+   3. AERO-SOUND LONG-FORM AUDIO ENGINE (OCEAN WAVES + 5 LONG TRACKS)
+   - 5 Faixas Longas Reais (3 a 8 minutos cada)
+   - Camada Contínua de Som do Mar (Ondas Suaves em Ciclo Lento de 10s)
+   - Acordes Longos e Quentes com Reverb Espacial e Delay Estéreo
    ============================================================================= */
 const PLAYLIST = [
   {
-    title: 'Tropical Beach Ambiance (Som Original)',
-    src: '/tropical_beach.mp3',
-    fallback: '/api/audio?url=/sounds/tropical_beach.mp3',
-    badge: 'FA ARCHIVE • MP3'
+    title: '01. Coral Reef Breeze',
+    desc: 'Ocean Waves & Rhodes • 65 BPM',
+    durationSec: 350,
+    durationStr: '05:50',
+    proxyUrl: '/api/audio?url=https://archive.org/download/Waves_of_Inspiration/01_Waves_of_Inspiration_elegant_move_64kb.mp3',
+    directUrl: 'https://archive.org/download/Waves_of_Inspiration/01_Waves_of_Inspiration_elegant_move_64kb.mp3',
+    chords: [
+      [174.61, 261.63, 329.63, 392.00, 440.00], // Fmaj9
+      [146.83, 220.00, 261.63, 329.63, 392.00], // Dm9
+      [130.81, 196.00, 246.94, 293.66, 329.63], // Cmaj9
+      [164.81, 246.94, 293.66, 392.00, 440.00]  // Em7add11
+    ]
   },
   {
-    title: 'CD-ROM Drive Reading (Drive Óptico 2005)',
-    src: '/cd_rom.mp3',
-    fallback: '/api/audio?url=/sounds/cd_rom_reading.mp3',
-    badge: 'HARDWARE • MP3'
+    title: '02. Dolphin Lagoon 2007',
+    desc: 'Deep Aquatic Ambient • Reverb Lush',
+    durationSec: 338,
+    durationStr: '05:38',
+    proxyUrl: '/api/audio?url=https://archive.org/download/Waves_of_Inspiration/03_Waves_of_Inspiration_tinto_de_verano_64kb.mp3',
+    directUrl: 'https://archive.org/download/Waves_of_Inspiration/03_Waves_of_Inspiration_tinto_de_verano_64kb.mp3',
+    chords: [
+      [155.56, 233.08, 293.66, 349.23, 440.00], // Ebmaj9
+      [130.81, 196.00, 233.08, 293.66, 349.23], // Cm9
+      [174.61, 261.63, 311.13, 349.23, 440.00], // F9sus4
+      [116.54, 233.08, 349.23, 415.30, 466.16]  // Bbmaj7
+    ]
   },
   {
-    title: 'Aquarium Ambience & Dew Bubbles',
-    src: '/aquarium_restore_down.mp3',
-    fallback: '/api/audio?url=/sounds/aquarium_restore_down.mp3',
-    badge: 'AQUARIUM • MP3'
+    title: '03. Sunny Tropical Coast',
+    desc: 'Wii Weather Lounge • Warm Sun',
+    durationSec: 278,
+    durationStr: '04:38',
+    proxyUrl: '/api/audio?url=https://archive.org/download/Waves_of_Inspiration/02_Waves_of_Inspiration_morning_sun_64kb.mp3',
+    directUrl: 'https://archive.org/download/Waves_of_Inspiration/02_Waves_of_Inspiration_morning_sun_64kb.mp3',
+    chords: [
+      [130.81, 196.00, 261.63, 329.63, 392.00], // Cmaj7
+      [146.83, 220.00, 293.66, 369.99, 440.00], // D9
+      [164.81, 246.94, 329.63, 392.00, 493.88], // Em7
+      [174.61, 261.63, 329.63, 440.00, 523.25]  // Fmaj7
+    ]
   },
   {
-    title: 'Optical Drive Eject Sound',
-    src: '/eject_cd.mp3',
-    fallback: '/api/audio?url=/sounds/eject_cd.mp3',
-    badge: 'VISTA FX • MP3'
+    title: '04. Pacific Horizon Sunset',
+    desc: 'Liquid Glass Pad • Ether Waves',
+    durationSec: 444,
+    durationStr: '07:24',
+    proxyUrl: '/api/audio?url=https://archive.org/download/Waves_of_Inspiration/07_Waves_of_Inspiration_adios_conil_64kb.mp3',
+    directUrl: 'https://archive.org/download/Waves_of_Inspiration/07_Waves_of_Inspiration_adios_conil_64kb.mp3',
+    chords: [
+      [110.00, 220.00, 261.63, 329.63, 392.00], // Am9
+      [130.81, 196.00, 246.94, 329.63, 392.00], // Cmaj7/G
+      [87.31,  174.61, 261.63, 329.63, 392.00], // Fmaj9
+      [98.00,  196.00, 246.94, 293.66, 392.00]  // G6/9
+    ]
   },
   {
-    title: 'Aquarium Ambient Close',
-    src: '/aquarium_close.mp3',
-    fallback: '/api/audio?url=/sounds/aquarium_close.mp3',
-    badge: 'AQUARIUM • MP3'
-  },
-  {
-    title: 'Windows Vista Glass Toggle Chime',
-    src: '/toggle.mp3',
-    fallback: '/api/audio?url=/sounds/toggle.mp3',
-    badge: 'UI GLASS • MP3'
+    title: '05. Pure Ocean Slumber',
+    desc: 'Crystal Water & Synth • Deep Rest',
+    durationSec: 258,
+    durationStr: '04:18',
+    proxyUrl: '/api/audio?url=https://archive.org/download/Waves_of_Inspiration/06_Waves_of_Inspiration_ocean_smooth_64kb.mp3',
+    directUrl: 'https://archive.org/download/Waves_of_Inspiration/06_Waves_of_Inspiration_ocean_smooth_64kb.mp3',
+    chords: [
+      [146.83, 220.00, 277.18, 329.63, 440.00], // Dmaj9
+      [123.47, 185.00, 220.00, 277.18, 369.99], // Bm9
+      [98.00,  146.83, 220.00, 246.94, 293.66], // Gmaj9
+      [110.00, 220.00, 277.18, 329.63, 440.00]  // A9sus4
+    ]
   }
 ];
 
 let currentTrackIdx = 0;
-const audioEl = document.getElementById('fa-audio-player');
-const toggleSoundEl = new Audio('/toggle.mp3');
+let isAudioPlaying = false;
+let isMuted = false;
+let trackSeconds = 0;
+let timerInterval = null;
 
-function playToggleSound() {
-  try {
-    toggleSoundEl.currentTime = 0;
-    toggleSoundEl.volume = 0.35;
-    toggleSoundEl.play().catch(() => {});
-  } catch (_) {}
+const audioEl = document.getElementById('fa-audio-player');
+
+/* ── GERADOR ACÚSTICO DE OCEANO + PADS AQUÁTICOS (WEB AUDIO API) ── */
+let webAudioCtx = null;
+let masterGainNode = null;
+let oceanGainNode = null;
+let synthGainNode = null;
+let chordStep = 0;
+let chordInterval = null;
+
+function initWebAudioEngine() {
+  if (webAudioCtx) return;
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) return;
+
+  webAudioCtx = new AudioCtx();
+
+  // Master Gain
+  masterGainNode = webAudioCtx.createGain();
+  masterGainNode.gain.setValueAtTime(isMuted ? 0.0 : 1.0, webAudioCtx.currentTime);
+  masterGainNode.connect(webAudioCtx.destination);
+
+  // 1. Camada do Mar: Gerador de Ruído Rosa Filtrado com LFO de Ondas (8-12s)
+  const bufferSize = webAudioCtx.sampleRate * 4;
+  const noiseBuffer = webAudioCtx.createBuffer(1, bufferSize, webAudioCtx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+  for (let i = 0; i < bufferSize; i++) {
+    const white = Math.random() * 2 - 1;
+    b0 = 0.99886 * b0 + white * 0.0555179;
+    b1 = 0.99332 * b1 + white * 0.0750759;
+    b2 = 0.96900 * b2 + white * 0.1538520;
+    b3 = 0.86650 * b3 + white * 0.3104856;
+    b4 = 0.55000 * b4 + white * 0.5329522;
+    b5 = -0.7616 * b5 - white * 0.0168980;
+    output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.08;
+    b6 = white * 0.115926;
+  }
+
+  const whiteNoise = webAudioCtx.createBufferSource();
+  whiteNoise.buffer = noiseBuffer;
+  whiteNoise.loop = true;
+
+  // Filtro Lowpass modulado por LFO
+  const oceanFilter = webAudioCtx.createBiquadFilter();
+  oceanFilter.type = 'lowpass';
+  oceanFilter.frequency.setValueAtTime(320, webAudioCtx.currentTime);
+  oceanFilter.Q.setValueAtTime(2.5, webAudioCtx.currentTime);
+
+  // LFO para simular ondas suaves do mar quebrando na praia a cada 10 segundos
+  const oceanLfo = webAudioCtx.createOscillator();
+  oceanLfo.type = 'sine';
+  oceanLfo.frequency.setValueAtTime(0.10, webAudioCtx.currentTime); // ~10s ciclo
+
+  const lfoGain = webAudioCtx.createGain();
+  lfoGain.gain.setValueAtTime(280, webAudioCtx.currentTime);
+  oceanLfo.connect(lfoGain);
+  lfoGain.connect(oceanFilter.frequency);
+
+  // Ganho do Oceano
+  oceanGainNode = webAudioCtx.createGain();
+  oceanGainNode.gain.setValueAtTime(0.35, webAudioCtx.currentTime);
+
+  whiteNoise.connect(oceanFilter);
+  oceanFilter.connect(oceanGainNode);
+  oceanGainNode.connect(masterGainNode);
+
+  whiteNoise.start();
+  oceanLfo.start();
+
+  // 2. Camada de Síntese Harmônica (Pads Rhodes / Vidro)
+  synthGainNode = webAudioCtx.createGain();
+  synthGainNode.gain.setValueAtTime(0.22, webAudioCtx.currentTime);
+
+  // Delay Estéreo Suave
+  const delay = webAudioCtx.createDelay();
+  delay.delayTime.setValueAtTime(0.42, webAudioCtx.currentTime);
+  const delayFeedback = webAudioCtx.createGain();
+  delayFeedback.gain.setValueAtTime(0.32, webAudioCtx.currentTime);
+  delay.connect(delayFeedback);
+  delayFeedback.connect(delay);
+  delay.connect(masterGainNode);
+
+  synthGainNode.connect(masterGainNode);
+  synthGainNode.connect(delay);
+}
+
+function playAtmosphericChord() {
+  if (!webAudioCtx || !isAudioPlaying || isMuted) return;
+
+  const track = PLAYLIST[currentTrackIdx];
+  const chord = track.chords[chordStep % track.chords.length];
+  chordStep++;
+
+  const now = webAudioCtx.currentTime;
+  chord.forEach((freq, idx) => {
+    const osc = webAudioCtx.createOscillator();
+    const gain = webAudioCtx.createGain();
+
+    osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+    const delay = now + (idx * 0.08);
+
+    osc.frequency.setValueAtTime(freq, delay);
+
+    gain.gain.setValueAtTime(0.0001, delay);
+    gain.gain.linearRampToValueAtTime(0.028, delay + 0.8);
+    gain.gain.exponentialRampToValueAtTime(0.0001, delay + 5.5);
+
+    osc.connect(gain);
+    gain.connect(synthGainNode);
+
+    osc.start(delay);
+    osc.stop(delay + 5.6);
+  });
 }
 
 function loadTrack(index, autoPlay = true) {
   currentTrackIdx = index;
   const track = PLAYLIST[currentTrackIdx];
-  audioEl.src = track.src;
+  trackSeconds = 0;
 
+  // Configura a tag <audio> com a faixa de longa duração
+  audioEl.src = track.proxyUrl;
   audioEl.onerror = () => {
-    // Se falhar o carregamento local, recorre ao proxy de streaming
-    if (audioEl.src !== track.fallback) {
-      console.warn('Recorrendo ao proxy de streaming:', track.fallback);
-      audioEl.src = track.fallback;
+    if (audioEl.src !== track.directUrl) {
+      audioEl.src = track.directUrl;
       if (autoPlay) audioEl.play().catch(() => {});
     }
   };
 
-  const dockedTitle = document.getElementById('docked-title');
-  if (dockedTitle) dockedTitle.textContent = track.title;
+  // Atualiza display do LCD
+  const titleEl = document.getElementById('docked-title');
+  const subEl = document.getElementById('docked-sub');
+  if (titleEl) titleEl.textContent = track.title;
+  if (subEl) subEl.textContent = track.desc;
 
   updatePlaylistActiveState();
+  updateTimerDisplay();
 
   if (autoPlay) {
-    audioEl.play().then(() => {
-      updatePlayPauseUI(true);
-    }).catch(() => {
-      updatePlayPauseUI(false);
-    });
+    startPlayback();
   } else {
     updatePlayPauseUI(false);
   }
 }
 
-function togglePlayPause() {
-  if (!audioEl.src) {
-    loadTrack(0, true);
-    return;
+function startPlayback() {
+  initWebAudioEngine();
+  if (webAudioCtx && webAudioCtx.state === 'suspended') {
+    webAudioCtx.resume();
   }
 
-  if (audioEl.paused) {
-    audioEl.play().then(() => {
-      updatePlayPauseUI(true);
-    }).catch(() => {});
+  isAudioPlaying = true;
+  updatePlayPauseUI(true);
+
+  audioEl.play().catch(() => {
+    // Caso o áudio precise de interação, o motor Web Audio assegura a ambiência
+  });
+
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (!isAudioPlaying) return;
+    trackSeconds++;
+    updateTimerDisplay();
+
+    const track = PLAYLIST[currentTrackIdx];
+    if (trackSeconds >= track.durationSec) {
+      nextTrack();
+    }
+  }, 1000);
+
+  if (chordInterval) clearInterval(chordInterval);
+  playAtmosphericChord();
+  chordInterval = setInterval(playAtmosphericChord, 6000);
+}
+
+function pausePlayback() {
+  isAudioPlaying = false;
+  updatePlayPauseUI(false);
+  audioEl.pause();
+  if (timerInterval) clearInterval(timerInterval);
+  if (chordInterval) clearInterval(chordInterval);
+}
+
+function togglePlayPause() {
+  playClickSound();
+  if (isAudioPlaying) {
+    pausePlayback();
   } else {
-    audioEl.pause();
-    updatePlayPauseUI(false);
+    if (!audioEl.src) {
+      loadTrack(0, true);
+    } else {
+      startPlayback();
+    }
   }
 }
 
 function nextTrack() {
-  playToggleSound();
+  playClickSound();
   currentTrackIdx = (currentTrackIdx + 1) % PLAYLIST.length;
   loadTrack(currentTrackIdx, true);
 }
 
 function prevTrack() {
-  playToggleSound();
+  playClickSound();
   currentTrackIdx = (currentTrackIdx - 1 + PLAYLIST.length) % PLAYLIST.length;
   loadTrack(currentTrackIdx, true);
 }
 
-function seekAudio(percent) {
-  if (audioEl.duration) {
-    audioEl.currentTime = (percent / 100) * audioEl.duration;
+function toggleMute() {
+  playClickSound();
+  isMuted = !isMuted;
+  audioEl.muted = isMuted;
+
+  if (masterGainNode && webAudioCtx) {
+    masterGainNode.gain.setValueAtTime(isMuted ? 0.0 : 1.0, webAudioCtx.currentTime);
+  }
+
+  const muteBtn = document.getElementById('docked-btn-mute');
+  const muteSvg = document.getElementById('svg-mute-icon');
+
+  if (isMuted) {
+    if (muteBtn) muteBtn.style.borderColor = '#e81123';
+    if (muteSvg) {
+      muteSvg.innerHTML = `<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>`;
+      muteSvg.style.fill = '#e81123';
+    }
+  } else {
+    if (muteBtn) muteBtn.style.borderColor = '#6b8fae';
+    if (muteSvg) {
+      muteSvg.innerHTML = `<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
+      muteSvg.style.fill = '#003366';
+    }
   }
 }
 
+function seekAudio(percent) {
+  const track = PLAYLIST[currentTrackIdx];
+  const targetSec = (percent / 100) * track.durationSec;
+  trackSeconds = Math.floor(targetSec);
+  if (audioEl.duration) {
+    audioEl.currentTime = (percent / 100) * audioEl.duration;
+  }
+  updateTimerDisplay();
+}
+
 function updatePlayPauseUI(isPlaying) {
-  const btn = document.getElementById('docked-btn-play');
-  const img = document.getElementById('docked-img-play');
-  const status = document.getElementById('docked-status');
+  const playBtn = document.getElementById('docked-btn-play');
+  const playSvg = document.getElementById('docked-svg-play');
+  const statusEl = document.getElementById('docked-status');
 
   if (isPlaying) {
-    if (btn) btn.classList.add('playing');
-    if (img) img.src = '/music_player_pause.png';
-    if (status) {
-      status.textContent = 'PLAYING';
-      status.style.color = '#00ff66';
+    if (playBtn) playBtn.classList.add('playing');
+    if (playSvg) {
+      // Duas barrinhas verticais de Pause SVG
+      playSvg.innerHTML = `<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>`;
+      playSvg.style.fill = '#00441b';
+    }
+    if (statusEl) {
+      statusEl.textContent = 'PLAYING';
+      statusEl.style.color = '#00ff66';
     }
   } else {
-    if (btn) btn.classList.remove('playing');
-    if (img) img.src = '/music_player_play.png';
-    if (status) {
-      status.textContent = 'PAUSED';
-      status.style.color = '#7ce8ff';
+    if (playBtn) playBtn.classList.remove('playing');
+    if (playSvg) {
+      // Triângulo de Play (▶)
+      playSvg.innerHTML = `<path d="M8 5v14l11-7z"/>`;
+      playSvg.style.fill = '#00441b';
     }
+    if (statusEl) {
+      statusEl.textContent = 'PAUSED';
+      statusEl.style.color = '#7ce8ff';
+    }
+  }
+}
+
+function updateTimerDisplay() {
+  const track = PLAYLIST[currentTrackIdx];
+  const m = Math.floor(trackSeconds / 60);
+  const s = trackSeconds % 60;
+  const currentStr = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+
+  const timerEl = document.getElementById('docked-timer');
+  if (timerEl) {
+    timerEl.textContent = `${currentStr} / ${track.durationStr}`;
+  }
+
+  const progressBar = document.getElementById('docked-progress-bar');
+  if (progressBar) {
+    progressBar.value = (trackSeconds / track.durationSec) * 100;
   }
 }
 
 audioEl.addEventListener('timeupdate', () => {
-  const current = audioEl.currentTime || 0;
-  const total = audioEl.duration || 0;
-
-  const timerEl = document.getElementById('docked-timer');
-  if (timerEl) {
-    const m = Math.floor(current / 60);
-    const s = Math.floor(current % 60);
-    timerEl.textContent = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-  }
-
-  const progressBar = document.getElementById('docked-progress-bar');
-  if (progressBar && total > 0) {
-    progressBar.value = (current / total) * 100;
+  if (audioEl.currentTime > 0) {
+    trackSeconds = Math.floor(audioEl.currentTime);
+    updateTimerDisplay();
   }
 });
 
 audioEl.addEventListener('ended', () => {
   nextTrack();
 });
-
-audioEl.addEventListener('play', () => updatePlayPauseUI(true));
-audioEl.addEventListener('pause', () => updatePlayPauseUI(false));
 
 function renderFullPlaylistView() {
   const container = document.getElementById('full-playlist-container');
@@ -1505,17 +1808,20 @@ function renderFullPlaylistView() {
     item.className = `music-track-item ${idx === currentTrackIdx ? 'track-active' : ''}`;
     item.id = `playlist-item-${idx}`;
     item.onclick = () => {
-      playToggleSound();
+      playClickSound();
       loadTrack(idx, true);
     };
 
     item.innerHTML = `
       <div class="track-info-left">
         <span class="track-number">0${idx + 1}.</span>
-        <img src="/icon-music.png" style="width: 16px; height: 16px;" alt="Audio"/>
-        <span class="track-title">${track.title}</span>
+        <img src="/icon-music.png" style="width: 18px; height: 18px;" alt="Audio"/>
+        <div>
+          <div class="track-title">${track.title}</div>
+          <div style="font-size: 11px; color: #406080; font-weight: 600;">${track.desc}</div>
+        </div>
       </div>
-      <span class="track-badge">${track.badge}</span>
+      <span class="track-badge">${track.durationStr}</span>
     `;
     container.appendChild(item);
   });
@@ -1532,10 +1838,10 @@ function updatePlaylistActiveState() {
 }
 
 /* =============================================================================
-   3. NAVEGAÇÃO EXCLUSIVA PELA BARRA LATERAL ESQUERDA
+   4. NAVEGAÇÃO EXCLUSIVA PELA BARRA LATERAL ESQUERDA
    ============================================================================= */
 function switchMainTab(tabKey) {
-  playToggleSound();
+  playClickSound();
 
   // Atualiza botões da Sidebar
   document.querySelectorAll('#navigationMenu .nav-item').forEach(btn => {
@@ -1560,12 +1866,12 @@ function switchMainTab(tabKey) {
     if (tabKey === 'ranking') titleEl.textContent = 'MouseClickCounter - Ranking Global de Cliques';
     if (tabKey === 'download') titleEl.textContent = 'MouseClickCounter - Baixar Software Nativo C++';
     if (tabKey === 'how') titleEl.textContent = 'MouseClickCounter - Como Funciona o Software';
-    if (tabKey === 'music') titleEl.textContent = 'MouseClickCounter - Music Player do Arquivo Frutiger Aero';
+    if (tabKey === 'music') titleEl.textContent = 'MouseClickCounter - AERO-SOUND Player (Ambiência e Oceano)';
   }
 }
 
 function switchRankingSubTab(subKey) {
-  playToggleSound();
+  playClickSound();
   document.querySelectorAll('.sub-nav-bar .frutiger-btn:not(.btn-refresh)').forEach(btn => btn.classList.remove('active'));
   const btn = document.getElementById('subtab-' + subKey);
   if (btn) btn.classList.add('active');
@@ -1582,7 +1888,7 @@ function switchRankingSubTab(subKey) {
 }
 
 /* =============================================================================
-   4. TELEMETRIA E TABELA DE RANKING (TURSO LIBSQL API)
+   5. TELEMETRIA E TABELA DE RANKING (TURSO LIBSQL API)
    ============================================================================= */
 let refreshSeconds = 30;
 
@@ -1600,7 +1906,7 @@ function renderTable(tableId, list, primaryKey, secondaryKey) {
   tbody.innerHTML = '';
 
   if (!list || list.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 18px; color:#556677; font-weight: 600;">Nenhum jogador registrado ainda.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 18px; color:#003366; font-weight: 700;">Nenhum jogador registrado ainda.</td></tr>';
     return;
   }
 
@@ -1627,7 +1933,7 @@ function renderTable(tableId, list, primaryKey, secondaryKey) {
       <td>
         <span class="lcd-vitrificado secundario">${formatNumber(player[secondaryKey])}</span>
       </td>
-      <td style="font-size: 11.5px; color: #556677; white-space: nowrap;">
+      <td style="font-size: 11.5px; color: #003366; white-space: nowrap; font-weight: 600;">
         ${escapeHtml(player.updated_at || 'Recente')}
       </td>
     `;
@@ -1688,6 +1994,14 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFullPlaylistView();
   fetchRankingData();
   setInterval(countdownTick, 1000);
+
+  // Efeitos sonoros de clique adicionados a todos os botões e links
+  const clickElements = document.querySelectorAll('button, a, .win7-btn');
+  clickElements.forEach(el => {
+    el.addEventListener('click', () => {
+      playClickSound();
+    });
+  });
 });
 </script>
 </body>
