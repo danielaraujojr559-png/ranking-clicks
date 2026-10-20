@@ -227,7 +227,7 @@ async function handler(req, res) {
   // -------------------------------------------------------------------------
   // GET / ou /ranking → Interface Web HTML
   // -------------------------------------------------------------------------
-  if (req.method === 'GET' && (url.pathname === '/ranking' || url.pathname === '/')) {
+  if ((req.method === 'GET' || req.method === 'HEAD') && (url.pathname === '/ranking' || url.pathname === '/')) {
     const candidates = [
       path.join(__dirname, 'ranking.html'),
       path.join(process.cwd(), 'ranking.html'),
@@ -240,7 +240,11 @@ async function handler(req, res) {
       }
     }
     if (html) {
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Content-Length': Buffer.byteLength(html, 'utf8')
+      });
+      if (req.method === 'HEAD') return res.end();
       res.end(html);
     } else {
       res.writeHead(500, { 'Content-Type': 'text/plain' });
