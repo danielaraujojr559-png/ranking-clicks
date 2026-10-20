@@ -8,9 +8,9 @@
 <style>
 /* =============================================================================
    THE FRUTIGER AERO ARCHIVE EDITION (2005–2013)
-   Engenharia Reversa baseada no código e layout oficial de frutigeraeroarchive.org
-   Pilares: Glass Borders, Beveled Headers, Sidebar em Tonalidade Clara e Legível,
-   Áudios Longos (4 a 8 min) com Som do Mar Contínuo, Efeitos Sonoros de Clique.
+   Design System: Translucent Aero Glass, High-Contrast Crisp Typography,
+   5-Track Long-Form Relaxing Ocean Audio Engine, Efeitos Sonoros de Clique
+   e Rotação Automática de Wallpapers a cada 30 Segundos.
    ============================================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800&display=swap');
@@ -37,21 +37,21 @@ html, body {
   min-height: 100vh;
   font-family: var(--font-segoe);
   overflow-x: hidden;
-  color: #1a2a3a;
-  background-color: #002b4d;
+  color: #002850;
+  background-color: transparent;
 }
 
-/* ── 1. SISTEMA DE WALLPAPERS DINÂMICOS AUTOMÁTICOS (CROSS-FADE 2S) ─ */
+/* ── 1. SISTEMA DE WALLPAPERS DINÂMICOS AUTOMÁTICOS (CROSS-FADE 30S) ─ */
 .wallpaper-layer {
   position: fixed;
   inset: 0;
   z-index: 0;
   background-size: cover;
-  background-position: center top;
+  background-position: center center;
   background-repeat: no-repeat;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: high-quality;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 1.8s ease-in-out;
   opacity: 0;
   pointer-events: none;
 }
@@ -67,8 +67,8 @@ html, body {
   pointer-events: none;
   z-index: 1;
   background:
-    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.08) 25%, transparent 65%),
-    radial-gradient(ellipse 70% 40% at 80% 15%, rgba(0, 229, 255, 0.22) 0%, transparent 60%);
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 25%, transparent 65%),
+    radial-gradient(ellipse 70% 40% at 80% 15%, rgba(0, 229, 255, 0.18) 0%, transparent 60%);
 }
 
 /* Bolhas de água translúcidas subindo com refração */
@@ -128,16 +128,18 @@ html, body {
   }
 }
 
-/* ── 2. CABEÇALHO LIMPO ESTILO FRUTIGER AERO ARCHIVE (#mainHeader) ─ */
+/* ── 2. CABEÇALHO TRANSLÚCIDO ESTILO FRUTIGER AERO ARCHIVE (#mainHeader) ─ */
 #mainHeader {
-  background: linear-gradient(180deg, rgba(172, 172, 172, 0.90) 0%, rgba(71, 71, 71, 0.90) 20%, rgba(19, 19, 19, 0.90) 40%, rgba(7, 7, 7, 0.93) 100%);
-  border-top: 2px solid #5a7b9c;
-  border-bottom: 1px solid #111111;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.65);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.40) 0%, rgba(200, 230, 255, 0.28) 45%, rgba(160, 210, 250, 0.35) 100%);
+  border-top: 2px solid #58b2e8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.80);
+  box-shadow: 0 4px 20px rgba(0, 35, 80, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 8px 24px;
+  padding: 9px 24px;
   position: relative;
   z-index: 20;
   user-select: none;
@@ -147,8 +149,8 @@ html, body {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.02) 100%);
+  height: 45%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.05) 100%);
   pointer-events: none;
 }
 
@@ -161,7 +163,7 @@ html, body {
 .header-logo-icon {
   width: 38px;
   height: 38px;
-  filter: drop-shadow(0 2px 6px rgba(0, 229, 255, 0.7));
+  filter: drop-shadow(0 2px 6px rgba(0, 160, 240, 0.6));
 }
 
 .header-title {
@@ -170,26 +172,28 @@ html, body {
   gap: 8px;
   font-size: 21px;
   font-weight: 800;
-  color: #ffffff;
+  color: #002b54;
   letter-spacing: 0.3px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 229, 255, 0.6);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.95), 0 0 12px rgba(255, 255, 255, 0.8);
 }
 
 .edition-tag {
   font-size: 11px;
-  font-weight: 700;
-  color: #57fa6f;
-  background: rgba(43, 240, 36, 0.18);
-  border: 1px solid rgba(43, 240, 36, 0.5);
+  font-weight: 800;
+  color: #006611;
+  background: rgba(43, 240, 36, 0.28);
+  border: 1px solid rgba(30, 160, 20, 0.55);
   border-radius: 10px;
-  padding: 1px 7px;
-  text-shadow: none;
+  padding: 1px 8px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .header-motto {
-  color: #c9c9c9;
+  color: #003a6b;
   font-size: 11.5px;
   margin-top: 2px;
+  font-weight: 600;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 /* ── 3. ESTRUTURA PRINCIPAL DO PORTAL (SIDEBAR + JANELA AERO GLASS) ─ */
@@ -205,18 +209,18 @@ html, body {
   padding: 0 10px;
 }
 
-/* ── BARRA LATERAL EM TONALIDADE CLARA, LUMINOSA E COM MÁXIMA LEGIBILIDADE ─ */
+/* ── BARRA LATERAL TRANSLÚCIDA AERO GLASS (#navigationMenu) ─ */
 #navigationMenu {
-  background: linear-gradient(180deg, rgba(245, 250, 255, 0.90) 0%, rgba(220, 238, 255, 0.85) 45%, rgba(195, 225, 250, 0.88) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  border-top: 2px solid #73b9e6;
+  background: rgba(255, 255, 255, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-top: 2px solid #58b2e8;
   border-radius: 12px;
   width: 248px;
   flex-shrink: 0;
   padding: 12px 10px 16px;
-  box-shadow: 0 12px 32px rgba(0, 45, 100, 0.25), inset 0 1px 0 #ffffff;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 35px rgba(0, 40, 90, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -224,21 +228,21 @@ html, body {
 }
 
 .nav-categories {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(230, 243, 255, 0.60) 100%);
-  border: 1px solid rgba(160, 205, 245, 0.70);
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.70);
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 50, 120, 0.08), inset 0 1px 1px #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 40, 90, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
   padding: 4px;
-  outline: 1px solid rgba(190, 225, 255, 0.5);
+  outline: 1px solid rgba(180, 220, 255, 0.4);
 }
 
 .navbar-titles {
-  background: linear-gradient(180deg, #ffffff 0%, #e1effd 48%, #c4def7 50%, #d8ecfe 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.90) 0%, rgba(225, 242, 255, 0.75) 48%, rgba(195, 228, 255, 0.75) 50%, rgba(218, 240, 255, 0.85) 100%);
   border: 1px solid #78aed9;
   border-radius: 5px;
-  color: #003a70;
+  color: #003366;
   padding: 4px 6px 3px;
   margin: 1px 1px 6px;
   font-size: 11.5px;
@@ -251,9 +255,9 @@ html, body {
 }
 
 .nav-item {
-  border: 1px solid #99c7ea;
+  border: 1px solid rgba(120, 190, 245, 0.65);
   border-radius: 6px;
-  color: #003366;
+  color: #002b54;
   display: flex;
   align-items: center;
   margin: 2px auto;
@@ -264,14 +268,15 @@ html, body {
   padding: 7px 10px;
   cursor: pointer;
   text-decoration: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 255, 0.85) 45%, rgba(215, 235, 255, 0.80) 50%, rgba(228, 242, 255, 0.90) 100%);
-  box-shadow: inset 0 1px 1px #ffffff, 0 1px 3px rgba(0, 50, 110, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(230, 245, 255, 0.55) 50%, rgba(210, 238, 255, 0.65) 100%);
+  box-shadow: inset 0 1px 1px #ffffff, 0 1px 3px rgba(0, 40, 90, 0.10);
   transition: all 0.18s ease;
   overflow: hidden;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .nav-item::before {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.1) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.1) 100%);
   border-radius: 20px;
   position: absolute;
   content: "";
@@ -279,15 +284,15 @@ html, body {
   width: 90%;
   top: 0;
   left: 5%;
-  opacity: 0.6;
+  opacity: 0.7;
   pointer-events: none;
 }
 
 .nav-item:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #e0f2ff 45%, #bfe2ff 50%, #d2ecff 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(200, 235, 255, 0.75) 100%);
   border-color: #38b6ff;
-  color: #002244;
-  box-shadow: 0 0 10px rgba(0, 168, 255, 0.45), inset 0 1px 2px #ffffff;
+  color: #001f3f;
+  box-shadow: 0 0 12px rgba(0, 180, 255, 0.45), inset 0 1px 2px #ffffff;
   transform: scale(1.02);
 }
 
@@ -296,8 +301,8 @@ html, body {
   color: #ffffff !important;
   font-weight: 800;
   border-color: #1e7e34 !important;
-  text-shadow: 0 1px 2px rgba(0, 40, 0, 0.7);
-  box-shadow: 0 0 12px rgba(93, 198, 39, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 1px 2px rgba(0, 40, 0, 0.8) !important;
+  box-shadow: 0 0 14px rgba(93, 198, 39, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
   transform: scale(1.02);
 }
 
@@ -311,21 +316,22 @@ html, body {
 
 /* Moldura de Vidro Esqueumórfica (.glass-borders) */
 .glass-borders {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.65), rgba(225, 240, 255, 0.50));
+  background: rgba(255, 255, 255, 0.45);
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 2px 2px 5px rgba(0, 40, 100, 0.15), inset 0 1px 1px #ffffff;
-  outline: rgba(120, 180, 235, 0.4) solid 1px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 2px 2px 6px rgba(0, 40, 100, 0.12), inset 0 1px 1px #ffffff;
+  outline: rgba(120, 180, 235, 0.35) solid 1px;
 }
 
 .nav-system-card {
   padding: 8px 10px;
   font-size: 11.5px;
-  color: #003366;
-  font-weight: 600;
+  color: #002b54;
+  font-weight: 700;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
 .sys-item {
@@ -343,20 +349,21 @@ html, body {
 .sys-dot.win    { background: #0099ff; box-shadow: 0 0 6px #0099ff; }
 .sys-dot.aero   { background: #ffaa00; box-shadow: 0 0 6px #ffaa00; }
 
-/* ── PLAYER INTEGRADO DOCKED NA SIDEBAR (CLARO, ELEGANTE E COM VISOR LCD) ─ */
+/* ── PLAYER INTEGRADO DOCKED NA SIDEBAR (TRANSLÚCIDO E COM VISOR LCD) ─ */
 .sidebar-docked-player {
-  background: linear-gradient(180deg, #ffffff 0%, #e2f0fb 50%, #cce4f7 100%);
-  border: 1px solid #85bce6;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 8px;
   padding: 9px;
   display: flex;
   flex-direction: column;
   gap: 7px;
-  box-shadow: inset 0 1px 2px #ffffff, 0 3px 8px rgba(0, 45, 100, 0.15);
+  box-shadow: inset 0 1px 2px #ffffff, 0 3px 8px rgba(0, 40, 90, 0.12);
+  backdrop-filter: blur(8px);
 }
 
 .docked-player-lcd {
-  background: #021a30;
+  background: rgba(2, 26, 48, 0.94);
   border: 1px solid #005a9e;
   border-radius: 6px;
   padding: 6px 8px;
@@ -486,35 +493,35 @@ html, body {
   cursor: pointer;
 }
 
-/* ── 4. ÁREA CENTRAL: JANELA AERO GLASS (#mainContent) ──────── */
+/* ── 4. ÁREA CENTRAL: JANELA AERO GLASS TRANSLÚCIDA (#mainContent) ── */
 #mainContent.aero-window {
   flex: 1;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.90);
-  box-shadow: 0 10px 35px rgba(0, 70, 150, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 12px 35px rgba(0, 40, 90, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.95);
   overflow: hidden;
   min-width: 0;
 }
 
-/* Barra de Título Windows 7 / Vista */
+/* Barra de Título Windows 7 / Vista Translúcida */
 .title-bar {
   position: relative;
   z-index: 5;
   display: flex;
   align-items: center;
-  padding: 7px 14px;
+  padding: 8px 14px;
   background: linear-gradient(
     180deg,
-    rgba(215, 238, 255, 0.95) 0%,
-    rgba(140, 200, 255, 0.80) 50%,
-    rgba(80, 160, 245, 0.75) 50.1%,
-    rgba(50, 135, 235, 0.85) 100%
+    rgba(215, 238, 255, 0.88) 0%,
+    rgba(140, 200, 255, 0.72) 50%,
+    rgba(80, 160, 245, 0.68) 50.1%,
+    rgba(50, 135, 235, 0.78) 100%
   );
-  border-bottom: 1px solid rgba(0, 70, 140, 0.45);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) inset;
+  border-bottom: 1px solid rgba(0, 70, 140, 0.35);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.85) inset;
   user-select: none;
 }
 
@@ -538,7 +545,7 @@ html, body {
 
 .title-text {
   flex: 1;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: 0.2px;
@@ -581,39 +588,15 @@ html, body {
   color: #ffffff;
 }
 
-/* ── BANNER PANORÂMICO DE INTRODUÇÃO (FRUTIGER AERO ARCHIVE) ─ */
-.intro-banner-wrap {
-  margin: 12px 14px 10px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 2px 2px 6px rgba(0, 40, 100, 0.2);
-}
-
-.intro-banner-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  max-height: 140px;
-  object-fit: cover;
-}
-
-.intro-banner-text {
-  background: linear-gradient(180deg, rgba(240, 248, 255, 0.95) 0%, rgba(215, 235, 255, 0.92) 100%);
-  padding: 8px 12px;
-  border-top: 1px solid #7ea8cc;
-  font-size: 12px;
-  color: #003366;
-  line-height: 1.4;
-  font-weight: 600;
-}
-
-/* Área de Conteúdo Interior */
+/* Área de Conteúdo Interior Translúcida */
 .aero-content-area {
-  background: linear-gradient(180deg, #f4f9ff 0%, #eaf2fb 45%, #dce9f7 100%);
-  margin: 0 14px 14px;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 70, 140, 0.22);
-  box-shadow: inset 1px 1px 4px rgba(0, 30, 80, 0.15), inset -1px -1px 3px rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.30);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  margin: 12px 14px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  box-shadow: inset 1px 1px 4px rgba(255, 255, 255, 0.8), inset -1px -1px 3px rgba(0, 30, 80, 0.08);
   overflow: hidden;
   min-height: 480px;
 }
@@ -632,14 +615,14 @@ html, body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Sub-Abas do Ranking em Tonalidade Clara e Brilhante */
+/* Sub-Abas do Ranking Translúcidas e de Alta Legibilidade */
 .sub-nav-bar {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  background: linear-gradient(180deg, rgba(235, 246, 255, 0.90) 0%, rgba(210, 235, 255, 0.75) 100%);
-  border-bottom: 1px solid rgba(0, 75, 150, 0.20);
+  background: rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(0, 75, 150, 0.18);
   flex-wrap: wrap;
 }
 
@@ -647,11 +630,11 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(180deg, #ffffff 0%, #e4f1fd 48%, #c5e0fa 50%, #d8ecfe 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(225, 242, 255, 0.55) 48%, rgba(200, 230, 255, 0.65) 100%);
   border-radius: 20px;
-  border: 1px solid #82b9e6;
-  box-shadow: inset 0 1px 1px #ffffff, 0 2px 4px rgba(0, 50, 120, 0.15);
-  color: #003a70;
+  border: 1px solid rgba(120, 185, 240, 0.75);
+  box-shadow: inset 0 1px 1px #ffffff, 0 2px 4px rgba(0, 50, 120, 0.12);
+  color: #002b55;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
   font-family: var(--font-segoe);
   cursor: pointer;
@@ -662,9 +645,9 @@ html, body {
 }
 
 .frutiger-btn:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #ebf5fe 48%, #d2e7fc 50%, #e4f2ff 100%);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(230, 245, 255, 0.8) 100%);
   border-color: #38b6ff;
-  color: #002244;
+  color: #001a33;
   box-shadow: 0 0 10px rgba(0, 168, 255, 0.4), inset 0 1px 2px #ffffff;
 }
 
@@ -684,7 +667,7 @@ html, body {
   text-shadow: 0 1px 2px rgba(0, 50, 0, 0.6) !important;
 }
 
-/* ── TABELA DE RANKING (100% LARGURA, ESTILO VISTA EXPLORER / WMP11) ─ */
+/* ── TABELA DE RANKING (100% LARGURA, TRANSLÚCIDA COM MÁXIMA NITIDEZ) ─ */
 .ranking-table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -698,7 +681,7 @@ html, body {
 }
 
 .frutiger-table th {
-  background: linear-gradient(180deg, #103c68 0%, #062243 50%, #03152d 51%, #072a53 100%);
+  background: linear-gradient(180deg, rgba(16, 60, 104, 0.92) 0%, rgba(6, 34, 67, 0.92) 50%, rgba(3, 21, 45, 0.92) 51%, rgba(7, 42, 83, 0.92) 100%);
   color: #ffffff;
   font-size: 12px;
   font-weight: 700;
@@ -710,15 +693,15 @@ html, body {
 }
 
 .frutiger-table tr:nth-child(odd) {
-  background: rgba(255, 255, 255, 0.90);
+  background: rgba(255, 255, 255, 0.65);
 }
 
 .frutiger-table tr:nth-child(even) {
-  background: rgba(234, 246, 255, 0.78);
+  background: rgba(230, 245, 255, 0.45);
 }
 
 .frutiger-table tr:hover {
-  background: linear-gradient(180deg, rgba(235, 248, 255, 0.98) 0%, rgba(200, 235, 255, 0.92) 100%) !important;
+  background: rgba(255, 255, 255, 0.90) !important;
   box-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #0078d7;
 }
 
@@ -767,13 +750,13 @@ html, body {
 
 .player-nickname {
   font-weight: 700;
-  color: #004080;
+  color: #002244;
 }
 
 /* Barras de Progresso Estilo Windows Vista (Verde Vitrificado Brilhante) */
 .vista-bar-wrapper {
   position: relative;
-  background: rgba(0, 30, 70, 0.12);
+  background: rgba(0, 30, 70, 0.15);
   border: 1px solid rgba(0, 60, 120, 0.25);
   border-radius: 10px;
   height: 20px;
@@ -828,10 +811,10 @@ html, body {
   align-items: center;
   justify-content: space-between;
   padding: 6px 14px;
-  background: linear-gradient(180deg, rgba(220, 235, 250, 0.90) 0%, rgba(200, 220, 240, 0.98) 100%);
-  border-top: 1px solid rgba(0, 75, 150, 0.20);
+  background: rgba(255, 255, 255, 0.40);
+  border-top: 1px solid rgba(0, 75, 150, 0.18);
   font-size: 11px;
-  color: #003366;
+  color: #002850;
   flex-wrap: wrap;
   gap: 8px;
 }
@@ -853,7 +836,8 @@ html, body {
   max-width: 650px;
   margin: 0 auto;
   padding: 24px 20px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(225, 242, 255, 0.78) 100%);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
   border-radius: 12px;
 }
 
@@ -912,6 +896,8 @@ html, body {
 .how-card {
   padding: 14px;
   border-radius: 8px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
 }
 
 .how-card-header {
@@ -932,7 +918,7 @@ html, body {
 .how-card p {
   font-size: 12px;
   line-height: 1.5;
-  color: #223a50;
+  color: #1a3045;
   font-weight: 600;
 }
 
@@ -961,7 +947,7 @@ html, body {
   align-items: center;
   justify-content: space-between;
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.75);
   border: 1px solid rgba(0, 80, 160, 0.20);
   border-radius: 8px;
   cursor: pointer;
@@ -970,14 +956,14 @@ html, body {
 }
 
 .music-track-item:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #e2f2ff 100%);
+  background: rgba(255, 255, 255, 0.95);
   border-color: #0078d7;
   transform: translateX(4px);
   box-shadow: 0 0 10px rgba(0, 120, 215, 0.25);
 }
 
 .music-track-item.track-active {
-  background: linear-gradient(180deg, #e0f4ff 0%, #c4e6ff 100%);
+  background: linear-gradient(180deg, rgba(224, 244, 255, 0.95) 0%, rgba(196, 230, 255, 0.90) 100%);
   border-color: #0078d7;
   font-weight: 700;
   box-shadow: 0 0 12px rgba(0, 168, 255, 0.35);
@@ -998,7 +984,7 @@ html, body {
 
 .track-title {
   font-size: 13.5px;
-  color: #003366;
+  color: #002b54;
   font-weight: 700;
 }
 
@@ -1026,7 +1012,7 @@ html, body {
 </head>
 <body>
 
-<!-- Camadas de Fundo para Rotação Automática de Wallpaper com Cross-fade (2s) -->
+<!-- Camadas de Fundo para Rotação Automática de Wallpaper com Cross-fade (30s) -->
 <div id="wallpaper-bg-1" class="wallpaper-layer active"></div>
 <div id="wallpaper-bg-2" class="wallpaper-layer"></div>
 
@@ -1039,7 +1025,7 @@ html, body {
 </div>
 
 <!-- ═════════════════════════════════════════════════════════════════
-     1. CABEÇALHO LIMPO ESTILO FRUTIGER AERO ARCHIVE (#mainHeader)
+     1. CABEÇALHO TRANSLÚCIDO ESTILO FRUTIGER AERO ARCHIVE (#mainHeader)
      ═════════════════════════════════════════════════════════════════ -->
 <header id="mainHeader">
   <div class="header-logo-text">
@@ -1059,7 +1045,7 @@ html, body {
      ═════════════════════════════════════════════════════════════════ -->
 <div class="portal-layout">
 
-  <!-- BARRA LATERAL EXCLUSIVA EM TONALIDADE CLARA (#navigationMenu) -->
+  <!-- BARRA LATERAL TRANSLÚCIDA (#navigationMenu) -->
   <aside id="navigationMenu">
 
     <!-- Categoria: Conteúdo Principal -->
@@ -1097,7 +1083,7 @@ html, body {
         </div>
         <div class="sys-item">
           <span class="sys-dot aero"></span>
-          <span>Aero Glass: <strong>18px Blur</strong></span>
+          <span>Aero Glass: <strong>16px Blur</strong></span>
         </div>
       </div>
     </nav>
@@ -1123,8 +1109,8 @@ html, body {
             <svg id="svg-mute-icon" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
           </button>
 
-          <!-- Faixa Anterior (⏮) -->
-          <button class="docked-btn" onclick="prevTrack()" title="Anterior (⏮)">
+          <!-- Faixa Anterior -->
+          <button class="docked-btn" onclick="prevTrack()" title="Anterior">
             <svg viewBox="0 0 24 24"><path d="M18 6l-8.5 6 8.5 6V6zM6 6v12h2V6H6z"/></svg>
           </button>
 
@@ -1133,8 +1119,8 @@ html, body {
             <svg id="docked-svg-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </button>
 
-          <!-- Próxima Faixa (⏭) -->
-          <button class="docked-btn" onclick="nextTrack()" title="Próxima (⏭)">
+          <!-- Próxima Faixa -->
+          <button class="docked-btn" onclick="nextTrack()" title="Próxima">
             <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
           </button>
         </div>
@@ -1146,7 +1132,7 @@ html, body {
   <!-- JANELA AERO GLASS PRINCIPAL (#mainContent) -->
   <main id="mainContent" class="aero-window">
 
-    <!-- Barra de Título Windows Vista / 7 -->
+    <!-- Barra de Título Windows Vista / 7 Translúcida -->
     <div class="title-bar">
       <div class="title-icon-orb">
         <img src="/icon-trophy.png" alt="Orb"/>
@@ -1160,19 +1146,11 @@ html, body {
     </div>
 
     <!-- ═════════════════════════════════════════════════════════
-         PAINEL 1: RANKING GLOBAL (SEM CARTÃO AMARELO / CARA DE IA)
+         PAINEL 1: RANKING GLOBAL (SEM IMAGEM DE BANNER - IMERSÃO TOTAL)
          ═════════════════════════════════════════════════════════ -->
     <div class="main-tab-panel active" id="panel-main-ranking">
 
-      <!-- Banner Panorâmico Oficial do Frutiger Aero Archive com moldura biselada -->
-      <div class="intro-banner-wrap glass-borders">
-        <img src="/introduction_banner.jpg" class="intro-banner-img" alt="Frutiger Aero Archive Introduction Banner"/>
-        <div class="intro-banner-text">
-          <strong>MouseClickCounter Global Leaderboard:</strong> Monitorização em tempo real de cliques do mouse com persistência libSQL / Turso Serverless. Estatísticas registradas pelo aplicativo nativo C++ Win32.
-        </div>
-      </div>
-
-      <!-- Área de Conteúdo Interior da Janela -->
+      <!-- Área de Conteúdo Interior da Janela Translúcida -->
       <div class="aero-content-area">
 
         <!-- Seletores de Cliques Alinhados à Esquerda em Tonalidade Clara -->
@@ -1255,7 +1233,7 @@ html, body {
         <div class="download-card-box glass-borders">
           <img src="/icon-download.png" style="width: 52px; height: 52px; margin-bottom: 8px;" alt="Download Wizard"/>
           <h2 style="font-size: 19px; color: #004b87; margin-bottom: 6px;">MouseClickCounter v2.8 (Build Nativo C++)</h2>
-          <p style="font-size: 13px; color: #223a50; line-height: 1.5; max-width: 520px; margin: 0 auto; font-weight: 600;">
+          <p style="font-size: 13px; color: #1a3045; line-height: 1.5; max-width: 520px; margin: 0 auto; font-weight: 600;">
             Compatível nativamente com Windows 7, Windows 8, Windows 10 e Windows 11 (64-bit).<br/>
             Construído em C++ puro com Win32 RawInput API. Sem dependências externas (.NET / VC++ Redistributable dispensados).
           </p>
@@ -1315,9 +1293,9 @@ html, body {
     <div class="main-tab-panel" id="panel-main-music">
       <div class="music-page-wrap">
 
-        <div class="intro-banner-wrap glass-borders" style="margin: 0 0 14px;">
-          <img src="/music_header.png" class="intro-banner-img" alt="Music Header"/>
-          <div class="intro-banner-text">
+        <div class="glass-borders" style="margin: 0 0 14px; padding: 12px; display: flex; align-items: center; gap: 12px;">
+          <img src="/icon-music.png" style="width: 32px; height: 32px;" alt="Music Header"/>
+          <div style="font-size: 12.5px; color: #002b54; line-height: 1.4; font-weight: 600;">
             <strong>Frutiger Aero Ocean &amp; Ambient Sanctuary:</strong> 5 estações musicais longas (4 a 8 minutos) combinadas com gerador de ondas do mar em tempo real, acordes quentes de piano Rhodes e ambiência aquática contínua.
           </div>
         </div>
@@ -1337,38 +1315,25 @@ html, body {
 
 <script>
 /* =============================================================================
-   1. SISTEMA DE WALLPAPERS 100% AUTOMÁTICO (SEM BOTÕES MANUAIS)
-   Troca a cada 3 minutos (180.000 ms) com cross-fade suave de 2s.
-   Wallpaper inicial selecionado de acordo com a hora do relógio local do PC.
+   1. SISTEMA DE WALLPAPERS 100% AUTOMÁTICO (ROTAÇÃO A CADA 30 SEGUNDOS)
+   Alterna suavemente com transição cross-fade entre os 5 papéis de parede Frutiger Aero.
    ============================================================================= */
 const WALLPAPERS = [
-  // Manhã / Aurora
-  { name: 'Asadal Morning Sunlight & Dew', url: '/wallpaper_2.jpg', preferredHours: [5, 6, 7, 8, 9, 10, 11] },
-  { name: 'Asadal Stock Aqua Orbs', url: '/wallpaper_1.jpg', preferredHours: [8, 9, 10, 11] },
-  // Tarde Tropical / Céu Azul e Colinas
-  { name: 'Asadal Summer & Tropical Fish HD', url: '/frutiger-bg-hd.jpg', preferredHours: [12, 13, 14, 15, 16, 17] },
-  { name: 'Asadal Green Hills & Bubbles', url: '/wallpaper_4.jpg', preferredHours: [12, 13, 14, 15] },
-  { name: 'Asadal Tropical Islands', url: '/wallpaper_5.jpg', preferredHours: [14, 15, 16, 17] },
-  // Entardecer / Pôr do Sol
-  { name: 'Perfect Hue Twilight', url: 'https://frutigeraeroarchive.org/images/wallpapers/table_of_contents/perfect_hue.jpg', preferredHours: [18, 19, 20] },
-  { name: 'Material Dictionary 149', url: 'https://frutigeraeroarchive.org/images/wallpapers/table_of_contents/material_dictionary_149.jpg', preferredHours: [18, 19, 20] },
-  // Noite / Windows Vista Aurora
-  { name: 'Windows Vista Aurora Night', url: 'https://frutigeraeroarchive.org/images/wallpapers/table_of_contents/windows_vista.jpg', preferredHours: [21, 22, 23, 0, 1, 2, 3, 4] },
-  { name: 'Windows 7 Harmony', url: 'https://frutigeraeroarchive.org/images/wallpapers/table_of_contents/windows_7.jpg', preferredHours: [21, 22, 23, 0, 1, 2, 3, 4] },
-  { name: 'Aqua Earth Globe', url: '/wallpaper_3.jpg', preferredHours: [16, 17, 18, 19] }
+  { name: 'Sunflowers & Blue Sky', url: '/wp_sunflowers.jpg' },
+  { name: 'Ladybug on Fresh Green Grass', url: '/wp_ladybug.jpg' },
+  { name: 'Asadal Mobile & Eco Utopia', url: '/wp_asadal_phone.jpg' },
+  { name: 'Dew Drops, Bubbles & Butterfly', url: '/wp_butterfly_dew.jpg' },
+  { name: 'Coastal City & Azure Waters', url: '/wp_coastal_city.jpg' }
 ];
 
 let currentWpIndex = 0;
 let activeLayer = 1;
 
 function pickInitialWallpaper() {
-  const currentHour = new Date().getHours();
-  const matchedIdx = WALLPAPERS.findIndex(w => w.preferredHours.includes(currentHour));
-  currentWpIndex = matchedIdx !== -1 ? matchedIdx : 0;
-
+  currentWpIndex = 0;
   const layer1 = document.getElementById('wallpaper-bg-1');
   if (layer1) {
-    layer1.style.backgroundImage = `url('${WALLPAPERS[currentWpIndex].url}')`;
+    layer1.style.backgroundImage = `url('${WALLPAPERS[0].url}')`;
     layer1.classList.add('active');
   }
 }
@@ -1393,11 +1358,12 @@ function autoRotateWallpaper() {
   }
 }
 
+// Inicia no primeiro wallpaper e troca automaticamente a cada 30 segundos (30.000 ms)
 pickInitialWallpaper();
-setInterval(autoRotateWallpaper, 180000);
+setInterval(autoRotateWallpaper, 30000);
 
 /* =============================================================================
-   2. EFEITOS SONOROS DE CLIQUE E FEEDBACK TÁTIL (VOLTE COM OS CLIQUES)
+   2. EFEITOS SONOROS DE CLIQUE E FEEDBACK TÁTIL
    ============================================================================= */
 const clickSound = new Audio('/toggle.mp3');
 
@@ -1411,9 +1377,6 @@ function playClickSound() {
 
 /* =============================================================================
    3. AERO-SOUND LONG-FORM AUDIO ENGINE (OCEAN WAVES + 5 LONG TRACKS)
-   - 5 Faixas Longas Reais (3 a 8 minutos cada)
-   - Camada Contínua de Som do Mar (Ondas Suaves em Ciclo Lento de 10s)
-   - Acordes Longos e Quentes com Reverb Espacial e Delay Estéreo
    ============================================================================= */
 const PLAYLIST = [
   {
@@ -1615,7 +1578,6 @@ function loadTrack(index, autoPlay = true) {
   const track = PLAYLIST[currentTrackIdx];
   trackSeconds = 0;
 
-  // Configura a tag <audio> com a faixa de longa duração
   audioEl.src = track.proxyUrl;
   audioEl.onerror = () => {
     if (audioEl.src !== track.directUrl) {
@@ -1624,7 +1586,6 @@ function loadTrack(index, autoPlay = true) {
     }
   };
 
-  // Atualiza display do LCD
   const titleEl = document.getElementById('docked-title');
   const subEl = document.getElementById('docked-sub');
   if (titleEl) titleEl.textContent = track.title;
@@ -1649,9 +1610,7 @@ function startPlayback() {
   isAudioPlaying = true;
   updatePlayPauseUI(true);
 
-  audioEl.play().catch(() => {
-    // Caso o áudio precise de interação, o motor Web Audio assegura a ambiência
-  });
+  audioEl.play().catch(() => {});
 
   if (timerInterval) clearInterval(timerInterval);
   timerInterval = setInterval(() => {
@@ -1748,7 +1707,6 @@ function updatePlayPauseUI(isPlaying) {
   if (isPlaying) {
     if (playBtn) playBtn.classList.add('playing');
     if (playSvg) {
-      // Duas barrinhas verticais de Pause SVG
       playSvg.innerHTML = `<path d="M6 5h4v14H6zm8 0h4v14h-4z"/>`;
       playSvg.style.fill = '#00441b';
     }
@@ -1759,7 +1717,6 @@ function updatePlayPauseUI(isPlaying) {
   } else {
     if (playBtn) playBtn.classList.remove('playing');
     if (playSvg) {
-      // Triângulo de Play (▶)
       playSvg.innerHTML = `<path d="M8 5v14l11-7z"/>`;
       playSvg.style.fill = '#00441b';
     }
@@ -1818,7 +1775,7 @@ function renderFullPlaylistView() {
         <img src="/icon-music.png" style="width: 18px; height: 18px;" alt="Audio"/>
         <div>
           <div class="track-title">${track.title}</div>
-          <div style="font-size: 11px; color: #406080; font-weight: 600;">${track.desc}</div>
+          <div style="font-size: 11px; color: #003366; font-weight: 600;">${track.desc}</div>
         </div>
       </div>
       <span class="track-badge">${track.durationStr}</span>
@@ -1843,7 +1800,6 @@ function updatePlaylistActiveState() {
 function switchMainTab(tabKey) {
   playClickSound();
 
-  // Atualiza botões da Sidebar
   document.querySelectorAll('#navigationMenu .nav-item').forEach(btn => {
     btn.classList.remove('nav-active');
     btn.classList.add('nav-inactive');
@@ -1855,12 +1811,10 @@ function switchMainTab(tabKey) {
     activeBtn.classList.add('nav-active');
   }
 
-  // Atualiza painéis
   document.querySelectorAll('.main-tab-panel').forEach(p => p.classList.remove('active'));
   const panel = document.getElementById('panel-main-' + tabKey);
   if (panel) panel.classList.add('active');
 
-  // Atualiza o título da barra de título do Windows 7
   const titleEl = document.getElementById('window-title-text');
   if (titleEl) {
     if (tabKey === 'ranking') titleEl.textContent = 'MouseClickCounter - Ranking Global de Cliques';
@@ -1933,7 +1887,7 @@ function renderTable(tableId, list, primaryKey, secondaryKey) {
       <td>
         <span class="lcd-vitrificado secundario">${formatNumber(player[secondaryKey])}</span>
       </td>
-      <td style="font-size: 11.5px; color: #003366; white-space: nowrap; font-weight: 600;">
+      <td style="font-size: 11.5px; color: #002b50; white-space: nowrap; font-weight: 700;">
         ${escapeHtml(player.updated_at || 'Recente')}
       </td>
     `;
