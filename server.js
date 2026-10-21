@@ -114,7 +114,7 @@ async function handler(req, res) {
 
     try {
       const data = JSON.parse(body);
-      let { nickname, clicks_hoje, clicks_totais } = data;
+      let { nickname, old_nickname, clicks_hoje, clicks_totais } = data;
 
       if (!nickname || typeof nickname !== 'string') nickname = 'Jogador_Anonimo';
       nickname      = nickname.trim().replace(/['"\\]/g, '').substring(0, 32);
@@ -122,6 +122,22 @@ async function handler(req, res) {
       clicks_totais = Number(clicks_totais) || 0;
 
       const updatedAt = new Date().toLocaleString('pt-BR');
+
+      // Se informou apelido antigo e é diferente do novo, remove o registro anterior para evitar duplicados no ranking
+      if (old_nickname && typeof old_nickname === 'string') {
+        const cleanOld = old_nickname.trim().replace(/['"\\]/g, '').substring(0, 32);
+        if (cleanOld && cleanOld !== nickname) {
+          try {
+            await db.execute({
+              sql: 'DELETE FROM players WHERE nickname = ?',
+              args: [cleanOld],
+            });
+            console.log(`[SYNC] Renomeado: '${cleanOld}' -> '${nickname}' (registro antigo removido)`);
+          } catch (e) {
+            console.warn('[SYNC] Falha ao remover registro antigo:', e.message);
+          }
+        }
+      }
 
       await db.execute({
         sql: `
