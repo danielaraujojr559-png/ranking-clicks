@@ -121,8 +121,6 @@ async function handler(req, res) {
       clicks_hoje   = Number(clicks_hoje)   || 0;
       clicks_totais = Number(clicks_totais) || 0;
 
-      const updatedAt = new Date().toLocaleString('pt-BR');
-
       // Se informou apelido antigo e é diferente do novo, remove o registro anterior para evitar duplicados no ranking
       if (old_nickname && typeof old_nickname === 'string') {
         const cleanOld = old_nickname.trim().replace(/['"\\]/g, '').substring(0, 32);
@@ -142,13 +140,13 @@ async function handler(req, res) {
       await db.execute({
         sql: `
           INSERT INTO players (nickname, clicks_hoje, clicks_totais, updated_at)
-          VALUES (?, ?, ?, ?)
+          VALUES (?, ?, ?, CURRENT_TIMESTAMP)
           ON CONFLICT(nickname) DO UPDATE SET
             clicks_hoje   = excluded.clicks_hoje,
             clicks_totais = excluded.clicks_totais,
-            updated_at    = excluded.updated_at
+            updated_at    = CURRENT_TIMESTAMP
         `,
-        args: [nickname, clicks_hoje, clicks_totais, updatedAt],
+        args: [nickname, clicks_hoje, clicks_totais],
       });
 
       console.log(`[SYNC] '${nickname}' | Hoje: ${clicks_hoje} | Total: ${clicks_totais}`);
@@ -386,12 +384,26 @@ async function handler(req, res) {
         }),
       ]);
 
-      const mapRow = (r) => ({
-        nickname:      String(r.nickname),
-        clicks_hoje:   Number(r.clicks_hoje),
-        clicks_totais: Number(r.clicks_totais),
-        updated_at:    String(r.updated_at),
-      });
+      const mapRow = (r) => {
+        let raw = String(r.updated_at || '');
+        let iso = raw;
+        // SQLite CURRENT_TIMESTAMP "YYYY-MM-DD HH:MM:SS" -> converte para ISO UTC "YYYY-MM-DDTHH:MM:SSZ"
+        if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(raw.trim())) {
+          iso = raw.trim().replace(' ', 'T') + 'Z';
+        } else if (/^\d{2}\/\d{2}\/\d{4}/.test(raw)) {
+          // Trata strings legadas no formato pt-BR "DD/MM/YYYY, HH:MM:SS"
+          const m = raw.match(/(\d{2})\/(\d{2})\/(\d{4})[,\s]+(\d{2}):(\d{2}):(\d{2})/);
+          if (m) {
+            iso = `${m[3]}-${m[2]}-${m[1]}T${m[4]}:${m[5]}:${m[6]}Z`;
+          }
+        }
+        return {
+          nickname:      String(r.nickname),
+          clicks_hoje:   Number(r.clicks_hoje),
+          clicks_totais: Number(r.clicks_totais),
+          updated_at:    iso,
+        };
+      };
 
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify({
@@ -492,20 +504,19 @@ async function handler(req, res) {
 
       const mergedHoje  = Number(oldRow.clicks_hoje)   + (newRow ? Number(newRow.clicks_hoje)   : 0);
       const mergedTotal = Number(oldRow.clicks_totais)  + (newRow ? Number(newRow.clicks_totais) : 0);
-      const updatedAt   = new Date().toLocaleString('pt-BR');
 
       // Transação atómica: UPSERT no novo nick + DELETE no antigo
       await db.batch([
         {
           sql:  `
             INSERT INTO players (nickname, clicks_hoje, clicks_totais, updated_at)
-            VALUES (?, ?, ?, ?)
+            VALUES (?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(nickname) DO UPDATE SET
               clicks_hoje   = excluded.clicks_hoje,
               clicks_totais = excluded.clicks_totais,
-              updated_at    = excluded.updated_at
+              updated_at    = CURRENT_TIMESTAMP
           `,
-          args: [newName, mergedHoje, mergedTotal, updatedAt],
+          args: [newName, mergedHoje, mergedTotal],
         },
         { sql: 'DELETE FROM players WHERE nickname = ?', args: [oldName] },
       ], 'write');
