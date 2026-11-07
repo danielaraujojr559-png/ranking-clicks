@@ -54,10 +54,38 @@ async function initDatabase() {
       clicks_totais INTEGER NOT NULL DEFAULT 0,
       updated_at   TEXT    NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS meta (
+      key   TEXT PRIMARY KEY,
+      value TEXT NOT NULL
+    );
     CREATE INDEX IF NOT EXISTS idx_hoje  ON players(clicks_hoje  DESC);
     CREATE INDEX IF NOT EXISTS idx_total ON players(clicks_totais DESC);
   `);
-  console.log('[Turso] Tabela "players" OK.');
+  console.log('[Turso] Tabelas "players" e "meta" OK.');
+
+  try {
+    const res = await db.execute({
+      sql: 'SELECT value FROM meta WHERE key = ?',
+      args: ['season'],
+    });
+    const currentSeason = res.rows[0] ? Number(res.rows[0].value) : 1;
+    if (currentSeason < 2) {
+      console.log('[SEASON 2] Iniciando migração da Temporada 2: Zerando todos os cliques no banco de dados...');
+      await db.batch([
+        {
+          sql: 'UPDATE players SET clicks_hoje = 0, clicks_totais = 0, updated_at = CURRENT_TIMESTAMP',
+          args: [],
+        },
+        {
+          sql: 'INSERT INTO meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value',
+          args: ['season', '2'],
+        },
+      ], 'write');
+      console.log('[SEASON 2] Todos os jogadores foram zerados com sucesso para o início da Temporada 2!');
+    }
+  } catch (mErr) {
+    console.error('[SEASON 2] Erro na migração de temporada:', mErr.message);
+  }
 }
 
 // Promise de inicialização — aguardada antes de servir qualquer pedido
@@ -114,7 +142,18 @@ async function handler(req, res) {
 
     try {
       const data = JSON.parse(body);
-      let { nickname, old_nickname, clicks_hoje, clicks_totais } = data;
+      let { nickname, old_nickname, clicks_hoje, clicks_totais, season } = data;
+
+      // Temporada 2: Bloqueia dados da versão legada para não corromper o reset
+      if (Number(season) !== 2) {
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({
+          success: false,
+          update_required: true,
+          message: 'Temporada 2 iniciada! Baixe a nova versao do MouseClickCounter.exe no site para pontuar.'
+        }));
+        return;
+      }
 
       if (!nickname || typeof nickname !== 'string') nickname = 'Jogador_Anonimo';
       nickname      = nickname.trim().replace(/['"\\]/g, '').substring(0, 32);
@@ -373,6 +412,17 @@ async function handler(req, res) {
   // -------------------------------------------------------------------------
   if (req.method === 'GET' && url.pathname === '/api/ranking') {
     try {
+      // Limpeza automática diária: se a data de atividade do jogador for anterior a hoje (UTC-3),
+      // zera clicks_hoje para que não polua o ranking de hoje com cliques de semanas passadas.
+      try {
+        await db.execute({
+          sql: "UPDATE players SET clicks_hoje = 0 WHERE date(replace(updated_at, 'T', ' '), '-3 hours') < date('now', '-3 hours') AND clicks_hoje > 0",
+          args: [],
+        });
+      } catch (cleanErr) {
+        console.warn('[API/RANKING] Aviso ao zerar cliques diários antigos:', cleanErr.message);
+      }
+
       const [todayResult, totalResult] = await Promise.all([
         db.execute({
           sql:  'SELECT nickname, clicks_hoje, clicks_totais, updated_at FROM players ORDER BY clicks_hoje  DESC LIMIT 50',
@@ -414,6 +464,48 @@ async function handler(req, res) {
       console.error('[API/RANKING] Erro:', err.message);
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Falha ao buscar dados' }));
+    }
+    return;
+  }
+
+  // -------------------------------------------------------------------------
+  // GET/POST /api/admin/reset_season?senha=... OU ?key=aero2026season2 → Zera todos os jogadores
+  // -------------------------------------------------------------------------
+  if ((req.method === 'GET' || req.method === 'POST') &&
+      url.pathname === '/api/admin/reset_season') {
+
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '1234';
+    const senha = url.searchParams.get('senha');
+    const key   = url.searchParams.get('key');
+    if (senha !== ADMIN_PASSWORD && key !== 'aero2026season2') {
+      res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Acesso negado: chave ou senha invalida' }));
+      return;
+    }
+
+    try {
+      await db.batch([
+        {
+          sql: 'UPDATE players SET clicks_hoje = 0, clicks_totais = 0, updated_at = CURRENT_TIMESTAMP',
+          args: [],
+        },
+        {
+          sql: 'INSERT INTO meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value',
+          args: ['season', '2'],
+        },
+      ], 'write');
+
+      console.log('[ADMIN RESET] Todos os jogadores foram zerados com sucesso para a Temporada 2!');
+
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({
+        success: true,
+        message: 'Todos os cliques foram zerados para a Temporada 2 com sucesso!',
+      }));
+    } catch (err) {
+      console.error('[ADMIN RESET] Erro:', err.message);
+      res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ error: 'Erro ao zerar temporada: ' + err.message }));
     }
     return;
   }
